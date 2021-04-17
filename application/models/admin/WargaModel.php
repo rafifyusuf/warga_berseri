@@ -32,7 +32,11 @@ class WargaModel extends CI_Model
 
 	public function get_all_warga()
 	{
-		return $this->db->get('warga');
+		$this->db->select('warga.*, nama_warga');
+		$this->db->from('warga');
+		$this->db->join('detail_warga', 'warga.id_warga = detail_warga.id_warga');
+		$this->db->where('status', 'Kepala Keluarga');
+		return $this->db->get();
 	}
 
 	public function get_single_warga($id_warga)
@@ -45,6 +49,7 @@ class WargaModel extends CI_Model
 		$this->db->select('*');
 		$this->db->from('detail_warga');
 		$this->db->join('warga', 'warga.id_warga = detail_warga.id_warga');
+
 		$query = $this->db->get();
 		return $query;
 	}
