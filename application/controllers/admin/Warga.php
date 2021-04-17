@@ -46,6 +46,14 @@ class Warga extends CI_Controller
 		$this->load->view('admin/layouts/footer');
 	}
 
+	public function tambah_warga()
+	{
+		$data['title'] = 'Tambah Data Warga';
+		$this->load->view('admin/layouts/header', $data);
+		$this->load->view('admin/pages/tambah-warga');
+		$this->load->view('admin/layouts/footer');
+	}
+
 	public function validasi_tambah_warga()
 	{
 		$this->form_validation->set_rules('no_rumah', 'No Rumah', 'required|min_length[2]|alpha_dash|is_unique[warga.no_rumah]');
@@ -63,7 +71,7 @@ class Warga extends CI_Controller
 			$this->form_validation->set_rules('file_kk', 'File Kartu Keluarga', 'required');
 		}
 		if ($this->form_validation->run() == FALSE) {
-			$this->data_warga();
+			$this->tambah_warga();
 		} else {
 			$id_warga   	         = $this->WargaModel->id_warga();
 			$no_rumah   		     = $this->input->post('no_rumah');
@@ -81,7 +89,7 @@ class Warga extends CI_Controller
 
 			if (!$this->upload->do_upload('file_kk')) {
 				$this->session->set_flashdata('status', 'File gagal diupload.');
-				$this->data_warga();
+				$this->tambah_warga();
 			} else {
 				$file_kk = $this->upload->data('file_name');
 				$data_warga = [

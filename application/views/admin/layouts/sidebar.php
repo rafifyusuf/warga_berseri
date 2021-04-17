@@ -5,38 +5,14 @@
 
 		<!--- Sidemenu -->
 		<div id="sidebar-menu">
-
 			<ul class="metismenu" id="side-menu">
-
 				<li class="menu-title">Navigation</li>
-
 				<li>
 					<a href="<?php echo base_url('admin/Dashboard') ?>">
 						<i class="fe-pocket"></i>
 						<span> Dashboard </span>
 					</a>
 				</li>
-
-				<li>
-					<a href="javascript: void(0);">
-						<i class="fe-clipboard"></i>
-						<span> Surat </span>
-						<span class="menu-arrow"></span>
-					</a>
-					<ul class="nav-second-level" aria-expanded="false">
-						<li>
-							<a href="<?php echo base_url('admin/surat/template_surat') ?>">
-								<span> Template Surat </span>
-							</a>
-						</li>
-						<li>
-							<a href="<?php echo base_url('admin/surat') ?>">
-								<span> Pengajuan Surat </span>
-							</a>
-						</li>
-					</ul>
-				</li>
-
 				<li>
 					<a href="javascript: void(0);">
 						<i class="fe-users"></i>
@@ -63,17 +39,30 @@
 						</li>
 					</ul>
 				</li>
+				<li>
+					<a href="javascript: void(0);">
+						<i class="fe-clipboard"></i>
+						<span> Surat </span>
+						<span class="menu-arrow"></span>
+					</a>
+					<ul class="nav-second-level" aria-expanded="false">
+						<li>
+							<a href="<?php echo base_url('admin/surat/template_surat') ?>">
+								<span> Template Surat </span>
+							</a>
+						</li>
+						<li>
+							<a href="<?php echo base_url('admin/surat') ?>">
+								<span> Pengajuan Surat </span>
+							</a>
+						</li>
+					</ul>
+				</li>
 
 			</ul>
-
-
-
 		</div>
 		<!-- End Sidebar -->
-
 		<div class="clearfix"></div>
-
 	</div>
 	<!-- Sidebar -left -->
-
 </div>

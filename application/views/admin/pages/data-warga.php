@@ -2,72 +2,6 @@
 <!-- Start Page Content here -->
 <!-- ============================================================== -->
 
-<!-- Start modal tambah keluarga -->
-<div class="modal fade overflow-auto" id="addWarga" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<?= form_open_multipart('admin/warga/proses_tambah_warga', array('method' => 'POST')) ?>
-			<div class="modal-header">
-				<h5 class="modal-title">Tambah Data Warga</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-			</div>
-			<div class="modal-body">
-				<div class="form-group">
-					<label>No Rumah</label>
-					<input style="height:40px" class="form-control input-sm" type="text" name="no_rumah">
-					<small class="form-text text-danger"><?= form_error('no_rumah'); ?></small>
-				</div>
-				<div class="form-group">
-					<label>No KK</label>
-					<input style="height:40px" class="form-control input-sm" type="text" name="no_kk">
-					<small class="form-text text-danger"><?= form_error('no_kk'); ?></small>
-				</div>
-				<div class=" form-group">
-					<label>Alamat</label>
-					<input style="height:40px" class="form-control input-sm" type="text" name="alamat">
-					<small class="form-text text-danger"><?= form_error('alamat'); ?></small>
-				</div>
-				<div class=" form-group">
-					<label>Rt</label>
-					<input style="height:40px" class="form-control input-sm" type="text" name="rt">
-					<small class="form-text text-danger"><?= form_error('rt'); ?></small>
-				</div>
-				<div class=" form-group">
-					<label>Rw</label>
-					<input style="height:40px" class="form-control input-sm" type="text" name="rw">
-					<small class="form-text text-danger"><?= form_error('rw'); ?></small>
-				</div>
-				<div class=" form-group">
-					<label>Jumlah Keluarga</label>
-					<input style="height:40px" class="form-control input-sm" type="number" name="jumlah_keluarga">
-					<small class="form-text text-danger"><?= form_error('jumlah_keluarga'); ?></small>
-				</div>
-				<div class="form-group">
-					<label>Status Rumah</label>
-					<select id="inputState" class="form-control" name="status_rumah">
-						<option disabled selected>Status Tinggal</option>
-						<option value="Rumah Usaha">Rumah Usaha</option>
-						<option value="Rumah Tinggal">Rumah Tinggal</option>
-						<option value="Rumah Kosong">Rumah Kosong</option>
-					</select>
-				</div>
-				<div class="form-group">
-					<label>Foto Kartu Keluarga</label>
-					<input type="file" name="file_kk" class="form-control">
-					<small class="form-text text-danger"><?= form_error('file_kk'); ?></small>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<button type="submit" name="submit" class="btn btn-primary">Tambah</button>
-			</div>
-		</div>
-		<?= form_close() ?>
-	</div>
-</div>
-<!-- End modal tambah keluarga -->
-
 <div class="content-page">
 	<div class="content">
 		<!-- Start Content-->
@@ -94,7 +28,7 @@
 							<div class="row">
 								<div class="col">
 									<div class="form-group mr-2">
-										<button data-toggle="modal" data-target="#addWarga" class="btn btn-secondary"><i class="mdi mdi-plus-circle mr-2"></i> Tambah Data Warga</button>
+										<a href="<?= base_url('admin/warga/tambah_warga') ?>" class="btn btn-secondary"><i class="mdi mdi-plus-circle mr-2"></i> Tambah Data Warga</a>
 									</div>
 								</div>
 							</div>
