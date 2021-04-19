@@ -58,6 +58,7 @@ class Warga extends CI_Controller
 	{
 		$this->form_validation->set_rules('no_rumah', 'No Rumah', 'required|min_length[2]|alpha_dash|is_unique[warga.no_rumah]');
 		$this->form_validation->set_rules('no_kk', 'No Kartu Keluarga', 'required|exact_length[16]|numeric');
+		$this->form_validation->set_rules('nama_warga', 'Nama Pemilik Rumah', 'required');
 		$this->form_validation->set_rules('alamat', 'Alamat', 'required|min_length[5]');
 		$this->form_validation->set_rules('jumlah_keluarga', 'Jumlah Keluarga', 'required|numeric');
 		$this->form_validation->set_rules('rt', 'RT', 'required|numeric');
@@ -74,6 +75,8 @@ class Warga extends CI_Controller
 			$this->tambah_warga();
 		} else {
 			$id_warga   	         = $this->WargaModel->id_warga();
+			$id_detail_warga   	     = $this->WargaModel->id_detail_warga();
+			$nama_warga   		     = $this->input->post('nama_warga');
 			$no_rumah   		     = $this->input->post('no_rumah');
 			$no_kk   		         = $this->input->post('no_kk');
 			$alamat   		         = $this->input->post('alamat');
@@ -103,7 +106,14 @@ class Warga extends CI_Controller
 					'rw'   			     => $rw,
 					'file_kk'			 => $file_kk,
 				];
+				$data_hunian = [
+					'id_warga'  	  => $id_warga,
+					'id_detail_warga' => $id_detail_warga,
+					'nama_warga'   	  => $nama_warga,
+					'status'   	      => 'Kepala Keluarga',
+				];
 				$this->WargaModel->tambah_warga($data_warga);
+				$this->WargaModel->tambah_anggota_warga($data_hunian);
 				redirect(base_url('admin/warga/data_warga'));
 			}
 		}
@@ -137,6 +147,20 @@ class Warga extends CI_Controller
 			$data['jumlah_hunian'] = $jumlah_hunian;
 			$this->load->view('admin/layouts/header', $data);
 			$this->load->view('admin/pages/detail-warga', $data);
+			$this->load->view('admin/layouts/footer');
+		}
+	}
+
+	public function detail_hunian($id_detail_warga)
+	{
+		if (!$this->session->username) {
+			redirect(base_url('admin'));
+		} else {
+			$hunian         = $this->WargaModel->get_hunian($id_detail_warga)->row();
+			$data['title']  = 'Detail Warga';
+			$data['hunian'] = $hunian;
+			$this->load->view('admin/layouts/header', $data);
+			$this->load->view('admin/pages/detail-hunian', $data);
 			$this->load->view('admin/layouts/footer');
 		}
 	}

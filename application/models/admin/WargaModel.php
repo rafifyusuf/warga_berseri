@@ -64,6 +64,11 @@ class WargaModel extends CI_Model
 		return $this->db->get_where('detail_warga', ['id_warga' => $id]);
 	}
 
+	public function get_hunian($id_detail_warga)
+	{
+		return $this->db->get_where('detail_warga', ['id_detail_warga' => $id_detail_warga]);
+	}
+
 	public function update_warga($id_detail_warga, $data)
 	{
 		$this->db->where('id_detail_warga', $id_detail_warga);
@@ -75,9 +80,9 @@ class WargaModel extends CI_Model
 	{
 		return $this->db->insert('warga', $data_warga);
 	}
-	public function tambah_anggota_warga($data)
+	public function tambah_anggota_warga($data_hunian)
 	{
-		return $this->db->insert('detail_warga', $data);
+		return $this->db->insert('detail_warga', $data_hunian);
 	}
 
 	public function get_chart_pendidikan()

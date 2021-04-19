@@ -58,7 +58,7 @@
 										<th>Alamat</th>
 										<th>Jml Keluarga</th>
 										<th>Status Rumah</th>
-										<th>Rt / Rw</th>
+										<th style="width: 80px;">Rt / Rw</th>
 										<th>Pemilik Rumah</th>
 										<th>File KK</th>
 										<th>Aksi</th>

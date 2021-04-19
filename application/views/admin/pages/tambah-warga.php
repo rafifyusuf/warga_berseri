@@ -41,7 +41,15 @@
 							<?= form_open_multipart('admin/warga/proses_tambah_warga', array('method' => 'POST')) ?>
 
 							<div class="form-row">
-								<div class="form-group col-md-6">
+								<div class="form-group col-md-8">
+									<label for="inputEmail4" class="col-form-label">Nama Pemimlik Rumah</label>
+									<input type="text" class="form-control" placeholder="Nama Pemilik Rumah" name="nama_warga" value="<?php echo set_value('nama_warga') ?>">
+									<span class="form-text text-danger"><?= form_error('nama_warga'); ?></span>
+								</div>
+							</div>
+
+							<div class="form-row">
+								<div class="form-group col-md-8">
 									<label for="inputEmail4" class="col-form-label">Nomor Rumah</label>
 									<input type="text" class="form-control" placeholder="Nomor Rumah" name="no_rumah" value="<?php echo set_value('no_rumah') ?>">
 									<span class="form-text text-danger"><?= form_error('no_rumah'); ?></span>
@@ -49,7 +57,7 @@
 							</div>
 
 							<div class="form-row">
-								<div class="form-group col-md-6">
+								<div class="form-group col-md-8">
 									<label for="inputEmail4" class="col-form-label">Nomor Kartu Keluarga</label>
 									<input type="number" class="form-control" placeholder="No KK" name="no_kk" value="<?php echo set_value('no_kk') ?>">
 									<span class="form-text text-danger"><?= form_error('no_kk'); ?></span>
@@ -57,9 +65,9 @@
 							</div>
 
 							<div class="form-row">
-								<div class="form-group col-md-8">
+								<div class="form-group col-md-6">
 									<label for="inputCity" class="col-form-label">Alamat</label>
-									<input type="text" name="alamat" class="form-control" placeholder="Alamat Rumah" value="<?php echo set_value('alamat') ?>">
+									<textarea class="form-control" name="alamat" cols="20" rows="1" placeholder="Alamat Rumah"><?php echo set_value('alamat') ?></textarea>
 									<span class="form-text text-danger"><?= form_error('alamat'); ?></span>
 								</div>
 								<div class="form-group col-md-1">
@@ -75,7 +83,7 @@
 							</div>
 
 							<div class="form-row">
-								<div class="form-group col-md-6">
+								<div class="form-group col-md-8">
 									<label class="col-form-label">Jumlah Keluarga</label>
 									<input type="text" class="form-control" name="jumlah_keluarga" value="<?php echo set_value('jumlah_keluarga') ?>">
 									<span class="form-text text-danger"><?= form_error('jumlah_keluarga'); ?></span>
@@ -83,7 +91,7 @@
 							</div>
 
 							<div class="form-row">
-								<div class="form-group col-md-6">
+								<div class="form-group col-md-8">
 									<label class="col-form-label">Status Rumah</label>
 									<select class="form-control" name="status_rumah">
 										<option disabled selected>Status Tinggal</option>
@@ -95,7 +103,7 @@
 							</div>
 
 							<div class="form-row">
-								<div class="form-group col-md-6">
+								<div class="form-group col-md-8">
 									<label class="col-form-label">File Kartu Keluarga</label>
 									<input type="file" class="form-control dropify" name="file_kk" value="<?php echo set_value('file_kk') ?>">
 									<span class="form-text text-danger"><?= form_error('file_kk'); ?></span>
