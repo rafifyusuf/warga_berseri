@@ -7,57 +7,97 @@
 		<div id="sidebar-menu">
 			<ul class="metismenu" id="side-menu">
 				<li class="menu-title">Navigation</li>
-				<li>
-					<a href="<?php echo base_url('admin/Dashboard') ?>">
-						<i class="fe-pocket"></i>
-						<span> Dashboard </span>
-					</a>
-				</li>
-				<li>
-					<a href="javascript: void(0);">
-						<i class="fe-users"></i>
-						<span> Pendataan Warga </span>
-						<span class="menu-arrow"></span>
-					</a>
-					<ul class="nav-second-level" aria-expanded="false">
-						<li>
-							<a href="<?php echo base_url('admin/warga/data_warga') ?>">
-								</i>
-								<span> Data Warga </span>
-							</a>
-						</li>
-						<li>
-							<a href="<?php echo base_url('admin/warga/info_warga') ?>">
-								</i>
-								<span> Info Warga </span>
-							</a>
-						</li>
-						<li>
-							<a href="#">
-								<span> Data Posyandu </span>
-							</a>
-						</li>
-					</ul>
-				</li>
-				<li>
-					<a href="javascript: void(0);">
-						<i class="fe-clipboard"></i>
-						<span> Surat </span>
-						<span class="menu-arrow"></span>
-					</a>
-					<ul class="nav-second-level" aria-expanded="false">
-						<li>
-							<a href="<?php echo base_url('admin/surat/template_surat') ?>">
-								<span> Template Surat </span>
-							</a>
-						</li>
-						<li>
-							<a href="<?php echo base_url('admin/surat') ?>">
-								<span> Pengajuan Surat </span>
-							</a>
-						</li>
-					</ul>
-				</li>
+
+				<?php
+				$role = $this->session->userdata('role_id');
+				if ($role == 1 || $role == 6 || $role == 7) : ?>
+					<li>
+						<a href="<?php echo base_url('admin/Dashboard') ?>">
+							<i class="fe-pocket"></i>
+							<span> Dashboard </span>
+						</a>
+					</li>
+					<li>
+						<a href="javascript: void(0);">
+							<i class="fe-users"></i>
+							<span> Pendataan Warga </span>
+							<span class="menu-arrow"></span>
+						</a>
+						<ul class="nav-second-level" aria-expanded="false">
+							<li>
+								<a href="<?php echo base_url('admin/warga/data_warga') ?>">
+									</i>
+									<span> Data Warga </span>
+								</a>
+							</li>
+							<li>
+								<a href="<?php echo base_url('admin/warga/info_warga') ?>">
+									</i>
+									<span> Info Warga </span>
+								</a>
+							</li>
+							<li>
+								<a href="#">
+									<span> Data Posyandu </span>
+								</a>
+							</li>
+						</ul>
+					</li>
+					<li>
+						<a href="javascript: void(0);">
+							<i class="fe-clipboard"></i>
+							<span> Surat </span>
+							<span class="menu-arrow"></span>
+						</a>
+						<ul class="nav-second-level" aria-expanded="false">
+							<li>
+								<a href="<?php echo base_url('admin/surat/template_surat') ?>">
+									<span> Template Surat </span>
+								</a>
+							</li>
+							<li>
+								<a href="<?php echo base_url('admin/surat') ?>">
+									<span> Pengajuan Surat </span>
+								</a>
+							</li>
+						</ul>
+					</li>
+				<?php endif ?>
+
+
+
+				<?php
+				$role_id = $this->session->userdata('role_id');
+				$queryMenu = "SELECT um.id, menu, icon FROM user_menu AS um JOIN user_access_menu AS uam ON um.id = uam.menu_id WHERE uam.role_id = $role_id AND active = 1 ORDER BY uam.menu_id ASC";
+				$menu = $this->db->query($queryMenu)->result_array();
+				?>
+				<?php foreach ($menu as $m) : ?>
+					<li>
+						<a href="javascript: void(0);">
+							<i class="<?= $m['icon'] ?>"></i>
+							<span><?= $m['menu'] ?></span>
+							<span class="menu-arrow"></span>
+						</a>
+						<ul class="nav-second-level" aria-expanded="false">
+							<?php
+							$queryMenu = "SELECT *, usm.icon AS usm_icon FROM user_sub_menu AS usm JOIN user_menu AS um ON usm.menu_id = um.id WHERE usm.menu_id = $m[id] AND usm.is_active = 1";
+							$subMenu = $this->db->query($queryMenu)->result_array();
+							?>
+							<?php foreach ($subMenu as $sm) : ?>
+								<?php if ($sm['title'] == $title) : ?>
+									<li class="nav-item active">
+									<?php else : ?>
+									<li class="nav-item">
+									<?php endif ?>
+									<a href="<?= base_url($sm['url']) ?>">
+										<i class="<?= $sm['usm_icon'] ?>"></i>
+										<span><?= $sm['title'] ?></span>
+									</a>
+									</li>
+								<?php endforeach ?>
+						</ul>
+					</li>
+				<?php endforeach ?>
 
 			</ul>
 		</div>

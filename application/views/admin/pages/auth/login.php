@@ -27,9 +27,7 @@
 			<div class="row justify-content-center">
 				<div class="col-md-8 col-lg-6 col-xl-5">
 					<div class="card bg-pattern">
-
 						<div class="card-body p-4">
-
 							<?php if ($this->session->flashdata('error')) { ?>
 								<div class="alert alert-danger col-12">
 									<center><?= $this->session->flashdata('error'); ?></center>
@@ -41,16 +39,16 @@
 								<p class="text-muted mb-4 mt-3">Enter your username and password to access admin panel.</p>
 							</div>
 
-							<?php echo form_open('admin/auth/proses_login', array('method' => 'POST')) ?>
+							<?php echo form_open('admin/auth', array('method' => 'POST')) ?>
 
 							<div class="form-group mb-3">
-								<label for="emailaddress">Username</label>
-								<input class="form-control" type="text" name="username" placeholder="Enter your username">
+								<label for="emailaddress">Email address</label>
+								<input class="form-control" type="text" name="email" id="email" placeholder="Enter your email">
 							</div>
 
 							<div class="form-group mb-3">
 								<label for="password">Password</label>
-								<input class="form-control" type="password" name="password" placeholder="Enter your password">
+								<input class="form-control" type="password" name="password" id="password" placeholder="Enter your password">
 							</div>
 
 							<div class="form-group mb-0 text-center">
@@ -58,7 +56,13 @@
 							</div>
 
 							<?php echo form_close() ?>
-
+							<hr>
+							<div class="text-center">
+								<a class="small" href="<?= base_url('admin/auth/forgotPassword') ?>">Forgot Password?</a>
+							</div>
+							<div class="text-center">
+								<a class="small" href="<?= base_url('admin/auth/registration') ?>">Create an Account!</a>
+							</div>
 						</div> <!-- end card-body -->
 					</div>
 					<!-- end card -->

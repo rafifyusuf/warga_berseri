@@ -67,4 +67,8 @@ class Kendaraan extends CI_Controller
 			}
 		}
 	}
+	public function hapus_kendaraan($id_kendaraan)
+	{
+		$id_kendaraan = $this->delete->id_kendaraan;
+	}
 }

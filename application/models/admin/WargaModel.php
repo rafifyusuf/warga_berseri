@@ -49,7 +49,6 @@ class WargaModel extends CI_Model
 		$this->db->select('*');
 		$this->db->from('detail_warga');
 		$this->db->join('warga', 'warga.id_warga = detail_warga.id_warga');
-
 		$query = $this->db->get();
 		return $query;
 	}
@@ -74,7 +73,6 @@ class WargaModel extends CI_Model
 		$this->db->where('id_detail_warga', $id_detail_warga);
 		return $this->db->update('detail_warga', $data);
 	}
-
 
 	public function tambah_warga($data_warga)
 	{

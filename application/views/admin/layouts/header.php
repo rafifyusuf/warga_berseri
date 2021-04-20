@@ -134,7 +134,7 @@
 					<a class="nav-link dropdown-toggle nav-user mr-0 waves-effect waves-light" data-toggle="dropdown" href="#" role="button" aria-haspopup="false" aria-expanded="false">
 						<img src="<?php echo base_url() ?>assets/admin/images/users/user-1.jpg" alt="user-image" class="rounded-circle">
 						<span class="pro-user-name ml-1">
-							<?php echo $this->session->username_admin ?> <i class="mdi mdi-chevron-down"></i>
+							<?php echo $this->session->email ?> <i class="mdi mdi-chevron-down"></i>
 						</span>
 					</a>
 					<div class="dropdown-menu dropdown-menu-right profile-dropdown ">

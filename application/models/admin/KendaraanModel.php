@@ -38,4 +38,10 @@ class KendaraanModel extends CI_Model
 		$this->db->order_by('total', 'desc');
 		return $this->db->get('kendaraan');
 	}
+
+	public function hapus_kendaraan($id_kendaraan)
+	{
+		$this->db->delete_by('kendaraan', 'id_kendaraan');
+		return $this->db->get('kendaraan');
+	}
 }

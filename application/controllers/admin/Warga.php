@@ -19,7 +19,7 @@ class Warga extends CI_Controller
 		$data['pendataan_warga'] = $query;
 		$data['title'] = 'Info Warga';
 		$this->load->view('admin/layouts/header', $data);
-		$this->load->view('admin/pages/info-warga', $data);
+		$this->load->view('admin/pages/warga/info-warga', $data);
 		$this->load->view('admin/layouts/footer');
 	}
 
@@ -42,7 +42,7 @@ class Warga extends CI_Controller
 		$data['pendataan_warga'] = $query;
 		$data['title'] = 'Data Warga';
 		$this->load->view('admin/layouts/header', $data);
-		$this->load->view('admin/pages/data-warga', $data);
+		$this->load->view('admin/pages/warga/data-warga', $data);
 		$this->load->view('admin/layouts/footer');
 	}
 
@@ -50,7 +50,7 @@ class Warga extends CI_Controller
 	{
 		$data['title'] = 'Tambah Data Warga';
 		$this->load->view('admin/layouts/header', $data);
-		$this->load->view('admin/pages/tambah-warga');
+		$this->load->view('admin/pages/warga/tambah-warga');
 		$this->load->view('admin/layouts/footer');
 	}
 
@@ -146,7 +146,7 @@ class Warga extends CI_Controller
 			$data['warga'] = $warga;
 			$data['jumlah_hunian'] = $jumlah_hunian;
 			$this->load->view('admin/layouts/header', $data);
-			$this->load->view('admin/pages/detail-warga', $data);
+			$this->load->view('admin/pages/warga/detail-warga', $data);
 			$this->load->view('admin/layouts/footer');
 		}
 	}

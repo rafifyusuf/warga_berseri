@@ -22,7 +22,7 @@ class Surat extends CI_Controller
 		$data['pengajuan_surat'] = $pengajuan_surat;
 		$data['title'] = 'Pengajuan Surat';
 		$this->load->view('admin/layouts/header', $data);
-		$this->load->view('admin/pages/pengajuan-surat', $data);
+		$this->load->view('admin/pages/surat/pengajuan-surat', $data);
 		$this->load->view('admin/layouts/footer');
 	}
 
@@ -54,7 +54,7 @@ class Surat extends CI_Controller
 		$template_surat = $this->SuratModel->get_all_template_surat()->result();
 		$data['template_surat'] = $template_surat;
 		$this->load->view('admin/layouts/header', $data);
-		$this->load->view('admin/pages/template-surat', $data);
+		$this->load->view('admin/pages/surat/template-surat', $data);
 		$this->load->view('admin/layouts/footer');
 	}
 
@@ -62,7 +62,7 @@ class Surat extends CI_Controller
 	{
 		$data['title'] = 'Tambah Template Surat';
 		$this->load->view('admin/layouts/header', $data);
-		$this->load->view('admin/pages/tambah-template-surat', $data);
+		$this->load->view('admin/pages/surat/tambah-template-surat', $data);
 		$this->load->view('admin/layouts/footer');
 	}
 
