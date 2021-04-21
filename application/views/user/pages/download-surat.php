@@ -149,12 +149,12 @@
 				<td align="center">Mengetahui,
 					<br>
 					<as class="text-uppercase font-weight-bold"> Ketua RW <?= $data->nama_rw ?></as><br><br>
-					<img width="90px" src=" <?php echo base_url('uploads/qr.png') ?>" alt="..." class="img-thumbnail mb-2">
+					<img width="90px" src=" <?php echo base_url('uploads/qr/qr.png') ?>" alt="..." class="img-thumbnail mb-2">
 					<br> (..........................................)
 				</td>
 				<td class="text-uppercase font-weight-bold" align="center"><?= date_indo($data->tanggal_disetujui) ?>
 					<br> KETUA RT <?= $data->nama_rt ?><br><br>
-					<img width="90px" src="<?php echo base_url('uploads/qr.png') ?>" alt="..." class="img-thumbnail mb-2">
+					<img width="90px" src="<?php echo base_url('uploads/qr/qr.png') ?>" alt="..." class="img-thumbnail mb-2">
 					<br> (..........................................)
 				</td>
 			</tr>
