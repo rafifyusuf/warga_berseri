@@ -36,7 +36,7 @@ class SuratModel extends CI_Model
 	public function get_pengajuan_surat()
 	{
 		$id_warga = $this->session->id_warga;
-		$this->db->select('id_pengajuan_surat,pengajuan,tanggal_pengajuan,pengajuan_surat.status_verifikasi,nama_warga');
+		$this->db->select('id_pengajuan_surat,pengajuan,tanggal_pengajuan,pengajuan_surat.verifikasi_rt,pengajuan_surat.verifikasi_rw,nama_warga');
 		$this->db->from('pengajuan_surat');
 		$this->db->where('detail_warga.id_warga', $id_warga);
 		$this->db->join('detail_warga', 'detail_warga.id_detail_warga = pengajuan_surat.id_detail_warga');
@@ -53,7 +53,7 @@ class SuratModel extends CI_Model
 	{
 		$id_detail_warga = $this->session->id_detail_warga;
 		$this->db->select('id_pengajuan_surat,nama_warga,pengajuan_surat.rt,pengajuan_surat.rw,no_surat,alamat,
-		tempat_lahir,tanggal_lahir,pekerjaan,agama,status_perkawinan,nik,pengajuan,tanggal_pengajuan,tanggal_disetujui');
+		tempat_lahir,tanggal_lahir,pekerjaan,agama,status_perkawinan,nik,pengajuan,tanggal_pengajuan,tanggal_disetujui,nama_rt,nama_rw');
 		$this->db->from('pengajuan_surat');
 		$this->db->where('detail_warga.id_detail_warga', $id_detail_warga);
 		$this->db->where('id_pengajuan_surat', $id_pengajuan_surat);

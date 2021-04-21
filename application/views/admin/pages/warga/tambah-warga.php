@@ -10,7 +10,7 @@
 		word-break: normal;
 	}
 </style>
-
+<?php $role = $this->session->userdata('role_id'); ?>
 <div class="content-page">
 	<div class="content">
 
@@ -50,6 +50,14 @@
 
 							<div class="form-row">
 								<div class="form-group col-md-8">
+									<label for="inputEmail4" class="col-form-label">No Hp</label>
+									<input type="number" class="form-control" placeholder="Nomor HP Pemilik Rumah" name="no_hp" value="<?php echo set_value('no_hp') ?>">
+									<span class="form-text text-danger"><?= form_error('no_hp'); ?></span>
+								</div>
+							</div>
+
+							<div class="form-row">
+								<div class="form-group col-md-8">
 									<label for="inputEmail4" class="col-form-label">Nomor Rumah</label>
 									<input type="text" class="form-control" placeholder="Nomor Rumah" name="no_rumah" value="<?php echo set_value('no_rumah') ?>">
 									<span class="form-text text-danger"><?= form_error('no_rumah'); ?></span>
@@ -70,16 +78,33 @@
 									<textarea class="form-control" name="alamat" cols="20" rows="1" placeholder="Alamat Rumah"><?php echo set_value('alamat') ?></textarea>
 									<span class="form-text text-danger"><?= form_error('alamat'); ?></span>
 								</div>
-								<div class="form-group col-md-1">
-									<label class="col-form-label">RT</label>
-									<input type="text" class="form-control" name="rt" value="<?php echo set_value('rt') ?>">
-									<span class="form-text text-danger"><?= form_error('rt'); ?></span>
-								</div>
-								<div class="form-group col-md-1">
-									<label class="col-form-label">RW</label>
-									<input type="text" class="form-control" name="rw" value="<?php echo set_value('rw') ?>">
-									<span class="form-text text-danger" style=" width:200px"><?= form_error('rw'); ?></span>
-								</div>
+								<?php if ($role == 6) { ?>
+									<div class="form-group col-md-1">
+										<label class="col-form-label">RT</label>
+										<input type="text" class="form-control" name="rt" value="<?= $user->rt ?>">
+									</div>
+								<?php	} else { ?>
+									<div class="form-group col-md-1">
+										<label class="col-form-label">RT</label>
+										<input type="text" class="form-control" name="rt" value="<?php echo set_value('rt') ?>">
+										<span class="form-text text-danger"><?= form_error('rt'); ?></span>
+									</div>
+								<?php	} ?>
+
+								<?php if ($role == 7) { ?>
+									<div class="form-group col-md-1">
+										<label class="col-form-label">RW</label>
+										<input type="text" class="form-control" name="rw" value="<?= $user->rw ?>">
+										<span class="form-text text-danger" style=" width:200px"><?= form_error('rw'); ?></span>
+									</div>
+								<?php	} else { ?>
+									<div class="form-group col-md-1">
+										<label class="col-form-label">RW</label>
+										<input type="text" class="form-control" name="rw" value="<?php echo set_value('rw') ?>">
+										<span class="form-text text-danger" style=" width:200px"><?= form_error('rw'); ?></span>
+									</div>
+								<?php	} ?>
+
 							</div>
 
 							<div class="form-row">
@@ -99,13 +124,14 @@
 										<option value="Rumah Tinggal">Rumah Tinggal</option>
 										<option value="Rumah Kosong">Rumah Kosong</option>
 									</select>
+									<span class="form-text text-danger"><?= form_error('status_rumah'); ?></span>
 								</div>
 							</div>
 
 							<div class="form-row">
 								<div class="form-group col-md-8">
 									<label class="col-form-label">File Kartu Keluarga</label>
-									<input type="file" class="form-control dropify" name="file_kk" value="<?php echo set_value('file_kk') ?>">
+									<input type="file" class="form-control dropify" name="file_kk">
 									<span class="form-text text-danger"><?= form_error('file_kk'); ?></span>
 								</div>
 							</div>

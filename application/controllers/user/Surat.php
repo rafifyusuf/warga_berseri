@@ -35,7 +35,8 @@ class Surat extends CI_Controller
 			'id_detail_warga'    => $id_detail_warga,
 			'pengajuan'    	 	 => $pengajuan,
 			'tanggal_pengajuan'  => $tanggal_pengajuan,
-			'status_verifikasi'  => "Diproses",
+			'verifikasi_rt'  => "Diproses",
+			'verifikasi_rw'  => "Diproses",
 		];
 		$this->SuratModel->tambah_pengajuan_surat($data);
 		$this->session->set_flashdata('flash', 'Pengajuan Surat Berhasil Ditambah');

@@ -2,6 +2,7 @@
 <!-- Start Page Content here -->
 <!-- ============================================================== -->
 
+
 <div class="modal fade overflow-auto" id="addTemplate" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -39,6 +40,7 @@
 
 <div class="content-page">
 	<div class="content">
+
 		<!-- Start Content-->
 		<div class="container-fluid">
 			<!-- start page title -->

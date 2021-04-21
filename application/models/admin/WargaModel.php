@@ -39,6 +39,26 @@ class WargaModel extends CI_Model
 		return $this->db->get();
 	}
 
+	public function get_all_warga_by_rw($rw)
+	{
+		$this->db->select('warga.*, nama_warga');
+		$this->db->from('warga');
+		$this->db->join('detail_warga', 'warga.id_warga = detail_warga.id_warga');
+		$this->db->where('status', 'Kepala Keluarga');
+		$this->db->where('rw', $rw);
+		return $this->db->get();
+	}
+
+	public function get_all_warga_by_rt($rt)
+	{
+		$this->db->select('warga.*, nama_warga');
+		$this->db->from('warga');
+		$this->db->join('detail_warga', 'warga.id_warga = detail_warga.id_warga');
+		$this->db->where('status', 'Kepala Keluarga');
+		$this->db->where('rt', $rt);
+		return $this->db->get();
+	}
+
 	public function get_single_warga($id_warga)
 	{
 		return $this->db->get_where('warga', ['id_warga' => $id_warga]);
@@ -49,6 +69,24 @@ class WargaModel extends CI_Model
 		$this->db->select('*');
 		$this->db->from('detail_warga');
 		$this->db->join('warga', 'warga.id_warga = detail_warga.id_warga');
+		$query = $this->db->get();
+		return $query;
+	}
+	public function get_all_info_warga_by_rt($rt)
+	{
+		$this->db->select('*');
+		$this->db->from('detail_warga');
+		$this->db->join('warga', 'warga.id_warga = detail_warga.id_warga');
+		$this->db->where('rt', $rt);
+		$query = $this->db->get();
+		return $query;
+	}
+	public function get_all_info_warga_by_rw($rw)
+	{
+		$this->db->select('*');
+		$this->db->from('detail_warga');
+		$this->db->join('warga', 'warga.id_warga = detail_warga.id_warga');
+		$this->db->where('rw', $rw);
 		$query = $this->db->get();
 		return $query;
 	}

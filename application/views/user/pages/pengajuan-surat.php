@@ -50,21 +50,21 @@
 									<td style="width: 150px;"><?= date_indo($surat->tanggal_pengajuan) ?></td>
 									<td><?= $surat->pengajuan ?></td>
 									<td>
-										<?php if ($surat->status_verifikasi == "Diproses") { ?>
-											<span class="badge bg-warning text-white"><?= $surat->status_verifikasi ?></span>
-										<?php	} elseif ($surat->status_verifikasi == "Disetujui") { ?>
-											<span class="badge bg-success text-white"><?= $surat->status_verifikasi ?></span>
+										<?php if ($surat->verifikasi_rt == "Diproses" && $surat->verifikasi_rt == "Diproses") { ?>
+											<span class="badge bg-warning text-white">Diproses</span>
+										<?php	} elseif ($surat->verifikasi_rw == "Disetujui" && $surat->verifikasi_rw == "Disetujui") { ?>
+											<span class="badge bg-success text-white">Disetujui</span>
 										<?php } ?>
 									</td>
 									<center>
 										<td colspan="4">
 
 											<?php if ($surat->nama_warga == $this->session->nama_warga) { ?>
-												<?php if ($surat->status_verifikasi == "Diproses") { ?>
-													<button class="btn btn-success btn-sm btn-edit" style="cursor: not-allowed !important ">
+												<?php if ($surat->verifikasi_rt == "Diproses" && $surat->verifikasi_rw == "Diproses") { ?>
+													<button disabled class="btn btn-success btn-sm btn-edit" style="cursor: not-allowed !important ">
 														<i class=" fas fa-download"></i>
 													</button>
-												<?php	} elseif ($surat->status_verifikasi == "Disetujui") { ?>
+												<?php	} elseif ($surat->verifikasi_rt == "Disetujui" && $surat->verifikasi_rw == "Disetujui") { ?>
 													<a href="<?= base_url('user/surat/download_surat/' . $surat->id_pengajuan_surat) ?>">
 														<button class="btn btn-success btn-sm">
 															<i class="fas fa-download"></i>

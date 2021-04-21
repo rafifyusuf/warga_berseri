@@ -1,6 +1,13 @@
 <!-- ============================================================== -->
 <!-- Start Page Content here -->
 <!-- ============================================================== -->
+
+<style>
+	.rtrw {
+		width: 140px;
+		display: inline;
+	}
+</style>
 <div class="content-page">
 	<div class="content">
 		<!-- Start Content-->
@@ -42,11 +49,12 @@
 										<th>Rt / Rw</th>
 										<th>Tanggal Pengajuan</th>
 										<th>Keterangan</th>
-										<th>Aksi</th>
+										<th>Verifikasi</th>
 									</tr>
 								</thead>
 								<tbody>
 									<?php $no = 1;
+									$role = $this->session->role_id;
 									foreach ($pengajuan_surat as $surat) : ?>
 										<tr>
 											<td><?= $no++ ?></td>
@@ -55,24 +63,53 @@
 											<td><?= 'Rt ' . $surat->rt . ' / ' ?> <?= 'Rw ' . $surat->rw ?> </td>
 											<td style="width: 150px;"><?= date_indo($surat->tanggal_pengajuan) ?></td>
 											<td><?= $surat->pengajuan ?></td>
-											<td style="width: 300px;">
+											<td style="width: 315px;">
 												<center>
-													<?php if ($surat->status_verifikasi == "Diproses") {  ?>
-														<?= form_open_multipart('admin/surat/verifikasi_surat/', array('method' => 'POST')) ?>
-														<input type="hidden" name="id_pengajuan_surat" value="<?= $surat->id_pengajuan_surat ?>">
-														<input type="hidden" name="rt" value="<?= $surat->rt ?>">
-														<input type="hidden" name="rw" value="<?= $surat->rw ?>">
-														<button type="submit" class="ladda-button btn btn-warning" data-style="slide-up">
-															<i class="mdi mdi-account-remove-outline"></i>
-															Diproses
-														</button>
-														<?= form_close() ?>
-													<?php } elseif ($surat->status_verifikasi == "Disetujui") { ?>
-														<button disabled class="ladda-button btn btn-success" data-style="slide-up">
+													<?php if ($surat->verifikasi_rt == "Diproses") {  ?>
+														<form action="<?= base_url('admin/surat/verifikasi_surat_rt/') ?>" class="rtrw" method="POST">
+															<input type="hidden" name="id_pengajuan_surat" value="<?= $surat->id_pengajuan_surat ?>">
+															<input type="hidden" name="rt" value="<?= $surat->rt ?>">
+															<?php if ($role == 6) { ?>
+																<button type="submit" class="ladda-button btn btn-warning" data-style="slide-up">
+																	<i class="mdi mdi-account-remove-outline"></i>
+																	Rt Diproses
+																</button>
+															<?php	} else { ?>
+																<button disabled type="submit" class="ladda-button btn btn-warning text-white" data-style="slide-up" style="cursor: not-allowed !important">
+																	<i class="mdi mdi-account-remove-outline"></i>
+																	Rt Diproses
+																</button>
+															<?php } ?>
+														</form>
+													<?php } elseif ($surat->verifikasi_rt == "Disetujui") { ?>
+														<button disabled class="ladda-button btn btn-success" style="cursor: not-allowed !important" data-style="slide-up">
 															<i class="mdi mdi-account-check-outline"></i>
-															Disetujui
+															Rt Disetujui
 														</button>
 													<?php } ?>
+													<?php if ($surat->verifikasi_rw == "Diproses") {  ?>
+														<form action="<?= base_url('admin/surat/verifikasi_surat_rw/') ?>" class="rtrw" method="POST">
+															<input type="hidden" name="id_pengajuan_surat" value="<?= $surat->id_pengajuan_surat ?>">
+															<input type="hidden" name="rw" value="<?= $surat->rw ?>">
+															<?php if ($role == 7) { ?>
+																<button type="submit" class="ladda-button btn btn-warning" data-style="slide-up">
+																	<i class="mdi mdi-account-remove-outline"></i>
+																	Rw Diproses
+																</button>
+															<?php	} else { ?>
+																<button disabled type="submit" class="ladda-button btn btn-warning text-white" data-style="slide-up" style="cursor: not-allowed !important">
+																	<i class="mdi mdi-account-remove-outline"></i>
+																	Rw Diproses
+																</button>
+															<?php } ?>
+														</form>
+													<?php } elseif ($surat->verifikasi_rw == "Disetujui") { ?>
+														<button disabled class="ladda-button btn btn-success" data-style="slide-up" style="cursor: not-allowed !important">
+															<i class="mdi mdi-account-check-outline"></i>
+															Rw Disetujui
+														</button>
+													<?php } ?>
+
 												</center>
 											</td>
 										</tr>

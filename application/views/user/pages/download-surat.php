@@ -53,10 +53,10 @@
 		<table width="625">
 			<tr width="300px">
 				<td>
-					<h4 class="text-uppercase font-weight-bold">Rukun Tetangga <?= $data->rt ?></h4>
+					<h4 class="text-uppercase font-weight-bold">Rukun Tetangga 00<?= $data->rt ?></h4>
 				</td>
 				<td>
-					<h4 class="text-uppercase font-weight-bold">Rukun Warga <?= $data->rw ?></h4>
+					<h4 class="text-uppercase font-weight-bold">Rukun Warga 00<?= $data->rw ?></h4>
 				</td>
 			</tr>
 			<tr>
@@ -148,12 +148,12 @@
 			<tr>
 				<td align="center">Mengetahui,
 					<br>
-					<as class="text-uppercase font-weight-bold"> Ketua RW.........</as><br><br>
+					<as class="text-uppercase font-weight-bold"> Ketua RW <?= $data->nama_rw ?></as><br><br>
 					<img width="90px" src=" <?php echo base_url('uploads/qr.png') ?>" alt="..." class="img-thumbnail mb-2">
 					<br> (..........................................)
 				</td>
 				<td class="text-uppercase font-weight-bold" align="center"><?= date_indo($data->tanggal_disetujui) ?>
-					<br> KETUA RT............<br><br>
+					<br> KETUA RT <?= $data->nama_rt ?><br><br>
 					<img width="90px" src="<?php echo base_url('uploads/qr.png') ?>" alt="..." class="img-thumbnail mb-2">
 					<br> (..........................................)
 				</td>

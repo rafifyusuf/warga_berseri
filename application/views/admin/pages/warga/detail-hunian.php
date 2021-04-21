@@ -61,7 +61,7 @@
 
 							<p class="text-muted mb-2 font-14"><strong style="width: 105px; display: inline-block;">No Telepon</strong>
 								<span class="ml-2">
-									<strong>:</strong> <?php echo $hunian->no_hp ?>
+									<strong>:</strong> <?php echo substr($hunian->no_hp, 0, -4) ?>****
 								</span>
 							</p>
 
