@@ -82,32 +82,9 @@ body {
 	background: #f5634b;
 }
 
-input[type="email"],
-input[type="password"],
-input[type="text"],
-input[type="tel"] {
-	box-shadow: none;
-	height: 50px;
-	outline: none;
-	font-size: 14px;
-}
-
-input[type="email"]:focus,
-input[type="password"]:focus,
-input[type="text"]:focus,
-input[type="tel"]:focus {
-	box-shadow: none;
-	border: 1px solid #f5634b;
-}
-
 .form-control {
 	box-shadow: none;
 	border-radius: 0;
-}
-
-.form-control:focus {
-	box-shadow: none;
-	border: 1px solid #f5634b;
 }
 
 .btn {

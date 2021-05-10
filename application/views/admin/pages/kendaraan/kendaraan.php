@@ -12,16 +12,11 @@
 						<div class="page-title-right">
 							<ol class="breadcrumb m-0">
 								<li class="breadcrumb-item"><a href="javascript: void(0);">Warga Berseri</a></li>
-								<li class="breadcrumb-item"><a href="javascript: void(0);">Data Warga</a></li>
+								<li class="breadcrumb-item"><a href="javascript: void(0);">Detail Kendaraan</a></li>
 							</ol>
 						</div>
-						<?php if ($this->session->role_id == 6) { ?>
-							<h4 class="page-title">Data Warga RT <?= get_rt() ?></h4>
-						<?php	} elseif ($this->session->role_id == 7) { ?>
-							<h4 class="page-title">Data Warga RW <?= get_rw() ?></h4>
-						<?php } else { ?>
-							<h4 class="page-title">Data Warga</h4>
-						<?php	} ?>
+						<h4 class="page-title">Data Kendaraan?>
+						</h4>
 					</div>
 				</div>
 			</div>
@@ -33,7 +28,10 @@
 							<div class="row">
 								<div class="col">
 									<div class="form-group mr-2">
-										<a href="<?= base_url('admin/warga/tambah_warga') ?>" class="btn btn-secondary"><i class="mdi mdi-plus-circle mr-2"></i> Tambah Data Warga</a>
+										<a href="<?= base_url('admin/kendaraan/tambah_kendaraan/' . $id . '/' . $this->uri->segment(5)) ?>" class="btn btn-secondary">
+											<i class="mdi mdi-plus-circle mr-2"></i>
+											Tambah Kendaraan
+										</a>
 									</div>
 								</div>
 							</div>
@@ -42,9 +40,10 @@
 									<div class="form-group mr-2">
 										<select id="demo-foo-filter-status" class="custom-select custom-select-sm">
 											<option value="">Tampilkan Semua</option>
-											<option value="Rumah Pribadi">Rumah Usulan</option>
-											<option value="Pemilik Kost">Rumah Tinggal</option>
-											<option value="Pemilik Kontrakan">Rumah Kosong</option>
+											<option value="Roda Dua">Roda Dua</option>
+											<option value="Roda Tiga">Roda Tiga</option>
+											<option value="Roda Empat">Roda Empat</option>
+											<option value="Lebih dari Roda Empat">Lebih dari Roda Empat</option>
 										</select>
 									</div>
 									<div class="form-group">
@@ -58,60 +57,48 @@
 								<thead>
 									<tr>
 										<th>No.</th>
-										<th>No Rumah</th>
-										<th>No KK</th>
-										<th>Alamat</th>
-										<th>Jml Keluarga</th>
-										<th>Status Rumah</th>
-										<th style="width: 80px;">Rt / Rw</th>
-										<th>Pemilik Rumah</th>
-										<th>Foto KK</th>
+										<th>Tipe Kendaraan</th>
+										<th>Merk Kendaraan</th>
+										<th>Nama Pemilik di STNK</th>
+										<th>Nomor Polisi</th>
+										<th>Foto Kendaraan</th>
 										<th>Aksi</th>
 									</tr>
 								</thead>
 								<tbody>
 									<?php $no = 1;
-									foreach ($pendataan_warga as $warga) : ?>
+									foreach ($info_kendaraan as $kendaraan) : ?>
 										<tr>
 											<td><?php echo $no++ ?></td>
-											<td><?php echo $warga->no_rumah ?></td>
-											<td><?php echo $warga->no_kk ?></td>
-											<td><?php echo $warga->alamat ?></td>
-											<td><?php echo $warga->jumlah_keluarga ?></td>
-											<td><?php echo $warga->status_rumah ?></td>
-											<td><?php echo $warga->rt ?> / <?php echo $warga->rw ?></td>
-											<td><?php echo $warga->nama_warga ?></td>
-											<td width='110px'>
-												<button data-toggle="modal" data-target="#openImageKK<?php echo $warga->id_warga ?>" class="ladda-button btn btn-info" data-style="slide-up">
+											<td><?php echo $kendaraan->tipe_kendaraan ?></td>
+											<td><?php echo $kendaraan->merk_kendaraan ?></td>
+											<td><?php echo $kendaraan->nama_stnk ?></td>
+											<td><?php echo $kendaraan->no_polisi ?></td>
+											<td>
+												<button data-toggle="modal" data-target="#openImageKendaraan<?php echo $kendaraan->id_kendaraan ?>" class="ladda-button btn btn-info" data-style="slide-up">
 													<i class="mdi mdi-eye-outline"></i> Lihat
 												</button>
 											</td>
-											<td width='310px'>
+											<td>
 												<center>
-													<a href=" <?php echo base_url('admin/warga/detail_warga/' . $warga->id_warga) ?>" class="ladda-button btn btn-primary" data-style="slide-up">
-														<i class="mdi mdi-information-outline"></i> Info Warga
-													</a>
-													<a href=" <?php echo base_url('admin/kendaraan/data/' . $warga->id_warga . '/' . $warga->no_rumah) ?>" class="ladda-button btn btn-warning" data-style="slide-up">
-														<i class="mdi mdi-information-outline"></i> Info Kendaraan
-													</a>
-													<!-- <a href="<?php echo base_url('Warga/delete_warga/' . $warga->id_warga) ?>" class="ladda-button btn btn-danger" data-style="slide-up">
+													<a href="<?php echo base_url('admin/kendaraan/hapus_kendaraan/' . $kendaraan->id_kendaraan . '/' . $id) ?>" class="ladda-button btn btn-danger" data-style="slide-up">
 														<i class="mdi mdi-delete"></i> Hapus
-													</a> -->
-												</center>
+													</a>
 											</td>
+											</center>
 										</tr>
-										<!-- START Modal Lihat File KK -->
-										<div class="modal fade overflow-auto" id="openImageKK<?php echo $warga->id_warga ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+										<!-- START Modal Lihat Foto Kendaraan -->
+										<div class="modal fade overflow-auto" id="openImageKendaraan<?php echo $kendaraan->id_kendaraan ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 											<div class="modal-dialog" role="document">
 												<div class="modal-content">
 													<div class="modal-header">
-														<h5 class="modal-title" id="exampleModalLabel">Foto Kartu Keluarga</h5>
+														<h5 class="modal-title" id="exampleModalLabel">Foto Kendaraan</h5>
 														<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 															<span aria-hidden="true">&times;</span>
 													</div>
 													<div class="modal-body">
 														<div class="form-group d-flex justify-content-center">
-															<img src="<?= base_url('/uploads/kk/' . $warga->file_kk)  ?>" alt="..." class="img-thumbnail mb-2">
+															<img src="<?php echo base_url('uploads/kendaraan/') . $kendaraan->foto_kendaraan ?>" alt="..." class="img-thumbnail mb-2">
 														</div>
 													</div>
 													<div class="modal-footer">
@@ -121,14 +108,14 @@
 											</div>
 										</div>
 										<!-- END Modal Lihat File KK -->
+
 									<?php endforeach; ?>
 								</tbody>
 								<tfoot>
 									<tr class="active">
-										<td colspan="10">
+										<td colspan="9">
 											<div class="text-right">
-												<ul class="pagination pagination-rounded justify-content-end footable-pagination m-t-10 mb-0">
-												</ul>
+												<ul class="pagination pagination-rounded justify-content-end footable-pagination m-t-10 mb-0"></ul>
 											</div>
 										</td>
 									</tr>
@@ -138,6 +125,6 @@
 					</div> <!-- end card-box -->
 				</div> <!-- end col -->
 			</div>
-			<!-- end row -->
+			<!-- end row-->
 		</div> <!-- container -->
 	</div> <!-- content -->

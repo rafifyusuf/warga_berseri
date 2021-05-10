@@ -22,7 +22,13 @@
 								<li class="breadcrumb-item"><a href="javascript: void(0);">Pengajuan Surat</a></li>
 							</ol>
 						</div>
-						<h4 class="page-title">Pengajuan Surat</h4>
+						<?php if ($this->session->role_id == 6) { ?>
+							<h4 class="page-title">Pengajuan Surat RT <?= get_rt() ?></h4>
+						<?php	} elseif ($this->session->role_id == 7) { ?>
+							<h4 class="page-title">Pengajuan Surat RW <?= get_rw() ?></h4>
+						<?php } else { ?>
+							<h4 class="page-title">Pengajuan Surat</h4>
+						<?php	} ?>
 					</div>
 				</div>
 			</div>

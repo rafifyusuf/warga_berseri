@@ -2,7 +2,9 @@
 <link rel="shortcut icon" href="<?php echo base_url() ?>assets/admin/images/pbb.png">
 
 
-<link href="<?php echo base_url() ?>assets/admin/libs/dropify/dropify.min.css" rel="stylesheet" type="text/css" /> <!-- App css -->
+<link href="<?php echo base_url() ?>assets/admin/libs/dropify/dropify.min.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo base_url() ?>assets/libs/dropzone/dropzone.min.css" rel="stylesheet" type="text/css" />
+<!-- App css -->
 
 <link href="<?php echo base_url() ?>assets/admin/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo base_url() ?>assets/admin/css/icons.min.css" rel="stylesheet" type="text/css" />
@@ -12,8 +14,8 @@
 
 
 <!-- Footable css -->
-<link href="<?php echo base_url() ?>assets/admin/libs/footable/footable.core.min.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo base_url() ?>assets/admin/libs/ladda/ladda-themeless.min.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo base_url() ?>assets/admin/libs/footable/footable.core.min.css" rel="stylesheet" type="text/css" />
 <style>
 	.highcharts-figure,
 	.highcharts-data-table table {

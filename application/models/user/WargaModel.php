@@ -33,6 +33,11 @@ class WargaModel extends CI_Model
 		return $this->db->get_where('warga', ['id_warga' => $id_warga]);
 	}
 
+	public function get_hunian($id_detail_warga)
+	{
+		return $this->db->get_where('detail_warga', ['id_detail_warga' => $id_detail_warga]);
+	}
+
 	public function get_detail_warga($id_warga)
 	{
 		return $this->db->get_where('detail_warga', ['id_warga' => $id_warga]);
@@ -42,10 +47,17 @@ class WargaModel extends CI_Model
 	{
 		return $this->db->insert('warga', $data_warga);
 	}
-	
+
 	public function tambah_anggota_warga($data)
 	{
 		return $this->db->insert('detail_warga', $data);
 	}
 
+	// ---------------------------Start update data---------------------------
+	public function update_anggota_warga($id_detail_warga, $data)
+	{
+		$this->db->where('id_detail_warga', $id_detail_warga);
+		return $this->db->update('detail_warga', $data);
+	}
+	// ---------------------------End update data---------------------------
 }

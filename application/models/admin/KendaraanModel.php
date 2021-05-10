@@ -41,7 +41,6 @@ class KendaraanModel extends CI_Model
 
 	public function hapus_kendaraan($id_kendaraan)
 	{
-		$this->db->delete_by('kendaraan', 'id_kendaraan');
-		return $this->db->get('kendaraan');
+		$this->db->delete('kendaraan', array('id_kendaraan' => $id_kendaraan));
 	}
 }

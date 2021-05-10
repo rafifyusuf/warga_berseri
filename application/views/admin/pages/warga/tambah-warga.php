@@ -119,10 +119,10 @@
 								<div class="form-group col-md-8">
 									<label class="col-form-label">Status Rumah</label>
 									<select class="form-control" name="status_rumah">
-										<option disabled selected>Status Tinggal</option>
-										<option value="Rumah Usaha">Rumah Usaha</option>
-										<option value="Rumah Tinggal">Rumah Tinggal</option>
-										<option value="Rumah Kosong">Rumah Kosong</option>
+										<option disabled selected>Status Rumah</option>
+										<option value="Rumah Usaha" <?php echo set_select('status_rumah', 'Rumah Usaha', (!empty($data) && $data == "Rumah Usaha" ? TRUE : FALSE)); ?>>Rumah Usaha</option>
+										<option value="Rumah Tinggal" <?php echo set_select('status_rumah', 'Rumah Tinggal', (!empty($data) && $data == "Rumah Tinggal" ? TRUE : FALSE)); ?>>Rumah Tinggal</option>
+										<option value="Rumah Kosong" <?php echo set_select('status_rumah', 'Rumah Kosong', (!empty($data) && $data == "Rumah Kosong" ? TRUE : FALSE)); ?>>Rumah Kosong</option>
 									</select>
 									<span class="form-text text-danger"><?= form_error('status_rumah'); ?></span>
 								</div>
@@ -131,7 +131,7 @@
 							<div class="form-row">
 								<div class="form-group col-md-8">
 									<label class="col-form-label">File Kartu Keluarga</label>
-									<input type="file" class="form-control dropify" name="file_kk">
+									<input type="file" class="form-control dropify" name="file_kk" value="<?php echo set_value('file_kk') ?>">
 									<span class="form-text text-danger"><?= form_error('file_kk'); ?></span>
 								</div>
 							</div>

@@ -4,6 +4,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 class WargaModel extends CI_Model
 {
 
+	// ---------------------------Start add id warga & hunian---------------------------
 	public function id_warga()
 	{
 		$warga = "W-PBB-";
@@ -29,6 +30,9 @@ class WargaModel extends CI_Model
 		$id    = "W-" . $id;
 		return $id;
 	}
+	// ---------------------------End add id warga & hunian---------------------------
+
+	// ---------------------------Start get data---------------------------
 
 	public function get_all_warga()
 	{
@@ -106,12 +110,10 @@ class WargaModel extends CI_Model
 		return $this->db->get_where('detail_warga', ['id_detail_warga' => $id_detail_warga]);
 	}
 
-	public function update_warga($id_detail_warga, $data)
-	{
-		$this->db->where('id_detail_warga', $id_detail_warga);
-		return $this->db->update('detail_warga', $data);
-	}
+	// ---------------------------End get data----------------------------
 
+
+	// ---------------------------Start Add data---------------------------
 	public function tambah_warga($data_warga)
 	{
 		return $this->db->insert('warga', $data_warga);
@@ -120,7 +122,19 @@ class WargaModel extends CI_Model
 	{
 		return $this->db->insert('detail_warga', $data_hunian);
 	}
+	// ---------------------------End Add data-----------------------------
 
+
+	// ---------------------------Start update data---------------------------
+	public function update_anggota_warga($id_detail_warga, $data)
+	{
+		$this->db->where('id_detail_warga', $id_detail_warga);
+		return $this->db->update('detail_warga', $data);
+	}
+	// ---------------------------End update data---------------------------
+
+
+	// ---------------------------Start get chart---------------------------
 	public function get_chart_pendidikan()
 	{
 		$this->db->select('pendidikan, COUNT(id_detail_warga) as total');
@@ -135,4 +149,16 @@ class WargaModel extends CI_Model
 		$this->db->order_by('total', 'desc');
 		return $this->db->get('detail_warga');
 	}
+	// ---------------------------End get chart-------------------------------
+
+	// ---------------------------Start delete data---------------------------
+	public function hapus_hunian($id_hunian)
+	{
+		$this->db->delete('detail_warga', array('id_detail_warga' => $id_hunian));
+	}
+
+
+	// ---------------------------End delete data-----------------------------
+
+
 }

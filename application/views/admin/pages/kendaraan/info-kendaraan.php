@@ -77,10 +77,10 @@
 							<div class="row">
 								<div class="col">
 									<div class="form-group mr-2">
-										<button data-toggle="modal" data-target="#addKendaraan" class="btn btn-secondary">
+										<a href="<?= base_url('admin/kendaraan/tambah_kendaraan/' . $id . '/' . $this->uri->segment(5)) ?>" class="btn btn-secondary">
 											<i class="mdi mdi-plus-circle mr-2"></i>
 											Tambah Kendaraan
-										</button>
+										</a>
 									</div>
 								</div>
 							</div>
@@ -130,7 +130,7 @@
 											</td>
 											<td>
 												<center>
-													<a href="<?php echo base_url('admin/kendaraan/delete_kendaraan/' . $kendaraan->id_kendaraan) ?>" class="ladda-button btn btn-danger" data-style="slide-up">
+													<a href="<?php echo base_url('admin/kendaraan/hapus_kendaraan/' . $kendaraan->id_kendaraan . '/' . $id) ?>" class="ladda-button btn btn-danger" data-style="slide-up">
 														<i class="mdi mdi-delete"></i> Hapus
 													</a>
 											</td>
@@ -147,7 +147,7 @@
 													</div>
 													<div class="modal-body">
 														<div class="form-group d-flex justify-content-center">
-															<img src="<?php echo base_url('uploads/') . $kendaraan->foto_kendaraan ?>" alt="..." class="img-thumbnail mb-2">
+															<img src="<?php echo base_url('uploads/kendaraan/') . $kendaraan->foto_kendaraan ?>" alt="..." class="img-thumbnail mb-2">
 														</div>
 													</div>
 													<div class="modal-footer">

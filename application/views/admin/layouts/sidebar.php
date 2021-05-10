@@ -36,6 +36,12 @@
 									<span> Info Warga </span>
 								</a>
 							</li>
+							<!-- <li>
+								<a href="<?php echo base_url('admin/kendaraan') ?>">
+									</i>
+									<span> Data Kendaraan </span>
+								</a>
+							</li> -->
 							<li>
 								<a href="#">
 									<span> Data Posyandu </span>
@@ -89,7 +95,7 @@
 									<?php else : ?>
 									<li class="nav-item">
 									<?php endif ?>
-									<a href="<?= base_url($sm['url']) ?>">
+									<a href="<?= base_url('admin/' . $sm['url']) ?>">
 										<i class="<?= $sm['usm_icon'] ?>"></i>
 										<span><?= $sm['title'] ?></span>
 									</a>

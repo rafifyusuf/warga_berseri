@@ -113,7 +113,7 @@
 															Terverifikasi
 														</button>
 													<?php		} ?>
-													<a href="<?php echo base_url('admin/warga/delete_warga/' . $warga->id_detail_warga) ?>" class="ladda-button btn btn-danger" data-style="slide-up">
+													<a href="<?php echo base_url('admin/warga/hapus_hunian/' . $warga->id_detail_warga . '/' . $warga->id_warga) ?>" class="ladda-button btn btn-danger hapus" data-style="slide-up">
 														<i class="mdi mdi-delete"></i> Hapus
 													</a>
 											</td>
@@ -163,12 +163,33 @@
 		</div> <!-- container -->
 	</div> <!-- content -->
 
+	<!-- TAMABHAN SCRIPT -->
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	<script>
 		document.querySelector("#tambah").addEventListener('click', function() {
 			Swal.fire({
 				icon: "error",
 				title: "Maaf",
 				text: "Anda hanya bisa menambah anggota hunian sebanyak <?= $jumlah_hunian ?> hunian",
+			});
+		});
+	</script>
+	<script>
+		$('.hapus').on('click', function(e) {
+			e.preventDefault();
+			const href = $(this).attr('href');
+			Swal.fire({
+				title: 'Anda yakin ingin menghapus data?',
+				text: "Data tidak dapat kembali setelah dihapus!",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Ya, hapus data!'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					document.location.href = href;
+				}
 			});
 		});
 	</script>
