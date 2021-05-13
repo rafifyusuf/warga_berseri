@@ -15,21 +15,27 @@
 	</section>
 </div>
 
-<div class=container>
-	<?php foreach ($template_surat as $template) : ?>
+<div class="container">
 
-		<div class="card text-center mt-4">
-			<div class="card-header">
-				Template <?php echo $template->judul ?>
+	<?php if (!$template_surat) { ?>
+		<h2 class="text-md text-black text-center my-5">Maaf Surat Keterangan/Pengantar Tidak Tersedia</h2>
+	<?php } else { ?>
+		<?php foreach ($template_surat as $template) : ?>
+
+			<div class="card text-center mt-4">
+				<div class="card-header">
+					Template <?php echo $template->judul ?>
+				</div>
+				<div class="card-body">
+					<h5 class="card-title">Silahkan Unduh</h5>
+					<p class="card-text">Template <b><?php echo $template->keterangan_surat ?></b> di bawah ini</p>
+					<a href="<?php echo base_url('user/surat/download_template/' . $template->id_surat) ?>" class="btn btn-primary">Unduh</a>
+				</div>
+
 			</div>
-			<div class="card-body">
-				<h5 class="card-title">Silahkan Unduh</h5>
-				<p class="card-text">Template <b><?php echo $template->keterangan_surat ?></b> di bawah ini</p>
-				<a href="<?php echo base_url('user/surat/download_template/' . $template->id_surat) ?>" class="btn btn-primary">Unduh</a>
-			</div>
+			<br>
 
-		</div>
-		<br>
+		<?php endforeach; ?>
+	<?php	} ?>
 
-	<?php endforeach; ?>
 </div>

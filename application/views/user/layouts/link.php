@@ -15,6 +15,9 @@
 <!-- Owl Carousel CSS -->
 <link rel="stylesheet" href="<?php echo base_url('assets/user/') ?>plugins/slick-carousel/slick/slick.css">
 <link rel="stylesheet" href="<?php echo base_url('assets/user/') ?>plugins/slick-carousel/slick/slick-theme.css">
+
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <!-- Main Stylesheet -->
 <!-- Optional: include a polyfill for ES6 Promises for IE11 -->
 
