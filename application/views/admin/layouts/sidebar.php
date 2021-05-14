@@ -69,16 +69,90 @@
 						</ul>
 					</li>
 				<?php endif ?>
+				<li>
+					<a href="javascript: void(0);">
+						<i class="fe-inbox"></i>
+						<span> Aspirasi </span>
+						<span class="menu-arrow"></span>
+					</a>
+					<ul class="nav-second-level" aria-expanded="false">
+						<li>
+							<a href="<?php echo base_url('admin/aspirasi') ?>">
+								</i>
+								<span> Aspirasi </span>
+								<span class="badge badge-danger">
+									<?php foreach ($aspirasi as $asp) {
+										echo $asp->jumlah;
+									} ?>
+								</span>
+							</a>
+						</li>
+						<li>
+							<a href="<?php echo base_url('admin/aspirasi/dataAspirasi') ?>">
+								<span> Data Aspirasi </span>
+							</a>
+						</li>
+					</ul>
+				</li>
 
 
+				<li>
+					<a href="javascript: void(0);">
+						<!-- <i class="fe-users"></i> -->
+						<i class="far fa-money-bill-alt"></i>
+						<span> Iuran </span>
+						<span class="menu-arrow"></span>
+					</a>
+					<ul class="nav-second-level" aria-expanded="false">
+						<li>
+							<a href="<?php echo base_url('admin/iuran/view_dataIuran') ?>">
+								</i>
+								<span> Data Pembayaran Iuran </span>
+							</a>
+						</li>
+						<li>
+							<a href="<?php echo base_url('admin/pemasukan') ?>">
+								</i>
+								<span> Pemasukan </span>
+							</a>
+						</li>
+						<li>
+							<a href="<?php echo base_url('admin/iuran/riwayat_iuran') ?>">
+								<span> Riwayat Verifikasi Iuran </span>
+							</a>
+						</li>
+					</ul>
+				</li>
+
+				<li>
+
+					<a href="javascript: void(0);">
+						<i class="far fa-money-bill-alt"></i>
+						<span> Keuangan </span>
+						<span class="menu-arrow"></span>
+					</a>
+					<ul class="nav-second-level" aria-expanded="false">
+
+						<li>
+							<a href="<?php echo base_url('admin/penggunaan') ?>">
+								<span> Pengeluaran </span>
+							</a>
+						</li>
+
+						<li>
+							<a href="<?php echo base_url('admin/keuangan') ?>">
+								<span> Data Keuangan </span>
+							</a>
+						</li>
+
+					</ul>
+				</li>
 
 				<?php
 				$role_id = $this->session->userdata('role_id');
 				$queryMenu = "SELECT um.id, menu, icon FROM user_menu AS um JOIN user_access_menu AS uam ON um.id = uam.menu_id WHERE uam.role_id = $role_id AND active = 1 ORDER BY uam.menu_id ASC";
 				$menu = $this->db->query($queryMenu)->result_array();
-				?>
-				<?php foreach ($menu as $m) : ?>
-					<li>
+				?> <?php foreach ($menu as $m) : ?> <li>
 						<a href="javascript: void(0);">
 							<i class="<?= $m['icon'] ?>"></i>
 							<span><?= $m['menu'] ?></span>

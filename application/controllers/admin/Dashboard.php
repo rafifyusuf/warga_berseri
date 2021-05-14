@@ -9,12 +9,14 @@ class Dashboard extends CI_Controller
 		$this->load->model('admin/WargaModel', 'WargaModel');
 		$this->load->model('admin/KendaraanModel', 'KendaraanModel');
 		$this->load->model('admin/SuratModel', 'SuratModel');
+		$this->load->model('admin/AspirasiModel', 'AspirasiModel');
 	}
 	public function index()
 	{
 
 		if ($this->session->email) {
 			$role = $this->session->userdata('role_id');
+			$data['aspirasi'] = $this->AspirasiModel->getBelumTertangani()->result();
 			if ($role == 1 || $role == 6 || $role == 7) {
 				$chart_pendidikan = $this->WargaModel->get_chart_pendidikan()->result();
 				$data['chart_pendidikan'] = $chart_pendidikan;
