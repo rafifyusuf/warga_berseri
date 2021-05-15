@@ -1,6 +1,7 @@
 <!-- App favicon -->
 <link rel="shortcut icon" href="<?php echo base_url() ?>assets/admin/images/pbb.png">
 
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
 
 <link href="<?php echo base_url() ?>assets/admin/libs/dropify/dropify.min.css" rel="stylesheet" type="text/css" />
 <link href="<?php echo base_url() ?>assets/libs/dropzone/dropzone.min.css" rel="stylesheet" type="text/css" />
@@ -64,8 +65,3 @@
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-
-<!-- include summernote css/js -->
-<link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
-
-<link href="summernote/summernote.css" rel="stylesheet">

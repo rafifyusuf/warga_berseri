@@ -4,7 +4,6 @@
 
 
 <!-- Main jQuery -->
-<!-- <script src="<?php echo base_url('assets/user/') ?>plugins/jquery/jquery.js"></script> -->
 <!-- Bootstrap 4.3.1 -->
 <script src="<?php echo base_url('assets/user/') ?>plugins/bootstrap/js/bootstrap.min.js"></script>
 <!-- Slick Slider -->

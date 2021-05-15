@@ -17,6 +17,12 @@ class IuranModel extends CI_Model
 		return $this->db->get('data_iuran_warga');
 	}
 
+	public function tampilRiwayatPembayaran()
+	{
+		$this->db->where('status_iuran', 'Lunas');
+		return $this->db->get('data_iuran_warga');
+	}
+
 	public function tambahDataIuran($data)
 	{
 		$this->db->insert('data_iuran_warga', $data);

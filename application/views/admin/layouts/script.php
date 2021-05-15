@@ -27,7 +27,6 @@
 <!-- Buttons init js-->
 <script src="<?php echo base_url() ?>assets/admin/js/pages/loading-btn.init.js"></script>
 
-<script src="<?php echo base_url() ?>assets/admin/js/pages/jquery.min.js"></script>
 <script src="<?php echo base_url() ?>assets/libs/dropzone/dropzone.min.js"></script>
 <script src="<?php echo base_url() ?>assets/admin/libs/dropify/dropify.min.js"></script>
 <script src="<?php echo base_url() ?>assets/admin/js/pages/form-fileuploads.init.js"></script>
@@ -36,3 +35,5 @@
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
