@@ -1,26 +1,42 @@
 <!DOCTYPE html>
 <html>
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Cara Membuat Datepicker dengan jQuery</title>
 
-<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-<link href="https://repo.rachmat.id/jquery-ui-1.12.1/jquery-ui.css" rel="stylesheet">
-<script type="text/javascript" src="https://repo.rachmat.id/jquery-1.12.4.js"></script>
-<script type="text/javascript" src="https://repo.rachmat.id/jquery-ui-1.12.1/jquery-ui.js"></script>
-<script>
-  $(function() {
-    $( "#datepicker" ).datepicker({ maxDate: "D" });
-  });
-  </script>
-</head>
 <body>
- 
-<div class="ui-widget">
-  <label for="datepicker">Tanggal: </label>
-  <input id="datepicker">
-</div>
- </form>
+	<table>
+		<thead>
+			<tr>
+				<th>id warga</th>
+				<th>Status</th>
+				<th>nominal</th>
+			</tr>
+		</thead>
+		<tbody>
+			<?php
+			foreach ($iuran as $warga) : ?>
+				<tr>
+					<td><?php echo $warga->id_warga; ?></td>
+					<td><?php echo $warga->status_rumah; ?></td>
+					<?php $stat =  $warga->status_rumah;
+					$nominal = 0;
+					if ($stat == 'Rumah Usaha') {
+						$nominal = 1000000;
+					}
+
+					if ($stat == 'Rumah Tinggal') {
+						$nominal = 2000000;
+					}
+
+					if ($stat == 'Rumah Tinggal') {
+						$nominal = 2000000;
+					}
+					?>
+
+					<td><?php echo $nominal; ?></td>
+				</tr>
+			<?php endforeach; ?>
+	</table>
+	</tbody>
+	<tfoot>
 </body>
+
 </html>

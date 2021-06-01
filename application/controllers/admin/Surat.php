@@ -92,7 +92,7 @@ class Surat extends CI_Controller
 		if (empty($_FILES['file_surat']['name'])) {
 			$this->form_validation->set_rules('file_surat', 'file surat', 'required');
 		}
-		$config['upload_path']    = './uploads/';
+		$config['upload_path']    = './uploads/template_surat/';
 		$config['allowed_types']  = 'pdf|docx|doc';
 		$config['max_size']       = 5000;
 
@@ -102,20 +102,19 @@ class Surat extends CI_Controller
 			$this->session->set_flashdata('status', 'File gagal diupload.');
 			redirect(base_url('admin/surat/template_surat'));
 		} else {
-			$id_user          = $this->session->id;
+			$id_admin          = $this->session->id;
 			$id_template 	  = $this->SuratModel->id_template_surat();
 			$judul            = $this->input->post('judul');
 			$keterangan_surat = $this->input->post('keterangan_surat');
 			$file_surat       = $this->upload->data('file_name');
 
 			$data = array(
-				'id_user' => $id_user,
+				'id_admin' => $id_admin,
 				'id_surat' => $id_template,
 				'judul'            => $judul,
 				'keterangan_surat' => $keterangan_surat,
 				'file_surat'       => $file_surat
 			);
-
 			$this->SuratModel->tambah_template_surat($data);
 			$this->session->set_flashdata('file', 'File berhasil diupload');
 			redirect(base_url('admin/surat/template_surat'));

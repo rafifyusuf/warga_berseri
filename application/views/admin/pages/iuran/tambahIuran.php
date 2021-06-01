@@ -4,7 +4,7 @@
 		<!-- Start Content-->
 		<div class="container-fluid">
 
-			<form action="<?= base_url('admin/iuran/input_data_iuran') ?>" enctype="multipart/form-data" method="post">
+			<form action="<?= base_url('admin/iuran/iuran_tambahan') ?>" enctype="multipart/form-data" method="post">
 				<div class="container-fluid">
 					<!-- Illustrations -->
 					<div class="card shadow mb-4">

@@ -52,12 +52,12 @@
 
 										</div>
 									</div>
-									<div class="form-group row">
+									<!--<div class="form-group row">
 										<label style="text-align: left" class="col-sm-2 col-form-label">No Rumah</label>
 										<div class="col-sm-10">
 											<input type="text" name="id_detail_warga" class="form-control" value="<?php echo $iuran[0]->id_detail_warga; ?>" readonly>
 										</div>
-									</div>
+									</div> -->
 									<div class="form-group row">
 										<label style="text-align: left" class="col-sm-2 col-form-label">Tanggal Pembayaran</label>
 										<div class="col-sm-10">

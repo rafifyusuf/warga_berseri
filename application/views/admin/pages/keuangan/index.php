@@ -112,7 +112,9 @@
 											<td><?php echo $uang->jumlah_sudah_bayar; ?></td>
 											<td><?php echo $uang->jumlah_belum_bayar; ?></td>
 											<td><?php echo  "Rp " . number_format($uang->saldo, 0, ',', '.'); ?></td>
-											<td><?php echo  "Rp " . number_format($uang->jumlah_belum_bayar * 100000, 0, ',', '.'); ?></td>
+											<td> -
+												<!--<?php echo  "Rp " . number_format($uang->jumlah_belum_bayar * 100000, 0, ',', '.'); ?>-->
+											</td>
 											<td><?php echo "Rp " . number_format($uang->pengeluaran, 0, ',', '.'); ?></td>
 											<td><?php echo "Rp " . number_format($uang->pemasukan, 0, ',', '.'); ?></td>
 											<td>

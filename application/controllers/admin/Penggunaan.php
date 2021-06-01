@@ -202,25 +202,66 @@ class Penggunaan extends CI_Controller
 	public function generate_iuran()
 	{
 		$tagihan_bulanan = date('ym');
+		$get_rumah = $this->WargaModel->getrumah();
 		$get_warga = $this->WargaModel->getwarga();
-
-
-		for ($i = 0; $i < count($get_warga); $i++) {
-			$check_tagihan_bulanan  = $this->IuranModel->check_data_iuran($tagihan_bulanan, $get_warga[$i]->id_detail_warga)->result();
+		for ($i = 0; $i < count($get_rumah); $i++) {
+			$check_tagihan_bulanan  = $this->IuranModel->check_data_iuran($tagihan_bulanan, $get_rumah[$i]->id_warga)->result();
+			$sw = $this->IuranModel->check_status($get_rumah[$i]->id_warga)->result();
+			$get_kepkel = $this->IuranModel->get_kepala_keluarga($get_rumah[$i]->id_warga)->result();
+			$stat = $sw[0]->status_rumah;
+			$kepkel = $get_kepkel[0]->nama_warga;
 
 			if (empty($check_tagihan_bulanan)) {
 				$notagihan = date('ymhis');
+				$nominal = 0;
+				if ($stat == "Rumah Tinggal") {
+					$nominal = 100000;
+				} elseif ($stat == 'Rumah Usaha') {
+					$nominal = 200000;
+				} elseif ($sw = 'Rumah Pribadi') {
+					$nominal = 150000;
+				}
 				$data_iuran = array(
 					'no_tagihan'      => $notagihan + $i,
-					'nama'            => $get_warga[$i]->nama_warga,
-					'id_detail_warga' => $get_warga[$i]->id_detail_warga,
+					'id_warga' => $get_rumah[$i]->id_warga,
+					'nama'            => $kepkel,
+					//'id_detail_warga' => $get_warga[$i]->id_detail_warga,
+					'jenis'			  => 'wajib',
+					'nominal' 		  => $nominal,
 					'bulan_iuran'     => date('M'),
 					'tahun_iuran'     => date('Y')
 				);
 				$this->IuranModel->tambahDataIuran($data_iuran);
+				//print_r($data_iuran);
 			}
+			//print_r($kepkel);
+			//print_r($check_tagihan_bulanan);
+
 		}
 	}
+
+	//public function generate_iuran()
+	//{
+	//	$tagihan_bulanan = date('ym');
+	//	$get_warga = $this->WargaModel->getwarga();
+
+
+	//	for ($i = 0; $i < count($get_warga); $i++) {
+	//		$check_tagihan_bulanan  = $this->IuranModel->check_data_iuran($tagihan_bulanan, $get_warga[$i]->id_detail_warga)->result();
+
+	//		if (empty($check_tagihan_bulanan)) {
+	//			$notagihan = date('ymhis');
+	//			$data_iuran = array(
+	//				'no_tagihan'      => $notagihan + $i,
+	//				'nama'            => $get_warga[$i]->nama_warga,
+	//				'id_detail_warga' => $get_warga[$i]->id_detail_warga,
+	//				'bulan_iuran'     => date('M'),
+	//				'tahun_iuran'     => date('Y')
+	//			);
+	//			$this->IuranModel->tambahDataIuran($data_iuran);
+	//		}
+	//	}
+	//}
 
 	public function generate_rekap_iuran()
 	{

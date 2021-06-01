@@ -14,6 +14,7 @@ class IuranModel extends CI_Model
 	//==============Pengurus==============//
 	public function tampilDataPembayaran()
 	{
+		$this->db->where_not_in('status_iuran', 'Lunas');
 		return $this->db->get('data_iuran_warga');
 	}
 
@@ -28,11 +29,25 @@ class IuranModel extends CI_Model
 		$this->db->insert('data_iuran_warga', $data);
 	}
 
-	public function check_data_iuran($where, $id_detail_warga)
+	public function check_data_iuran($where, $id_warga)
 	{
 		$this->db->like('no_tagihan', $where);
-		$this->db->like('id_detail_warga', $id_detail_warga);
+		$this->db->like('id_warga', $id_warga);
 		return $this->db->get('data_iuran_warga');
+	}
+
+	public function check_status($where)
+	{
+		$this->db->where('id_warga', $where);
+		$this->db->select('status_rumah');
+		$this->db->from('warga');
+		return $this->db->get();
+	}
+	public function get_kepala_keluarga($where)
+	{
+		$this->db->where('id_warga', $where);
+		$this->db->where('status', 'Kepala Keluarga');
+		return $this->db->get('detail_warga');
 	}
 
 	public function get_iuran_bytagihan($id)
@@ -136,7 +151,7 @@ class IuranModel extends CI_Model
 
 	public function dataIuran($id_warga)
 	{
-		$this->db->where('id_detail_warga', $id_warga);
+		$this->db->where('id_warga', $id_warga);
 		return $this->db->get('data_iuran_warga');
 	}
 
@@ -144,14 +159,14 @@ class IuranModel extends CI_Model
 
 	public function get_IuranWarga_lunas($id)
 	{
-		$this->db->where('id_detail_warga', $id);
+		$this->db->where('id_warga', $id);
 		$this->db->where('status_iuran', 'Lunas');
 		return $this->db->get('data_iuran_warga');
 	}
 
 	public function get_IuranWarga($id)
 	{
-		$this->db->where('id_detail_warga', $id);
+		$this->db->where('id_warga', $id);
 		$this->db->where_not_in('status_iuran', 'Lunas');
 		return $this->db->get('data_iuran_warga');
 	}
@@ -165,20 +180,24 @@ class IuranModel extends CI_Model
 		return $this->db->get('data_iuran_warga');
 	}
 
+	public function get_nominal_bulanan($bulan, $tahun)
+	{
+		$this->db->where('bulan_iuran', $bulan);
+		$this->db->where('tahun_iuran', $tahun);
+		$this->db->where('status_iuran', 'Lunas');
+		$this->db->select('SUM(nominal) as total_nominal');
+		$this->db->from('data_iuran_warga');
+		return $this->db->get();
+	}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+	public function get_nominal($bulan, $tahun)
+	{
+		$this->db->where('bulan_iuran', $bulan);
+		$this->db->where('tahun_iuran', $tahun);
+		$this->db->select('SUM(nominal) as total_nominal');
+		$this->db->from('data_iuran_warga');
+		return $this->db->get();
+	}
 
 
 

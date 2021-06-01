@@ -24,14 +24,14 @@ class IuranModel extends CI_Model
 
 	public function get_IuranWarga($id)
 	{
-		$this->db->where('id_detail_warga', $id);
+		$this->db->where('id_warga', $id);
 		$this->db->where_not_in('status_iuran', 'Lunas');
 		return $this->db->get('data_iuran_warga');
 	}
 
 	public function get_IuranWarga_lunas($id)
 	{
-		$this->db->where('id_detail_warga', $id);
+		$this->db->where('id_warga', $id);
 		$this->db->where('status_iuran', 'Lunas');
 		return $this->db->get('data_iuran_warga');
 	}
@@ -161,5 +161,20 @@ class IuranModel extends CI_Model
 	{
 		$this->db->where('id', $id);
 		return $this->db->get('user');
+	}
+
+	//====Tambahan=====//
+	public function check_status($where)
+	{
+		$this->db->where('id_warga', $where);
+		$this->db->select('status_rumah');
+		$this->db->from('warga');
+		return $this->db->get();
+	}
+	public function get_kepala_keluarga($where)
+	{
+		$this->db->where('id_warga', $where);
+		$this->db->where('status', 'Kepala Keluarga');
+		return $this->db->get('detail_warga');
 	}
 }

@@ -5,11 +5,11 @@
 			<div class="row">
 				<div class="col-lg-12 text-center">
 					<ul class="list-inline mb-0">
-						<li class="list-inline-item"><a href="index.html" class="text-sm letter-spacing text-white text-uppercase font-weight-bold">Home</a></li>
+						<li class="list-inline-item"><a href="<?php echo base_url(); ?>user/" class="text-sm letter-spacing text-white text-uppercase font-weight-bold">Home</a></li>
 						<li class="list-inline-item"><span class="text-white">|</span></li>
-						<li class="list-inline-item"><a href="#" class="text-color text-uppercase text-sm letter-spacing">Pendataan Warga</a></li>
+						<li class="list-inline-item"><a href="#" class="text-color text-uppercase text-sm letter-spacing">Iuran Warga</a></li>
 					</ul>
-					<h1 class="text-lg text-white mt-2">Info Aspirasi Warga</h1>
+					<h1 class="text-lg text-white mt-2">Data Tagihan Iuran</h1>
 				</div>
 			</div>
 		</div>
@@ -43,10 +43,10 @@
 							<tbody>
 								<?php
 								$no = 1;
-								$a = 100000;
 
 								foreach ($iuran as $pengguna) {
 								?>
+									<?php $nom = $pengguna->nominal; ?>
 									<tr>
 										<th><?php echo $no++; ?></th>
 										<th> <?php echo $pengguna->no_tagihan; ?></th>
@@ -54,7 +54,7 @@
 										<th><?php echo $pengguna->tahun_iuran; ?></th>
 										<th> <?php echo $pengguna->nama; ?></th>
 										<th> <?php echo $pengguna->status_iuran; ?></th>
-										<th><?php echo number_format($a, 0, '', '.'); ?></th>
+										<th><?php echo number_format($nom, 0, '', '.'); ?></th>
 										<?php if ($pengguna->status_iuran == "Belum Diverifikasi") : ?>
 											<th>Sudah Bayar</th>
 										<?php endif; ?>
@@ -71,8 +71,8 @@
 						</table>
 						<div class="right">
 							<b>
-								<?php $b = $no - 1;
-								echo  "Total Tagihan Rp. " . number_format($a * $b, 0, '', '.'); ?>
+								<?php $nom = $nom + $nom;
+								echo  "Total Tagihan Rp. " . number_format($nom, 0, '', '.');   ?>
 							</b>
 						</div>
 					</div>

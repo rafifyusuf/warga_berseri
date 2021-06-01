@@ -62,11 +62,14 @@
 								<thead>
 									<tr>
 										<th>No.</th>
-										<th>No Rumah</th>
+										<th>Id Warga</th>
 										<th data-toggle="true">No Tagihan</th>
+										<!--	<th>No Rumah</th> -->
 										<th>Bulan Iuran</th>
 										<th>Tahun Iuran</th>
 										<th>Nama</th>
+										<th>Jenis Iuran</th>
+										<th>Nominal</th>
 										<th>Tanggal Bayar</th>
 										<th>Bukti Pembayaran</th>
 										<th>Aksi</th>
@@ -77,19 +80,23 @@
 									foreach ($iuran as $warga) : ?>
 										<tr>
 											<td><?php echo $no++ ?></td>
-											<td><?php echo $warga->id_detail_warga; ?></td>
+											<td><?php echo $warga->id_warga; ?></td>
 											<td><?php echo $warga->no_tagihan; ?></td>
+											<!-- <td><?php echo $warga->id_warga; ?></td> -->
 											<td><?php echo $warga->bulan_iuran; ?></td>
 											<td><?php echo $warga->tahun_iuran; ?></td>
 											<td><?php echo $warga->nama; ?></td>
-											<?php if ($warga->tanggal_pembayaran == "0000-00-00") : ?>
+											<td><?php echo $warga->jenis; ?></td>
+											<td><?php echo $hasil_rupiah = "Rp " . number_format($warga->nominal, 0, ',', '.'); ?></td>
+											<?php if (empty($warga->tanggal_pembayaran)) : ?>
 												<td>-</td>
 											<?php endif; ?>
 
-											<?php if ($warga->tanggal_pembayaran != "0000-00-00") : ?>
-												<td><?php echo $warga->tanggal_pembayaran; ?></td>
-											<?php endif; ?>
-											<?php if ($warga->bukti_pembayaran == "") : ?>
+											<?php if ($warga->tanggal_pembayaran != "") : ?>
+												<td><?php $tanggal = strtotime($warga->tanggal_pembayaran);
+													echo date('d-M-Y', $tanggal); ?>
+												<?php endif; ?>
+												<?php if ($warga->bukti_pembayaran == "") : ?>
 												<td>-</td>
 											<?php endif; ?>
 											<?php if ($warga->bukti_pembayaran != "") : ?>

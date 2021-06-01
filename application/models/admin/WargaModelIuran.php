@@ -73,4 +73,18 @@ class WargaModelIuran extends CI_Model
 	{
 		return $this->db->get('detail_warga');
 	}
+	public function getrumah()
+	{
+		return $this->db->get('warga')->result();
+	}
+
+	function getrumah_by_id($where)
+	{
+		$this->db->where('id_warga', $where);
+		return $this->db->get('warga')->row();
+	}
+	public function jumlah_rumah()
+	{
+		return $this->db->get('warga');
+	}
 }
