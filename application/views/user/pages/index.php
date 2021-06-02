@@ -1,6 +1,6 @@
 <div class="main-wrapper ">
 	<!-- Section Menu End -->
-
+	<?php unset($_SESSION['flash']); ?>
 	<!-- Section Slider Start -->
 	<!-- Slider Start -->
 	<section class="slider">

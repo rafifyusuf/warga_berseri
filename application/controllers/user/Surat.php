@@ -52,8 +52,8 @@ class Surat extends CI_Controller
 	public function download_template($id_surat)
 	{
 		$this->load->helper('download');
-		$fileinfo = $this->SuratModel->get_template_surat($id_surat)->row_array();
-		$file = 'uploads/' . $fileinfo['file_surat'];
+		$fileinfo = $this->SuratModel->get_template_surat($id_surat)->row();
+		$file = 'uploads/template_surat/' . $fileinfo->file_surat;
 		force_download($file, NULL);
 	}
 
@@ -68,5 +68,11 @@ class Surat extends CI_Controller
 		} else {
 			redirect('user/auth');
 		}
+	}
+
+	public function hapus_surat($id_pengajuan_surat)
+	{
+		$this->SuratModel->hapus_pengajuan_surat($id_pengajuan_surat);
+		redirect('user/surat');
 	}
 }

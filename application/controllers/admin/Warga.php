@@ -7,6 +7,9 @@ class Warga extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		if (!$this->session->email) {
+			redirect(base_url('admin'));
+		}
 		$this->load->helper('tgl_indo');
 		$this->load->helper('get_rt_rw_helper');
 		$this->load->model('admin/WargaModel', 'WargaModel');
@@ -142,11 +145,8 @@ class Warga extends CI_Controller
 
 	public function delete_warga($id)
 	{
-		$query = $this->WargaModel->delete_warga($id);
-		if ($query) {
-			return redirect(base_url('admin/warga/data_warga'));
-		}
-		echo "Gagal";
+		$this->WargaModel->delete_warga($id);
+		return redirect(base_url('admin/warga/data_warga'));
 	}
 
 	// ----------------------End Data Warga------------------------
@@ -195,7 +195,7 @@ class Warga extends CI_Controller
 		$data = [
 			'status_verifikasi' => 2
 		];
-		$this->WargaModel->update_warga($id_detail_warga, $data);
+		$this->WargaModel->update_anggota_warga($id_detail_warga, $data);
 		redirect(base_url('admin/warga/detail_warga/' . $id_warga  . '/' . $no_rumah));
 	}
 

@@ -53,6 +53,12 @@ class WargaModel extends CI_Model
 		return $this->db->insert('detail_warga', $data);
 	}
 
+	public function update_warga($id_warga, $data)
+	{
+		$this->db->where('id_warga', $id_warga);
+		return $this->db->update('warga', $data);
+	}
+
 	// ---------------------------Start update data---------------------------
 	public function update_anggota_warga($id_detail_warga, $data)
 	{

@@ -119,7 +119,7 @@
 											</td>
 											</center>
 										</tr>
-										<!-- START Modal view Anggota Keluarga -->
+										<!-- START Modal view File Ktp -->
 										<div class="modal fade" id="viewDetail<?php echo $warga->id_detail_warga ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 											<div class="modal-dialog" role="document">
 												<div class="modal-content">
@@ -141,7 +141,7 @@
 												</div>
 											</div>
 										</div>
-										<!-- END Modal view Anggota Keluarga -->
+										<!-- END Modal view File Ktp -->
 									<?php endforeach; ?>
 								</tbody>
 								<tfoot>

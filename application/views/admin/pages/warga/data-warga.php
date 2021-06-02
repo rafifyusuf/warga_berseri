@@ -42,7 +42,7 @@
 									<div class="form-group mr-2">
 										<select id="demo-foo-filter-status" class="custom-select custom-select-sm">
 											<option value="">Tampilkan Semua</option>
-											<option value="Rumah Pribadi">Rumah Usulan</option>
+											<option value="Rumah Pribadi">Rumah Usaha</option>
 											<option value="Pemilik Kost">Rumah Tinggal</option>
 											<option value="Pemilik Kontrakan">Rumah Kosong</option>
 										</select>

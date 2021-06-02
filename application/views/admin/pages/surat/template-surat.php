@@ -96,13 +96,23 @@
 											<td><?= $no++ ?></td>
 											<td><?= $surat->judul ?></td>
 											<td><?= $surat->keterangan_surat ?></td>
-											<td><?= $surat->file_surat ?></td>
+											<td>
+												<?= str_replace('_', ' ', $surat->file_surat)  ?>
+											</td>
 											<td style="width: 300px;">
 												<center>
-													<button class="ladda-button btn btn-danger" data-style="slide-up">
-														<i class="mdi mdi-delete"></i>
-														Hapus
-													</button>
+													<a href="<?= base_url('admin/surat/hapus_template_surat/' . $surat->id_surat) ?>">
+														<button class="ladda-button btn btn-success" data-style="slide-up">
+															<i class="mdi mdi-download"></i>
+															Unduh
+														</button>
+													</a>
+													<a href="<?= base_url('admin/surat/hapus_template_surat/' . $surat->id_surat) ?>">
+														<button class="ladda-button btn btn-danger" data-style="slide-up">
+															<i class="mdi mdi-delete"></i>
+															Hapus
+														</button>
+													</a>
 												</center>
 											</td>
 										</tr>

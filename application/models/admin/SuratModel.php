@@ -16,6 +16,7 @@ class SuratModel extends CI_Model
 		$id    = "S-PBB-" . $id;
 		return $id;
 	}
+
 	public function get_all_pengajuan()
 	{
 		return  $this->db->get('pengajuan_surat');
@@ -72,8 +73,19 @@ class SuratModel extends CI_Model
 	{
 		return  $this->db->get('surat');
 	}
+
+	public function get_single_surat($id_template_surat)
+	{
+		return $this->db->get_where('surat', ['id_surat' => $id_template_surat]);
+	}
+
 	public function tambah_template_surat($data)
 	{
 		return $this->db->insert('surat', $data);
+	}
+
+	public function hapus_template_surat($id_template_surat)
+	{
+		$this->db->delete('surat', ['id_surat' => $id_template_surat]);
 	}
 }

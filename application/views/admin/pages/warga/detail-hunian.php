@@ -63,6 +63,7 @@
 		<!-- Start Content-->
 		<div class="container-fluid">
 			<div class="flash-data" data-flashdata="<?= $this->session->flashdata('flash'); ?>"></div>
+			<?php unset($_SESSION['flash']); ?>
 			<!-- start page title -->
 			<div class="row">
 				<div class="col-12">

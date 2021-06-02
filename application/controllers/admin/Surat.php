@@ -7,8 +7,12 @@ class Surat extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
+		if (!$this->session->email) {
+			redirect(base_url('admin'));
+		}
 		$this->load->helper('get_rt_rw_helper');
 		$this->load->helper('tgl_indo');
+		$this->load->helper('text');
 		$this->load->model('admin/SuratModel', 'SuratModel');
 		$this->load->model('admin/WargaModel', 'WargaModel');
 	}
@@ -126,5 +130,13 @@ class Surat extends CI_Controller
 		$fileinfo = $this->WargaModel->download_surat($id_pengajuan_surat)->row_array();
 		$file = 'uploads/' . $fileinfo['file_surat'];
 		force_download($file, NULL);
+	}
+
+	public function hapus_template_surat($id_template_surat)
+	{
+		$id_surat = $this->SuratModel->get_single_surat($id_template_surat)->row();
+		unlink(FCPATH . 'uploads/template_surat/' . $id_surat->file_surat);
+		$this->SuratModel->hapus_template_surat($id_template_surat);
+		redirect(base_url('admin/surat/template_surat'));
 	}
 }

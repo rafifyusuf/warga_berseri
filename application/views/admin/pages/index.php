@@ -1,6 +1,11 @@
 <!-- ============================================================== -->
 <!-- Start Page Content here -->
 <!-- ============================================================== -->
+<style>
+	.highcharts-credits {
+		display: none;
+	}
+</style>
 
 <div class="content-page">
 	<div class="content">
@@ -132,7 +137,7 @@
 			</div>
 		</div> <!-- container -->
 	</div>
-
+	<?php $null = "Data belum terdaftar" ?>
 	<script>
 		Highcharts.chart('chart_pendidikan', {
 			chart: {
@@ -169,10 +174,8 @@
 					<?php foreach ($chart_pendidikan as $pendidikan) : ?> {
 							name: '<?= $pendidikan->pendidikan ?>',
 							y: <?= $pendidikan->total ?>,
-							// sliced: true,
-							// selected: true
 						},
-					<?php endforeach ?>
+					<?php endforeach; ?>
 				]
 			}]
 		});
@@ -258,8 +261,6 @@
 					<?php foreach ($chart_hunian as $hunian) : ?> {
 							name: '<?= $hunian->status_hunian ?>',
 							y: <?= $hunian->total ?>,
-							// sliced: true,
-							// selected: true
 						},
 					<?php endforeach ?>
 				]

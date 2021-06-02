@@ -80,11 +80,6 @@
 							<a href="<?php echo base_url('admin/aspirasi') ?>">
 								</i>
 								<span> Aspirasi </span>
-								<span class="badge badge-danger">
-									<?php foreach ($aspirasi as $asp) {
-										echo $asp->jumlah;
-									} ?>
-								</span>
 							</a>
 						</li>
 						<li>

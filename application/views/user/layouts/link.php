@@ -4,6 +4,9 @@
 <!-- Icofont Css -->
 <link rel="stylesheet" href="<?php echo base_url('assets/user/') ?>plugins/icofont/icofont.min.css">
 
+<link href="<?php echo base_url() ?>assets/admin/libs/dropify/dropify.min.css" rel="stylesheet" type="text/css" />
+<link href="<?php echo base_url() ?>assets/admin/libs/dropzone/dropzone.min.css" rel="stylesheet" type="text/css" />
+
 <link rel="stylesheet" href="<?php echo base_url('assets/user/') ?>plugins/fontawesome/css/all.css">
 
 <!-- Themify Css -->

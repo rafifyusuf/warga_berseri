@@ -18,6 +18,10 @@
 <script src="<?php echo base_url('assets/user/') ?>plugins/google-map/gmap.js"></script>
 <script src="<?php echo base_url('assets/user/') ?>js/script.js"></script>
 
+<script src="<?php echo base_url() ?>assets/admin/libs/dropzone/dropzone.min.js"></script>
+<script src="<?php echo base_url() ?>assets/admin/libs/dropify/dropify.min.js"></script>
+<script src="<?php echo base_url() ?>assets/admin/js/pages/form-fileuploads.init.js"></script>
+
 <!-- SWEETALLERT -->
 <script src="<?php echo base_url('assets/js/sweetalert2.all.min.js') ?>"></script>
 <script src="<?php echo base_url('assets/js/myscript.js') ?>"></script>

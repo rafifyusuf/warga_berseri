@@ -14,6 +14,7 @@ class SuratModel extends CI_Model
 		$id    = "SURAT-" . $id;
 		return $id;
 	}
+
 	public function get_nama_warga()
 	{
 		$id_warga = $this->session->id_warga;
@@ -24,15 +25,12 @@ class SuratModel extends CI_Model
 		$query = $this->db->get();
 		return $query;
 	}
+
 	public function get_all_template()
 	{
-		// $id_warga = $this->session->id_warga;
-		// $this->db->select('nama_warga,id_detail_warga');
-		// $this->db->from('detail_warga');
-		// $this->db->where('detail_warga.id_warga', $id_warga);
-		// $this->db->join('warga', 'warga.id_warga = detail_warga.id_warga');
 		return $this->db->get('surat');
 	}
+
 	public function get_pengajuan_surat()
 	{
 		$id_warga = $this->session->id_warga;
@@ -44,11 +42,13 @@ class SuratModel extends CI_Model
 		$query = $this->db->get();
 		return $query;
 	}
+
 	public function tambah_pengajuan_surat($data)
 	{
 		$query = $this->db->insert('pengajuan_surat', $data);
 		return $query;
 	}
+
 	public function download_surat($id_pengajuan_surat)
 	{
 		$id_detail_warga = $this->session->id_detail_warga;
@@ -62,6 +62,7 @@ class SuratModel extends CI_Model
 		$query = $this->db->get();
 		return $query;
 	}
+
 	public function get_template_surat($id_template)
 	{
 		$this->db->select('file_surat');
@@ -69,5 +70,10 @@ class SuratModel extends CI_Model
 		$this->db->where('id_surat', $id_template);
 		$query = $this->db->get();
 		return $query;
+	}
+
+	public function hapus_pengajuan_surat($id_pengajuan_surat)
+	{
+		$this->db->delete('pengajuan_surat', array('id_pengajuan_surat' => $id_pengajuan_surat));
 	}
 }

@@ -86,9 +86,6 @@
 															Terverifikasi
 														</button>
 													<?php		} ?>
-													<a href="<?= base_url('admin/warga/delete_warga/' . $warga->id_detail_warga) ?>" class="ladda-button btn btn-danger" data-style="slide-up">
-														<i class="mdi mdi-delete"></i> Hapus
-													</a>
 												</center>
 											</td>
 										</tr>

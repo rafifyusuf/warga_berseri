@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 27 Bulan Mei 2021 pada 07.00
+-- Waktu pembuatan: 02 Jun 2021 pada 06.05
 -- Versi server: 10.4.19-MariaDB
 -- Versi PHP: 8.0.6
 
@@ -63,6 +63,24 @@ INSERT INTO `agama` (`id`, `agama`) VALUES
 (4, 'Budha'),
 (5, 'Hindu'),
 (6, 'Konghucu');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `aspirasi`
+--
+
+CREATE TABLE `aspirasi` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `nama` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `no_wa` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `jenis_aspirasi` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `aspirasi` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `bukti` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `waktu_kirim` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -159,6 +177,22 @@ CREATE TABLE `data_aspirasi_warga` (
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `data_fasilitas`
+--
+
+CREATE TABLE `data_fasilitas` (
+  `no` int(10) UNSIGNED NOT NULL,
+  `nama_lokasi` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fasilitas_lokasi` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `alamat_lokasi` mediumtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `foto_lokasi` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lat` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `long` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `data_iuran_warga`
 --
 
@@ -172,20 +206,22 @@ CREATE TABLE `data_iuran_warga` (
   `bukti_pembayaran` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status_iuran` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Belum Lunas',
   `nominal` int(11) DEFAULT NULL,
-  `id_detail_warga` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+  `id_warga` varchar(10) COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data untuk tabel `data_iuran_warga`
 --
 
-INSERT INTO `data_iuran_warga` (`no_tagihan`, `jenis`, `bulan_iuran`, `tahun_iuran`, `nama`, `tanggal_pembayaran`, `bukti_pembayaran`, `status_iuran`, `nominal`, `id_detail_warga`) VALUES
-(2105022631, NULL, 'May', 2021, 'Indah Mayangsari', NULL, NULL, 'Belum Lunas', NULL, 'W-001'),
-(2105022632, NULL, 'May', 2021, 'Muahamad Ridwan', NULL, NULL, 'Belum Lunas', NULL, 'W-002'),
-(2105022633, NULL, 'May', 2021, 'Papam', NULL, NULL, 'Belum Lunas', NULL, 'W-003'),
-(2105022634, NULL, 'May', 2021, 'Tian', NULL, NULL, 'Belum Lunas', NULL, 'W-004'),
-(2105022635, NULL, 'May', 2021, 'siti aminah', NULL, NULL, 'Belum Lunas', NULL, 'W-005'),
-(2105022636, NULL, 'May', 2021, 'asep jumroni', NULL, NULL, 'Belum Lunas', NULL, 'W-006');
+INSERT INTO `data_iuran_warga` (`no_tagihan`, `jenis`, `bulan_iuran`, `tahun_iuran`, `nama`, `tanggal_pembayaran`, `bukti_pembayaran`, `status_iuran`, `nominal`, `id_warga`) VALUES
+(2106033547, 'wajib', 'Jun', 2021, 'Indah Mayangsari', NULL, NULL, 'Belum Lunas', 200000, 'W-PBB-001'),
+(2106033548, 'wajib', 'Jun', 2021, 'Papam', NULL, NULL, 'Belum Lunas', 100000, 'W-PBB-002'),
+(2106033549, 'wajib', 'Jun', 2021, 'Tian', NULL, NULL, 'Belum Lunas', 200000, 'W-PBB-003'),
+(2106033550, 'wajib', 'Jun', 2021, 'siti aminah', NULL, NULL, 'Belum Lunas', 100000, 'W-PBB-004'),
+(2106034047, 'tambahan', 'Jun', 2021, 'Indah Mayangsari', NULL, NULL, 'Belum Lunas', 125, 'W-PBB-001'),
+(2106034050, 'tambahan', 'Jun', 2021, 'Papam', NULL, NULL, 'Belum Lunas', 125, 'W-PBB-002'),
+(2106034051, 'tambahan', 'Jun', 2021, 'Tian', NULL, NULL, 'Belum Lunas', 125, 'W-PBB-003'),
+(2106034052, 'tambahan', 'Jun', 2021, 'siti aminah', NULL, NULL, 'Belum Lunas', 125, 'W-PBB-004');
 
 -- --------------------------------------------------------
 
@@ -210,10 +246,10 @@ CREATE TABLE `data_keuangan_iuran` (
 --
 
 INSERT INTO `data_keuangan_iuran` (`id_data_keuangan`, `bulan`, `tahun`, `jumlah_warga`, `jumlah_sudah_bayar`, `jumlah_belum_bayar`, `saldo`, `pemasukan`, `total_saldo`) VALUES
-(5, 'Mar', 2021, 2, 2, 0, 200000, 0, 120024),
-(6, 'Apr', 2021, 2, 1, 1, 100000, 0, 120024),
-(7, '', 0000, 0, 0, 0, 0, 0, 120024),
-(8, 'May', 2021, 6, 0, 6, 0, 0, 120024);
+(5, 'Mar', 2021, 2, 2, 0, 200000, 0, 120000),
+(6, 'Apr', 2021, 2, 1, 1, 100000, 0, 120000),
+(7, '', 0000, 0, 0, 0, 0, 0, 120000),
+(8, 'Jun', 2021, 5, 0, 5, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -300,12 +336,12 @@ CREATE TABLE `detail_warga` (
 --
 
 INSERT INTO `detail_warga` (`id_warga`, `id_detail_warga`, `nama_warga`, `nik`, `status`, `no_hp`, `jenis_kelamin`, `agama`, `tempat_lahir`, `tanggal_lahir`, `pendidikan`, `pekerjaan`, `hubungan_keluarga`, `status_perkawinan`, `status_hunian`, `foto_profile`, `file_ktp`, `status_verifikasi`) VALUES
-('W-PBB-001', 'W-001', 'Indah Mayangsari', NULL, 'Kepala Keluarga', '082116097010', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1'),
-('W-PBB-001', 'W-002', 'Muahamad Ridwan', '123456789012341', 'Anggota Keluarga', '082116097045', 'Laki-laki', 'Islam', 'Bandung', '2000-06-28', 'S2', 'Buruh Harian Lepas', 'Orang Tua', 'Kawin', 'KTP luar tinggal di Lengkong', NULL, 'ipung.jpg', '1'),
+('W-PBB-001', 'W-001', 'Indah Mayangsari', NULL, 'Kepala Keluarga', NULL, NULL, NULL, NULL, NULL, 'SMP', NULL, NULL, NULL, 'KTP luar tinggal di Lengkong', NULL, NULL, '2'),
 ('W-PBB-002', 'W-003', 'Papam', '1234567890123456', 'Kepala Keluarga', '081322127897', 'Laki-laki', 'Islam', 'Bandung', '2000-06-28', 'SMP', 'Pegawai Negeri', 'Istri', 'Janda', 'KTP lengkong tinggal di luar', NULL, NULL, '1'),
-('W-PBB-003', 'W-004', 'Tian', NULL, 'Kepala Keluarga', '0813221278123', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '1'),
-('W-PBB-004', 'W-005', 'siti aminah', NULL, 'Kepala Keluarga', '089650161537', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2'),
-('W-PBB-004', 'W-006', 'asep jumroni', '3204082343215002', 'Anggota Keluarga', '082314523890', 'Laki-laki', 'Islam', 'Bandung', '2021-04-13', 'SMA', 'Wiraswasta', 'Suami', 'Kawin', 'KTP lengkong tinggal di Lengkong', NULL, 'ipung.jpg', '2');
+('W-PBB-003', 'W-004', 'Tian', NULL, 'Kepala Keluarga', '0813221278123', NULL, NULL, NULL, NULL, 'SMA', NULL, NULL, NULL, 'KTP lengkong tinggal di luar', NULL, NULL, '1'),
+('W-PBB-004', 'W-005', 'siti aminah', '12345678901234567890', 'Kepala Keluarga', '089650161537', 'Laki-laki', 'Kristen', 'Bandung', '2021-06-09', 'S3', 'Mahasiswa', 'Istri', 'Duda', 'KTP lengkong tinggal di Lengkong', 'create_event.jpg', 'video_call.jpg', '2'),
+('W-PBB-004', 'W-006', 'asep jumroni', '3204082343215002', 'Anggota Keluarga', '082314523890', 'Laki-laki', 'Islam', 'Bandung', '2021-04-13', 'SMA', 'Wiraswasta', 'Suami', 'Kawin', 'KTP lengkong tinggal di Lengkong', 'video_call.jpg', 'ipung.jpg', '2'),
+('W-PBB-002', 'W-007', 'januar', '1234567890123456', 'Anggota Keluarga', '081322128491', 'Laki-laki', 'Islam', 'Bandung', '2021-06-13', 'SD', 'Pegawai Negeri', 'Istri', 'Belum Kawin', 'KTP lengkong tinggal di Lengkong', NULL, 'video_call1.jpg', '1');
 
 -- --------------------------------------------------------
 
@@ -338,6 +374,13 @@ CREATE TABLE `kendaraan` (
   `no_polisi` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `foto_kendaraan` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `kendaraan`
+--
+
+INSERT INTO `kendaraan` (`id_warga`, `id_kendaraan`, `tipe_kendaraan`, `merk_kendaraan`, `nama_stnk`, `no_polisi`, `foto_kendaraan`) VALUES
+('W-PBB-002', 'K-PBB-001', 'Roda Tiga', 'Avanza', 'Ersa Nur Maulana', 'D 3405 LEVI', 'video_call.jpg');
 
 -- --------------------------------------------------------
 
@@ -374,11 +417,58 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (16, '2021_11_17_172836_create_tokens_table', 1),
 (17, '2021_11_17_172837_create_user_akses_menus_table', 1),
 (18, '2021_11_17_172838_create_menus_table', 1),
-(19, '2021_11_17_172839_create_user_sub_menus_table', 1),
-(20, '2022_11_17_131108_create_pembayaran_iurans_table', 1),
-(21, '2022_11_17_131124_create_keuangans_table', 1),
-(22, '2022_11_17_131125_create_pemasukans_table', 1),
-(23, '2022_11_17_131153_create_penggunaan_iurans_table', 1);
+(19, '2021_11_17_172839_create_aspirasi_table', 1),
+(20, '2021_11_17_172839_create_fasilitas_table', 1),
+(21, '2021_11_17_172839_create_keamanan_table', 1),
+(22, '2021_11_17_172839_create_musrembang_table', 1),
+(23, '2021_11_17_172839_create_notulansi_table', 1),
+(24, '2021_11_17_172839_create_peraturan_table', 1),
+(25, '2021_11_17_172839_create_user_sub_menus_table', 1),
+(26, '2022_11_17_131108_create_pembayaran_iurans_table', 1),
+(27, '2022_11_17_131124_create_keuangans_table', 1),
+(28, '2022_11_17_131125_create_pemasukans_table', 1),
+(29, '2022_11_17_131153_create_penggunaan_iurans_table', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `musrembang`
+--
+
+CREATE TABLE `musrembang` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `program` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `kegiatan` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sasaran` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `volume_lokasi` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pengusul` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `keterangan` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `musrembang`
+--
+
+INSERT INTO `musrembang` (`id`, `program`, `kegiatan`, `sasaran`, `volume_lokasi`, `pengusul`, `keterangan`, `status`) VALUES
+(1, 'Peningkatan Infrastruktur', 'Pengecoran Jalan', 'Kelancaran Lalu Lintas', 'Volume: 125 m\r\nLokasi: Rw.01\r\nKelurahan Gemolong\r\n-Sragen', 'Musyawarah RT di RW.01\r\nTanggal: 2020-11-01', 'Saat ini kondisi Jalan sudah tidak dapat dilalui oleh kendaraan karena terdapat lobang-lobang yang sangat besar dan dalam', 'Sudah diusulkan'),
+(2, 'Peningkatan Kebersihan Lingkungan Hidup', 'Kerja Bakti', 'Perumah Permata Buah Batu', '100', 'Semua Warga', 'Kerja Bakti dilaksanakan jam 10 pagi', 'Diusulkan');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `notulensi`
+--
+
+CREATE TABLE `notulensi` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `judul` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `isi` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `penulis` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `waktu_post` datetime NOT NULL,
+  `terakhir_diubah` datetime NOT NULL,
+  `thumbnail` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -407,10 +497,10 @@ CREATE TABLE `pengajuan_surat` (
 --
 
 INSERT INTO `pengajuan_surat` (`id_pengajuan_surat`, `id_detail_warga`, `pengajuan`, `tanggal_pengajuan`, `tanggal_disetujui`, `kode_surat`, `no_surat`, `rt`, `rw`, `nama_rt`, `nama_rw`, `verifikasi_rt`, `verifikasi_rw`) VALUES
-('SURAT-001', 'W-002', 'Membuat SKCK', '2021-04-21', '2021-04-21', '091201212', '121 / 213 / 5541XII', '1', '2', 'Ersa', 'RAFIF YUSUF AVANDY', 'Disetujui', 'Disetujui'),
 ('SURAT-002', 'W-001', 'Membuat Surat Pindah', '2021-04-21', '2021-04-22', '091201212', '121 / 213 / 5541XII', '1', '2', NULL, 'RAFIF YUSUF AVANDY', 'Diproses', 'Disetujui'),
-('SURAT-003', 'W-003', 'Membuat Surat Pindah Halaman', '2021-04-21', NULL, '', '', '', '', NULL, NULL, 'Diproses', 'Diproses'),
-('SURAT-004', 'W-006', 'na', '2021-04-22', '2021-04-22', '091201212', '121 / 213 / 5541XII', '1', '16', 'Ersa', 'Rafif Yusuf Avandy', 'Disetujui', 'Disetujui');
+('SURAT-004', 'W-006', 'na', '2021-04-22', '2021-04-22', '091201212', '121 / 213 / 5541XII', '1', '16', 'Ersa', 'Rafif Yusuf Avandy', 'Disetujui', 'Disetujui'),
+('SURAT-005', 'W-003', 'Mau Papam Pindahan', '2021-06-02', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Diproses', 'Diproses'),
+('SURAT-006', 'W-007', 'Pindahan', '2021-06-02', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Diproses', 'Diproses');
 
 -- --------------------------------------------------------
 
@@ -442,6 +532,44 @@ INSERT INTO `pengumuman` (`id`, `judul`, `isi`, `penulis`, `waktu_post`, `terakh
 (7, 'Make your fitness Boost with us', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum, minima.', 'john stain', '2021-03-30 00:00:00', '2021-03-30 00:00:00', 'post4.jpg'),
 (8, 'Ethernity beauty health diet plan', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum, minima.', 'john stain', '2021-03-30 00:00:00', '2021-03-30 00:00:00', 'post5.jpg'),
 (9, 'Pengumuman <br>Pengajian <span class=\"text-color\">Bulanan</span>', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis Theme natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam lorem ante, dapibus in.', 'Muhammad Haitsam', '2021-03-20 21:54:41', '2021-03-20 21:54:41', 'bg-7.jpeg');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `peraturan`
+--
+
+CREATE TABLE `peraturan` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `judul` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `isi` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `penulis` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `waktu_post` datetime NOT NULL,
+  `terakhir_diubah` datetime NOT NULL,
+  `thumbnail` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `petugas_keamanan`
+--
+
+CREATE TABLE `petugas_keamanan` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `nama` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `jabatan` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `foto` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `parent_id` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `petugas_keamanan`
+--
+
+INSERT INTO `petugas_keamanan` (`id`, `nama`, `jabatan`, `foto`, `parent_id`) VALUES
+(1, 'Akib Dahlan', 'Kepala Keamanan', 'akib.jpg', '0'),
+(4, 'Olga Paurenta Simanihuruk', 'Anggota Keamanan', 'christopher-campbell-rDEOVtE7vOs-unsplash2.jpg', '1');
 
 -- --------------------------------------------------------
 
@@ -481,6 +609,13 @@ CREATE TABLE `surat` (
   `keterangan_surat` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `file_surat` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data untuk tabel `surat`
+--
+
+INSERT INTO `surat` (`id_surat`, `id_admin`, `judul`, `keterangan_surat`, `file_surat`) VALUES
+('S-PBB-001', 2, 'Arisan RT 06', 'Wajib Hadir Semuanya Karena Ada DoorPrize', 'Bagaimana_cara_memebuat_border_pada_table_menggunakan_styling_CSS_dibawah_ini.docx');
 
 -- --------------------------------------------------------
 
@@ -586,7 +721,7 @@ CREATE TABLE `user_menu` (
 INSERT INTO `user_menu` (`id`, `menu`, `icon`, `active`) VALUES
 (1, 'Admin', 'fe-users', 1),
 (2, 'User', 'fe-user', 1),
-(3, 'Menu', 'fe-menu', 1),
+(3, 'Set Up', 'fe-menu', 1),
 (4, 'Admin Kebersihan', 'fe-trash-2', 1),
 (5, 'Admin Keamanan', 'fe-shield', 1),
 (6, 'Admin Fasilitas', 'fe-home', 1),
@@ -595,7 +730,9 @@ INSERT INTO `user_menu` (`id`, `menu`, `icon`, `active`) VALUES
 (9, 'Lainnya', 'fe-more-vertical-', 1),
 (10, 'Data', 'fe-book-open', 0),
 (11, 'Dashboard', 'fe-book', 0),
-(12, 'KeluhanAspirasi', 'fe-people', 0);
+(12, 'KeluhanAspirasi', 'fe-people', 0),
+(13, 'menu', 'fe-menu', 0),
+(14, 'Struktur Organisasi', 'fas fa-fw fa-sitemap', 1);
 
 -- --------------------------------------------------------
 
@@ -646,30 +783,34 @@ INSERT INTO `user_sub_menu` (`id`, `menu_id`, `title`, `url`, `icon`, `is_active
 (3, 2, 'Edit Profile', 'user/edit', 'fas fa-fw fa-user-edit', 1),
 (4, 3, 'Menu Management', 'menu/', 'fas fa-fw fa-folder', 1),
 (5, 3, 'Submenu Management', 'menu/subMenu', 'fas fa-fw fa-folder-open', 1),
-(6, 1, 'Role Management', 'admin/role', 'fas fa-fw fa-user-tie', 1),
+(6, 3, 'Role Management', 'admin/role', 'fas fa-fw fa-user-tie', 1),
 (7, 2, 'Change Password', 'user/changePassword', 'fas fa-fw fa-key', 1),
 (8, 1, 'Data User', 'admin/dataUser/', 'fas fa-fw fa-user-tie', 1),
 (9, 4, 'Data Keluhan dan Aspirasi', 'KeluhanAspirasi/kebersihan', 'fas fa-fw fa-broom', 1),
 (10, 8, 'Data Master', 'DataMaster/', 'fas fa-fw fa-database', 1),
 (11, 5, 'Data Keluhan dan Aspirasi', 'KeluhanAspirasi/keamanan', 'fas fa-fw fa-handshake', 1),
-(12, 1, 'Struktur Organisasi', 'Admin/strukturOrganisasi', 'fas fa-fw fa-sitemap', 1),
 (13, 1, 'Pengumuman', 'Admin/pengumuman', 'fas fa-fw fa-bullhorn', 1),
 (14, 6, 'Data Keluhan dan Aspirasi', 'KeluhanAspirasi/fasilitas', 'fas fa-fw fa-building', 1),
 (15, 7, 'Data Keluhan dan Aspirasi', 'KeluhanAspirasi/olahraga', 'fas fa-fw fa-basketball-ball', 1),
-(16, 1, 'Riwayat Verifikasi', 'Dashboard/riwayat_verifikasi', 'fas fa-fw fa-history', 1),
 (17, 8, 'Data Warga', 'Dashboard/data_warga', 'fas fa-fw fa-users', 1),
 (18, 8, 'Data Kendaraan', 'Dashboard/data_kendaraan', 'fas fa-fw fa-car', 1),
 (19, 8, 'Data Fasilitas', 'Dashboard/fasilitas', 'fas fa-fw fa-couch', 1),
 (20, 1, 'Keluhan dan Aspirasi', 'KeluhanAspirasi/', 'fas fa-fw fa-people-carry', 1),
-(21, 8, 'Data Agama', 'DataMaster/agama/', 'fas fa-fw fa-pray', 1),
-(22, 8, 'Data Dashboard', 'DataMaster/dashboard/', 'fas fa-fw fa-edit', 1),
+(21, 3, 'Data Agama', 'DataMaster/agama/', 'fas fa-fw fa-pray', 1),
+(22, 3, 'Edit Dashboard Admin', 'DataMaster/dashboard/', 'fas fa-fw fa-edit', 1),
 (23, 8, 'Data Konten', 'DataMaster/konten', 'far fa-fw fa-newspaper', 1),
 (24, 9, 'Tentang Aplikasi', 'Lainnya/tentang', 'fas fa-fw fa-address-card', 1),
 (25, 9, 'Pengaturan', 'Lainnya/pengaturan', 'fas fa-fw fa-wrench', 1),
 (26, 9, 'Hubungi Kami', 'Lainnya/hubungi', 'fas fa-fw fa-address-book', 1),
 (27, 9, 'Bantuan', 'Lainnya/bantuan', 'far fa-fw fa-question-circle', 1),
 (28, 9, 'FAQ', 'Lainnya/faq', 'fas fa-fw fa-question', 1),
-(32, 1, 'Berita', 'admin/berita', 'fas fa-fw fa-newspaper', 1);
+(32, 1, 'Berita', 'admin/berita', 'fas fa-fw fa-newspaper', 1),
+(33, 1, 'Notulensi', 'admin/notulensi', 'far fa-fw fa-clipboard', 1),
+(34, 3, 'Edit Dashboard User', 'DataMaster/dashboardUser/', 'far fa-fw fa-edit', 1),
+(35, 1, 'Musrembang', 'Admin/musrembang', 'fas fa-fw fa-book-open', 1),
+(36, 14, 'Petugas RT', 'Admin/strukturOrganisasi', 'fas fa-fw fa-sitemap', 1),
+(38, 1, 'Peraturan', 'Admin/peraturan', 'fas fa-book', 1),
+(39, 14, 'Petugas Keamanan', 'Admin/strukturOrganisasiPetugasKeamanan', 'fas fa-fw fa-sitemap', 1);
 
 -- --------------------------------------------------------
 
@@ -736,7 +877,7 @@ CREATE TABLE `warga` (
 
 INSERT INTO `warga` (`id_warga`, `no_rumah`, `no_kk`, `alamat`, `jumlah_keluarga`, `status_rumah`, `rt`, `rw`, `file_kk`) VALUES
 ('W-PBB-001', 'H-7', '1234567890123456', 'Komplek PBB 1', 2, 'Rumah Usaha', '1', '2', 'ipung2.jpg'),
-('W-PBB-002', 'C-1', '1234567890123456', 'Pbb 1', 3, 'Rumah Tinggal', '2', '1', 'uskes_ipung.jpg'),
+('W-PBB-002', 'C-10', '1234567890123456', 'Komplek Pbb', 3, 'Rumah Usaha', '2', '1', 'kk_1622601649.jpg'),
 ('W-PBB-003', 'E-1', '1234567890123456', 'Komplek PBB Ceria', 2, 'Rumah Usaha', '1', '1', '633547.jpg'),
 ('W-PBB-004', '22-B', '3204082302800004', 'gg.pa edo ', 3, 'Rumah Tinggal', '1', '16', 'ipung.jpg');
 
@@ -748,6 +889,12 @@ INSERT INTO `warga` (`id_warga`, `no_rumah`, `no_kk`, `alamat`, `jumlah_keluarga
 -- Indeks untuk tabel `agama`
 --
 ALTER TABLE `agama`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `aspirasi`
+--
+ALTER TABLE `aspirasi`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -777,11 +924,17 @@ ALTER TABLE `data_aspirasi_warga`
   ADD KEY `data_aspirasi_warga_id_admin_foreign` (`id_admin`);
 
 --
+-- Indeks untuk tabel `data_fasilitas`
+--
+ALTER TABLE `data_fasilitas`
+  ADD PRIMARY KEY (`no`);
+
+--
 -- Indeks untuk tabel `data_iuran_warga`
 --
 ALTER TABLE `data_iuran_warga`
   ADD PRIMARY KEY (`no_tagihan`),
-  ADD KEY `data_iuran_warga_id_detail_warga_foreign` (`id_detail_warga`);
+  ADD KEY `data_iuran_warga_id_warga_foreign` (`id_warga`);
 
 --
 -- Indeks untuk tabel `data_keuangan_iuran`
@@ -830,6 +983,18 @@ ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indeks untuk tabel `musrembang`
+--
+ALTER TABLE `musrembang`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `notulensi`
+--
+ALTER TABLE `notulensi`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indeks untuk tabel `pengajuan_surat`
 --
 ALTER TABLE `pengajuan_surat`
@@ -840,6 +1005,18 @@ ALTER TABLE `pengajuan_surat`
 -- Indeks untuk tabel `pengumuman`
 --
 ALTER TABLE `pengumuman`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `peraturan`
+--
+ALTER TABLE `peraturan`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indeks untuk tabel `petugas_keamanan`
+--
+ALTER TABLE `petugas_keamanan`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -908,6 +1085,12 @@ ALTER TABLE `agama`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT untuk tabel `aspirasi`
+--
+ALTER TABLE `aspirasi`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT untuk tabel `berita`
 --
 ALTER TABLE `berita`
@@ -926,10 +1109,16 @@ ALTER TABLE `dashboard`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT untuk tabel `data_fasilitas`
+--
+ALTER TABLE `data_fasilitas`
+  MODIFY `no` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT untuk tabel `data_iuran_warga`
 --
 ALTER TABLE `data_iuran_warga`
-  MODIFY `no_tagihan` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2105022637;
+  MODIFY `no_tagihan` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2106034053;
 
 --
 -- AUTO_INCREMENT untuk tabel `data_keuangan_iuran`
@@ -941,7 +1130,7 @@ ALTER TABLE `data_keuangan_iuran`
 -- AUTO_INCREMENT untuk tabel `data_pemasukan_iuran`
 --
 ALTER TABLE `data_pemasukan_iuran`
-  MODIFY `id_pemasukan` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_pemasukan` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `data_penggunaan_iuran`
@@ -959,13 +1148,37 @@ ALTER TABLE `keluhan`
 -- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+
+--
+-- AUTO_INCREMENT untuk tabel `musrembang`
+--
+ALTER TABLE `musrembang`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT untuk tabel `notulensi`
+--
+ALTER TABLE `notulensi`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `pengumuman`
 --
 ALTER TABLE `pengumuman`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT untuk tabel `peraturan`
+--
+ALTER TABLE `peraturan`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `petugas_keamanan`
+--
+ALTER TABLE `petugas_keamanan`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `struktur`
@@ -989,7 +1202,7 @@ ALTER TABLE `user_access_menu`
 -- AUTO_INCREMENT untuk tabel `user_menu`
 --
 ALTER TABLE `user_menu`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT untuk tabel `user_role`
@@ -1001,7 +1214,7 @@ ALTER TABLE `user_role`
 -- AUTO_INCREMENT untuk tabel `user_sub_menu`
 --
 ALTER TABLE `user_sub_menu`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT untuk tabel `user_token`
@@ -1024,7 +1237,7 @@ ALTER TABLE `data_aspirasi_warga`
 -- Ketidakleluasaan untuk tabel `data_iuran_warga`
 --
 ALTER TABLE `data_iuran_warga`
-  ADD CONSTRAINT `data_iuran_warga_id_detail_warga_foreign` FOREIGN KEY (`id_detail_warga`) REFERENCES `detail_warga` (`id_detail_warga`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `data_iuran_warga_id_warga_foreign` FOREIGN KEY (`id_warga`) REFERENCES `warga` (`id_warga`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `data_pemasukan_iuran`

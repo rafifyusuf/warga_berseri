@@ -6,9 +6,9 @@
 					<ul class="list-inline mb-0">
 						<li class="list-inline-item"><a href="index.html" class="text-sm letter-spacing text-white text-uppercase font-weight-bold">Home</a></li>
 						<li class="list-inline-item"><span class="text-white">|</span></li>
-						<li class="list-inline-item"><a href="#" class="text-color text-uppercase text-sm letter-spacing">Pendataan Warga</a></li>
+						<li class="list-inline-item"><a href="#" class="text-color text-uppercase text-sm letter-spacing">Pengajuan Surat</a></li>
 					</ul>
-					<h1 class="text-lg text-white mt-2">Pendataan Warga</h1>
+					<h1 class="text-lg text-white mt-2">Pengajuan Surat</h1>
 				</div>
 			</div>
 		</div>
@@ -58,7 +58,6 @@
 									</td>
 									<center>
 										<td colspan="4">
-
 											<?php if ($surat->nama_warga == $this->session->nama_warga) { ?>
 												<?php if ($surat->verifikasi_rt == "Diproses" && $surat->verifikasi_rw == "Diproses") { ?>
 													<button disabled class="btn btn-success btn-sm btn-edit" style="cursor: not-allowed !important ">
@@ -71,7 +70,7 @@
 														</button>
 													</a>
 												<?php } ?>
-												<a href="<?= base_url('PendataanWarga/hapus_surat/' . $surat->id_pengajuan_surat) ?>">
+												<a href="<?= base_url('user/surat/hapus_surat/' . $surat->id_pengajuan_surat) ?>">
 													<button class="btn btn-sm btn-danger">
 														<i class="fas fa-trash"></i>
 													</button>

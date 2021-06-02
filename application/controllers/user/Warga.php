@@ -24,7 +24,7 @@ class Warga extends CI_Controller
 			$data['warga']  = $detail_warga;
 			$data['jumlah_hunian']  = $jumlah_hunian;
 			$this->load->view('user/layouts/header');
-			$this->load->view('user/pages/pendataan-warga', $data);
+			$this->load->view('user/pages/warga/pendataan-warga', $data);
 			$this->load->view('user/layouts/footer');
 		} else {
 			redirect('user/auth');
@@ -35,10 +35,36 @@ class Warga extends CI_Controller
 	{
 		if ($this->session->id_warga) {
 			$hunian         = $this->WargaModel->get_hunian($id_detail_warga)->row();
-			$data['title']  = 'Detail Warga';
+			$data['title']  = 'Detail Hunian';
 			$data['hunian'] = $hunian;
 			$this->load->view('user/layouts/header', $data);
 			$this->load->view('user/pages/warga/info-hunian', $data);
+			$this->load->view('user/layouts/footer');
+		} else {
+			redirect('user/auth');
+		}
+	}
+
+	public function info_warga($id_warga)
+	{
+		if ($this->session->id_warga) {
+			$warga         = $this->WargaModel->get_warga($id_warga)->row();
+			$data['title'] = 'Detail Warga';
+			$data['warga'] = $warga;
+			$this->load->view('user/layouts/header', $data);
+			$this->load->view('user/pages/warga/info-warga', $data);
+			$this->load->view('user/layouts/footer');
+		} else {
+			redirect('user/auth');
+		}
+	}
+
+	public function tambah_hunian()
+	{
+		if ($this->session->id_warga) {
+			$data['title'] = 'Tambah hunian';
+			$this->load->view('user/layouts/header', $data);
+			$this->load->view('user/pages/warga/tambah-hunian');
 			$this->load->view('user/layouts/footer');
 		} else {
 			redirect('user/auth');
@@ -64,15 +90,16 @@ class Warga extends CI_Controller
 	public function proses_tambah_anggota_warga()
 	{
 		// Memanggil function untuk validasi
+		$this->form_validation->set_rules('no_hp', 'No Hp', 'required|min_length[10]|numeric');
 		$this->validasi_tambah_hunian();
 
 		if (empty($_FILES['file_ktp']['name'])) {
 			$this->form_validation->set_rules('file_ktp', 'File Identitas', 'required');
 			if ($this->form_validation->run() == FALSE) {
-				$this->index();
+				$this->tambah_hunian();
 			}
 		} else {
-			$config['upload_path']          = './uploads/';
+			$config['upload_path']          = './uploads/ktp/';
 			$config['allowed_types']        = 'gif|jpg|png|jpeg';
 			$config['max_size']             = 4000;
 
@@ -119,7 +146,6 @@ class Warga extends CI_Controller
 					'file_ktp' 		    => $file_ktp
 				];
 				$this->WargaModel->tambah_anggota_warga($data);
-				$this->session->set_flashdata('flash', 'Ditambah');
 				redirect(base_url('user/warga'));
 			}
 		}
@@ -211,4 +237,75 @@ class Warga extends CI_Controller
 	}
 
 	// ----------------------End Data Hunian Warga------------------------
+
+	public function update_kk()
+	{
+		$upload_kk  = "kk_" . time();
+		$id_warga = $this->input->post('id_warga');
+		if ($upload_kk) {
+			$config['allowed_types'] = 'gif|jpg|png|svg|jpeg';
+			$config['upload_path']   = './uploads/kk';
+			$config['max_size']      = '2048';
+			$config['file_name']     = $upload_kk;
+			$this->load->library('upload', $config);
+			if ($this->upload->do_upload('file_kk')) {
+				$old_kk      = $this->input->post('old_kk');
+				if ($old_kk != '' || $old_kk != NULL) {
+					unlink(FCPATH . 'uploads/kk/' . $old_kk);
+				}
+				$new_kk = $this->upload->data('file_name');
+				$data = [
+					'file_kk'   	    => $new_kk
+				];
+				$this->WargaModel->update_warga($id_warga, $data);
+				$this->session->set_flashdata('flash', 'Update');
+				redirect(base_url('user/warga/info_warga/' . $id_warga));
+			} else {
+				$this->session->set_flashdata('flash', 'Gagal');
+				redirect(base_url('user/warga/info_warga/' . $id_warga));
+			}
+		}
+	}
+
+	public function validasi_tambah_warga()
+	{
+		$this->form_validation->set_rules('no_rumah', 'No Rumah', 'required|min_length[2]|alpha_dash');
+		$this->form_validation->set_rules('no_kk', 'No Kartu Keluarga', 'required|exact_length[16]|numeric');
+		$this->form_validation->set_rules('alamat', 'Alamat', 'required|min_length[5]');
+		$this->form_validation->set_rules('jumlah_keluarga', 'Jumlah Keluarga', 'required|numeric');
+		$this->form_validation->set_rules('rt', 'RT', 'required|numeric');
+		$this->form_validation->set_rules('rw', 'RW', 'required|numeric');
+		$this->form_validation->set_rules('status_rumah', 'Status Rumah', 'required');
+	}
+
+	public function proses_update_warga()
+	{
+		// Memanggil function untuk validasi
+		$this->validasi_tambah_warga();
+		$id_warga = $this->input->post('id_warga');
+		if ($this->form_validation->run() == FALSE) {
+			$this->info_warga($id_warga);
+		}
+
+		$no_rumah   		     = $this->input->post('no_rumah');
+		$no_kk   		         = $this->input->post('no_kk');
+		$alamat   		         = $this->input->post('alamat');
+		$jumlah_keluarga         = $this->input->post('jumlah_keluarga');
+		$status_rumah            = $this->input->post('status_rumah');
+		$rt   				     = $this->input->post('rt');
+		$rw   				     = $this->input->post('rw');
+
+		$data_warga = [
+			'no_rumah'   		 => $no_rumah,
+			'no_kk'   			 => $no_kk,
+			'alamat'   			 => $alamat,
+			'jumlah_keluarga'	 => $jumlah_keluarga,
+			'status_rumah' 		 => $status_rumah,
+			'rt'   				 => $rt,
+			'rw'   			     => $rw,
+		];
+		$this->WargaModel->update_warga($id_warga, $data_warga);
+		$this->session->set_flashdata('flash', 'Update');
+		redirect(base_url('user/warga/info_warga/' . $id_warga));
+	}
 }
