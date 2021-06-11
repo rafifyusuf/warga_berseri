@@ -135,16 +135,42 @@
 
 							<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 								<div class="form-group">
+									<label class="col-form-label">Status Rumah Tangga</label>
+									<div class="custom-control custom-checkbox">
+										<input type="checkbox" name="status_rumah_tangga[]" class="custom-control-input" id="customCheck1" value="KIS">
+										<label class="custom-control-label text-info" for="customCheck1">Program Pemerintah berupa KIS (Kartu Indonesia Sehat)</label>
+									</div>
+									<div class="custom-control custom-checkbox">
+										<input type="checkbox" name="status_rumah_tangga[]" class="custom-control-input" id="customCheck2" value="RASKIN">
+										<label class="custom-control-label text-success" for="customCheck2">Program Pemerintah berupa RASKIN (Beras untuk keluarga miskin)</label>
+									</div>
+									<div class="custom-control custom-checkbox">
+										<input type="checkbox" name="status_rumah_tangga[]" class="custom-control-input" id="customCheck3" value="KIP">
+										<label class="custom-control-label text-warning" for="customCheck3">Program Pemerintah berupa KIP (Kartu Indonesia Pintar)</label>
+									</div>
+									<div class="custom-control custom-checkbox">
+										<input type="checkbox" name="status_rumah_tangga[]" class="custom-control-input" id="customCheck4" value="PKH">
+										<label class="custom-control-label text-danger" for="customCheck4">Program Pemerintah berupa PKH (Program Keluarga Harapan)</label>
+									</div>
+									<?php if ($warga->status_rumah_tangga != NULL || $warga->status_rumah_tangga != "") : ?>
+										<span class="form-text text-primary ml-3">Status : <?php echo $warga->status_rumah_tangga ?></span>
+									<?php endif; ?>
+									<span class="form-text text-danger"><?= form_error('status_rumah_tangga[]'); ?></span>
+								</div>
+							</div>
+
+							<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+								<div class="form-group">
 									<label for="firstname">Alamat</label>
-									<textarea class="form-control" name="alamat" cols="20" rows="5"><?php echo $warga->alamat ?></textarea>
+									<textarea class="form-control" name="alamat" cols="20" rows="9"><?php echo $warga->alamat ?></textarea>
 									<span class="form-text text-danger"><?= form_error('jumlah_keluarga'); ?></span>
 								</div>
 							</div>
+
 						</div>
 						<div class="row gutters">
 							<div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
 								<div class="text-right">
-									<input type="hidden" name="id_warga" value="<?= $warga->id_warga ?>">
 									<button type="submit" class="btn btn-primary ml-3">Update</button>
 								</div>
 							</div>

@@ -26,4 +26,9 @@ class KendaraanModel extends CI_Model
 	{
 		return $this->db->insert('kendaraan', $data_kendaraan);
 	}
+
+	public function hapus_kendaraan($id_kendaraan)
+	{
+		$this->db->delete('kendaraan', array('id_kendaraan' => $id_kendaraan));
+	}
 }

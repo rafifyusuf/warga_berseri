@@ -19,13 +19,6 @@
     						<div class="card-body">
     							<h5 class="card-title"><?= $user['name']; ?></h5>
     							<p class="card-text"><?= $user['email']; ?></p>
-    							<!-- <?php if (isset($mahasiswa)) : ?>
-    								<p class="card-text">NIM : <?= $mahasiswa['nim'] ?></p>
-    							<?php elseif (isset($dosen)) : ?>
-    								<p class="card-text">Kode Dosen : <?= $dosen['kode_dosen'] ?></p>
-    								<p class="card-text">NIDN : <?= $dosen['nidn'] ?></p>
-    								<p class="card-text">NIP : <?= $dosen['nip'] ?></p>
-    							<?php endif ?> -->
     							<p class="card-text"><small class="text-muted">Member since <?= date('d F Y', strtotime($user['date_created'])) ?></small></p>
     						</div>
     					</div>

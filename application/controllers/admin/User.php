@@ -42,13 +42,13 @@ class User extends CI_Controller
 			$upload_image = $_FILES['image']['name'];
 			if ($upload_image) {
 				$config['allowed_types'] = 'gif|jpg|png|svg';
-				$config['upload_path'] = './assets/img/profile';
+				$config['upload_path'] = './uploads/profile';
 				$config['max_size']     = '2048';
 				$this->load->library('upload', $config);
 				if ($this->upload->do_upload('image')) {
 					$old_image = $data['user']['image'];
 					if ($old_image != 'default.jpg') {
-						unlink(FCPATH . 'assets/img/profile/' . $old_image);
+						unlink(FCPATH . 'uploads/profile/' . $old_image);
 					}
 					$new_image = $this->upload->data('file_name');
 					$this->db->set('image', $new_image);
@@ -85,7 +85,7 @@ class User extends CI_Controller
 			$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
 				The Password is required.
 				</div>');
-			redirect('user/edit');
+			redirect('admin/user/edit');
 		} else {
 			$email = $this->session->userdata('email');
 			$password = $this->input->post('password');
@@ -95,12 +95,12 @@ class User extends CI_Controller
 
 			if (password_verify($password, $user['password'])) {
 				$this->db->delete('user', ['id' => $id]);
-				redirect('auth/logout');
+				redirect('admin/auth/logout');
 			} else {
 				$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
 					Wrong Password!
 					</div>');
-				redirect('user/edit');
+				redirect('admin/user/edit');
 			}
 		}
 	}
@@ -114,11 +114,10 @@ class User extends CI_Controller
 		$this->form_validation->set_rules('new_password1', 'New Password', 'trim|required|min_length[3]');
 		$this->form_validation->set_rules('new_password2', 'Repeat New Password', 'trim|required|matches[new_password1]');
 		if ($this->form_validation->run() ==  false) {
-			$this->load->view('templates/header', $data);
-			$this->load->view('templates/sidebar', $data);
-			$this->load->view('templates/topbar', $data);
-			$this->load->view('user/change_password', $data);
-			$this->load->view('templates/footer');
+
+			$this->load->view('admin/layouts/header', $data);
+			$this->load->view('admin/pages/user/change_password', $data);
+			$this->load->view('admin/layouts/footer');
 		} else {
 			$current_password = $this->input->post('current_password');
 			$new_password1 = $this->input->post('new_password1');

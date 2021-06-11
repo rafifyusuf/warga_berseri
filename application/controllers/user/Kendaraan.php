@@ -23,7 +23,7 @@ class Kendaraan extends CI_Controller
 				redirect(base_url('user/warga'));
 			}
 		} else {
-			$config['upload_path']          = './uploads/';
+			$config['upload_path']          = './uploads/kendaraan/';
 			$config['allowed_types']        = 'gif|jpg|png|jpeg';
 			$config['max_size']             = 4000;
 			$this->load->library('upload', $config);
@@ -52,5 +52,11 @@ class Kendaraan extends CI_Controller
 				redirect(base_url('user/warga'));
 			}
 		}
+	}
+
+	public function hapus_kendaraan($id_kendaraan)
+	{
+		$this->KendaraanModel->hapus_kendaraan($id_kendaraan);
+		redirect(base_url('user/warga'));
 	}
 }

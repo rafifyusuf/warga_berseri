@@ -48,15 +48,13 @@
 							</li>
 						</ul>
 					</li>
+					<li class="nav-item"><a class="nav-link" href="<?php echo base_url('user/aspirasi') ?>">Keluhan & Aspirasi</a></li>
 					<li class="nav-item dropdown">
-						<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Aspirasi</a>
+						<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true"
+							aria-expanded="false">Struktur Organisasi</a>
 						<ul class="dropdown-menu">
-							<li>
-								<a class="dropdown-item" href="<?php echo base_url(); ?>user/aspirasi">Input Aspirasi</a>
-							</li>
-							<li>
-								<a class="dropdown-item" href="<?php echo base_url(); ?>user/aspirasi/data_aspirasi_warga">Data Aspirasi</a>
-							</li>
+							<li><a class="dropdown-item" href="<?php echo base_url('user/dashboard/strukturOrganisasi') ?>">Struktur Organisasi RT</a></li>
+							<li><a class="dropdown-item" href="<?php echo base_url('user/dashboard/strukturOrganisasiKeamanan') ?>">Struktur Organisasi Keamanan</a></li>
 						</ul>
 					</li>
 					<li class="nav-item dropdown">

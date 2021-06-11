@@ -45,20 +45,6 @@ class Warga extends CI_Controller
 		}
 	}
 
-	public function info_warga($id_warga)
-	{
-		if ($this->session->id_warga) {
-			$warga         = $this->WargaModel->get_warga($id_warga)->row();
-			$data['title'] = 'Detail Warga';
-			$data['warga'] = $warga;
-			$this->load->view('user/layouts/header', $data);
-			$this->load->view('user/pages/warga/info-warga', $data);
-			$this->load->view('user/layouts/footer');
-		} else {
-			redirect('user/auth');
-		}
-	}
-
 	public function tambah_hunian()
 	{
 		if ($this->session->id_warga) {
@@ -161,34 +147,33 @@ class Warga extends CI_Controller
 			$this->info_hunian($id_detail_warga);
 		}
 
-		$nama_warga        = $this->input->post('nama_warga');
-		$nik  			   = $this->input->post('nik', true);
-		$no_hp  		   = $this->input->post('no_hp', true);
-		$tempat_lahir  	   = $this->input->post('tempat_lahir', true);
-		$tanggal_lahir     = $this->input->post('tanggal_lahir', true);
-		$agama  		   = $this->input->post('agama', true);
-		$jenis_kelamin     = $this->input->post('jenis_kelamin', true);
-		$status_perkawinan = $this->input->post('status_perkawinan', true);
-		$hubungan_keluarga = $this->input->post('hubungan_keluarga', true);
-		$status  		   = $this->input->post('status', true);
-		$pekerjaan  	   = $this->input->post('pekerjaan', true);
-		$pendidikan  	   = $this->input->post('pendidikan', true);
-		$status_hunian     = $this->input->post('status_hunian', true);
-
+		$nama_warga          = $this->input->post('nama_warga');
+		$nik  			     = $this->input->post('nik', true);
+		$no_hp  		     = $this->input->post('no_hp', true);
+		$tempat_lahir  	     = $this->input->post('tempat_lahir', true);
+		$tanggal_lahir       = $this->input->post('tanggal_lahir', true);
+		$agama  		     = $this->input->post('agama', true);
+		$jenis_kelamin       = $this->input->post('jenis_kelamin', true);
+		$status_perkawinan   = $this->input->post('status_perkawinan', true);
+		$hubungan_keluarga   = $this->input->post('hubungan_keluarga', true);
+		$status  		     = $this->input->post('status', true);
+		$pekerjaan  	     = $this->input->post('pekerjaan', true);
+		$pendidikan  	     = $this->input->post('pendidikan', true);
+		$status_hunian       = $this->input->post('status_hunian', true);
 		$data = [
-			'nama_warga'   	    => $nama_warga,
-			'nik'   		    => $nik,
-			'no_hp'   		    => $no_hp,
-			'tempat_lahir'      => $tempat_lahir,
-			'tanggal_lahir'     => $tanggal_lahir,
-			'agama'   			=> $agama,
-			'status_perkawinan' => $status_perkawinan,
-			'jenis_kelamin'     => $jenis_kelamin,
-			'hubungan_keluarga' => $hubungan_keluarga,
-			'status'   		    => $status,
-			'pekerjaan'   		=> $pekerjaan,
-			'pendidikan'        => $pendidikan,
-			'status_hunian'     => $status_hunian,
+			'nama_warga'   	       => $nama_warga,
+			'nik'   		       => $nik,
+			'no_hp'   		       => $no_hp,
+			'tempat_lahir'         => $tempat_lahir,
+			'tanggal_lahir'        => $tanggal_lahir,
+			'agama'   			   => $agama,
+			'status_perkawinan'    => $status_perkawinan,
+			'jenis_kelamin'        => $jenis_kelamin,
+			'hubungan_keluarga'    => $hubungan_keluarga,
+			'status'   		       => $status,
+			'pekerjaan'   		   => $pekerjaan,
+			'pendidikan'           => $pendidikan,
+			'status_hunian'        => $status_hunian,
 		];
 		$this->WargaModel->update_anggota_warga($id_detail_warga, $data);
 		$this->session->set_flashdata('flash', 'Update');
@@ -278,15 +263,29 @@ class Warga extends CI_Controller
 		$this->form_validation->set_rules('status_rumah', 'Status Rumah', 'required');
 	}
 
+	public function info_warga($id_warga)
+	{
+		if ($this->session->id_warga) {
+			$warga         = $this->WargaModel->get_warga($id_warga)->row();
+			$data['title'] = 'Detail Warga';
+			$data['warga'] = $warga;
+			$this->load->view('user/layouts/header', $data);
+			$this->load->view('user/pages/warga/info-warga', $data);
+			$this->load->view('user/layouts/footer');
+		} else {
+			redirect('user/auth');
+		}
+	}
+
 	public function proses_update_warga()
 	{
+		$id_warga = $this->session->id_warga;
+		$warga    = $this->WargaModel->get_warga($id_warga)->row();
 		// Memanggil function untuk validasi
 		$this->validasi_tambah_warga();
-		$id_warga = $this->input->post('id_warga');
 		if ($this->form_validation->run() == FALSE) {
 			$this->info_warga($id_warga);
 		}
-
 		$no_rumah   		     = $this->input->post('no_rumah');
 		$no_kk   		         = $this->input->post('no_kk');
 		$alamat   		         = $this->input->post('alamat');
@@ -294,15 +293,21 @@ class Warga extends CI_Controller
 		$status_rumah            = $this->input->post('status_rumah');
 		$rt   				     = $this->input->post('rt');
 		$rw   				     = $this->input->post('rw');
-
+		$status_rt 	 		 	 = $this->input->post('status_rumah_tangga');
+		if ($status_rt == NULL) {
+			$status_rumah_tangga = 	$warga->status_rumah_tangga;
+		} else {
+			$status_rumah_tangga 	 = implode(", ", $status_rt);
+		}
 		$data_warga = [
-			'no_rumah'   		 => $no_rumah,
-			'no_kk'   			 => $no_kk,
-			'alamat'   			 => $alamat,
-			'jumlah_keluarga'	 => $jumlah_keluarga,
-			'status_rumah' 		 => $status_rumah,
-			'rt'   				 => $rt,
-			'rw'   			     => $rw,
+			'no_rumah'   		  => $no_rumah,
+			'no_kk'   			  => $no_kk,
+			'alamat'   			  => $alamat,
+			'jumlah_keluarga'	  => $jumlah_keluarga,
+			'status_rumah' 		  => $status_rumah,
+			'status_rumah_tangga' => $status_rumah_tangga,
+			'rt'   				  => $rt,
+			'rw'   			      => $rw,
 		];
 		$this->WargaModel->update_warga($id_warga, $data_warga);
 		$this->session->set_flashdata('flash', 'Update');

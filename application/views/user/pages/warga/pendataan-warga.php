@@ -74,7 +74,7 @@
 	</div>
 </div>
 <!-- END Modal Lihat File KK -->
-
+<?php unset($_SESSION['flash']); ?>
 
 <div class="main-wrapper">
 	<section class="page-title bg-2">
@@ -132,6 +132,10 @@
 							<tr>
 								<td>Status Tempat Tinggal</td>
 								<td><?= $warga->status_rumah ?></td>
+							</tr>
+							<tr>
+								<td>Status Rumah Tangga</td>
+								<td><?= $warga->status_rumah_tangga ?></td>
 							</tr>
 							<tr>
 								<td>Foto KK</td>
@@ -324,8 +328,10 @@
 											<?php if ($this->session->status == "Kepala Keluarga") : ?>
 												<td>
 													<center>
-														<button class="btn btn-primary btn-sm btn-edit"><i class="fas fa-edit"></i></button>
-														<button class="btn btn-danger btn-sm btn-delete"><i class="fa fa-trash"></i></button>
+														<!-- <button class="btn btn-primary btn-sm btn-edit"><i class="fas fa-edit"></i></button> -->
+														<a href="<?= base_url("user/kendaraan/hapus_kendaraan/" . $kendaraan->id_kendaraan); ?>" onclick="return confirm('Are you sure?');">
+															<button class="btn btn-danger btn-sm btn-delete"><i class="fa fa-trash"></i></button>
+														</a>
 													</center>
 												</td>
 											<?php endif; ?>
@@ -341,7 +347,7 @@
 													</div>
 													<div class="modal-body">
 														<div class="form-group d-flex justify-content-center">
-															<img src="<?php echo base_url('uploads/' . $kendaraan->foto_kendaraan) ?>" alt="..." class="img-thumbnail mb-2">
+															<img src="<?php echo base_url('uploads/kendaraan/' . $kendaraan->foto_kendaraan) ?>" alt="..." class="img-thumbnail mb-2">
 														</div>
 													</div>
 													<div class="modal-footer">
@@ -350,7 +356,7 @@
 												</div>
 											</div>
 										</div>
-										<!-- START Modal Lihat File KTP -->
+										<!-- START Modal Lihat File Kendaraan -->
 									<?php endforeach; ?>
 								</tbody>
 							</table>

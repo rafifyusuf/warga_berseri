@@ -71,28 +71,6 @@
 				<?php endif ?>
 				<li>
 					<a href="javascript: void(0);">
-						<i class="fe-inbox"></i>
-						<span> Aspirasi </span>
-						<span class="menu-arrow"></span>
-					</a>
-					<ul class="nav-second-level" aria-expanded="false">
-						<li>
-							<a href="<?php echo base_url('admin/aspirasi') ?>">
-								</i>
-								<span> Aspirasi </span>
-							</a>
-						</li>
-						<li>
-							<a href="<?php echo base_url('admin/aspirasi/dataAspirasi') ?>">
-								<span> Data Aspirasi </span>
-							</a>
-						</li>
-					</ul>
-				</li>
-
-
-				<li>
-					<a href="javascript: void(0);">
 						<!-- <i class="fe-users"></i> -->
 						<i class="far fa-money-bill-alt"></i>
 						<span> Iuran </span>
@@ -118,28 +96,23 @@
 						</li>
 					</ul>
 				</li>
-
 				<li>
-
 					<a href="javascript: void(0);">
 						<i class="far fa-money-bill-alt"></i>
 						<span> Keuangan </span>
 						<span class="menu-arrow"></span>
 					</a>
 					<ul class="nav-second-level" aria-expanded="false">
-
 						<li>
 							<a href="<?php echo base_url('admin/penggunaan') ?>">
 								<span> Pengeluaran </span>
 							</a>
 						</li>
-
 						<li>
 							<a href="<?php echo base_url('admin/keuangan') ?>">
 								<span> Data Keuangan </span>
 							</a>
 						</li>
-
 					</ul>
 				</li>
 
@@ -164,7 +137,7 @@
 									<?php else : ?>
 									<li class="nav-item">
 									<?php endif ?>
-									<a href="<?= base_url('admin/' . $sm['url']) ?>">
+									<a href="<?= base_url('/admin/' . $sm['url']) ?>">
 										<i class="<?= $sm['usm_icon'] ?>"></i>
 										<span><?= $sm['title'] ?></span>
 									</a>

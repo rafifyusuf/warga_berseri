@@ -16,6 +16,7 @@ class Pemasukan extends CI_Controller
 
 	public function index()
 	{
+		$data['title'] = "Pemasukan";
 		$data['aspirasi'] = $this->AspirasiModel->getBelumTertangani()->result();
 		$data['saldo'] = $this->KeuanganModel->getTotalSaldo()->result();
 		$data['pemasukan'] = $this->PemasukanIuranModel->tampilDataPemasukan()->result();
@@ -49,11 +50,6 @@ class Pemasukan extends CI_Controller
 		$data_form = $this->input->post();
 		$total_saldo = $this->KeuanganModel->getTotalSaldo()->result();
 		$pemasukan = $total_saldo[0]->total_saldo + $data_form['jumlah_pemasukan'];
-
-		// $bulan_convert = strtotime($data_form['tanggal_Pemasukan']);
-		// $bulan = date('M',$bulan_convert);
-		// echo $bulan;
-
 		if ($pemasukan < 0) {
 			$this->session->set_flashdata('error', 'Saldo Tidak Mencukupi');
 			redirect('admin/pemasukan/tambah_pemasukan');

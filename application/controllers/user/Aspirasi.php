@@ -6,33 +6,90 @@ class Aspirasi extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('user/AspirasiModel', 'AspirasiModel');
+		// if (!$this->session->id_warga) {
+		// 	redirect('user/auth');
+		// }
+		$this->load->model('user/KeluhanAspirasi_Model','KeluhanAspirasi_Model');
+		$this->load->model('user/BeritaPengumuman_Model','BeritaPengumuman_Model');
 	}
 
 	//============================== TIKETING ASPIRASI ========================//
 
 	public function index()
 	{
-		$data_warga['data_warga'] = $this->AspirasiModel->getHariIni()->result();
 		$this->load->view('user/layouts/header');
-		$this->load->view('user/pages/aspirasi/input_aspirasi', $data_warga);
+		$this->load->view('user/pages/aspirasi/input_aspirasi');
 		$this->load->view('user/layouts/footer');
 	}
 
 	public function input_data_aspirasi()
 	{
-		$data = $this->input->post();
-		$aspirasi = array(
-			'no_tiket' 			=> $data['no_tiket'],
-			'tanggal_aspirasi' 	=> $data['tanggal_aspirasi'],
-			'jenis_aspirasi'	=> $data['jenis_aspirasi'],
-			'aspirasi'			=> $data['aspirasi'],
-			'id_detail_warga'	=> $data['id_detail_warga'],
-			'status_aspirasi'	=> 'BELUM TERTANGANI'
-		);
-
-		$this->AspirasiModel->input_aspirasi($aspirasi);
-		redirect('user/aspirasi/data_aspirasi_warga');
+		$this->form_validation->set_rules('nama', 'Full Name', 'trim|required');
+		$this->form_validation->set_rules('no_wa', 'WhatsApp Number', 'trim|required');
+		$this->form_validation->set_rules('jenis', 'Type', 'trim|required');
+		$this->form_validation->set_rules('jenis_pesan', 'Message Type', 'trim|required');
+		$this->form_validation->set_rules('isi', 'Content', 'trim|required');
+		$this->db->order_by('id', 'DESC');
+		$this->db->limit(1);
+		$data['pengumuman_terkini'] = $this->db->get('pengumuman')->row_array();
+		$this->db->order_by('id', 'DESC');
+		$this->db->limit(1);
+		$data['berita_terkini'] = $this->db->get('berita')->row_array();
+		$this->db->order_by('id', 'DESC');
+		$this->db->limit(1);
+		$data['peraturan_terkini'] = $this->db->get('peraturan')->row_array();
+		if ($this->form_validation->run() == false) {
+			$this->load->view('user/layouts/header');
+			if ($this->input->post('site') == 'home') {
+				$this->load->view('user/pages/index', $data);
+			} else {
+				$this->load->view('user/pages/aspirasi/input_aspirasi');
+			}
+			$this->load->view('user/layouts/footer');
+		} else {
+			$upload_image = $_FILES['bukti']['name'];
+			if ($upload_image) {
+				$config['allowed_types'] = 'gif|jpg|png|svg|jpeg';
+				$config['upload_path'] = './uploads/keluhan-aspirasi';
+				$config['max_size']     = '2048';
+				$this->load->library('upload', $config);
+				if ($this->upload->do_upload('bukti')) {
+					$new_image = $this->upload->data('file_name');
+					if ($this->input->post('jenis') == 'Aspirasi') {
+						$data = [
+							'nama' => $this->input->post('nama'),
+							'no_wa' => $this->input->post('no_wa'),
+							'jenis_aspirasi' => $this->input->post('jenis_pesan'),
+							'aspirasi' => $this->input->post('isi'),
+							'status' => 'Belum diproses',
+							'waktu_kirim' => date("Y-m-d H:i:s"),
+							'bukti' => $new_image
+						];
+						$this->KeluhanAspirasi_Model->insertAspirasi($data);
+					} elseif ($this->input->post('jenis') == 'Keluhan') {
+						$data = [
+							'nama' => $this->input->post('nama'),
+							'no_wa' => $this->input->post('no_wa'),
+							'jenis_keluhan' => $this->input->post('jenis_pesan'),
+							'keluhan' => $this->input->post('isi'),
+							'status' => 'Belum diproses',
+							'waktu_kirim' => date("Y-m-d H:i:s"),
+							'bukti' => $new_image
+						];
+						$this->KeluhanAspirasi_Model->insertKeluhan($data);
+					}
+					$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Your Message has been sent! </div>');
+					if ($this->input->post('site') == 'home') {
+						redirect('user');
+					} else {
+						redirect('user/aspirasi');
+					}
+				} else {
+					$this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">' . $this->upload->display_errors() . '</div>');
+				}
+				redirect('user/aspirasi');
+			}
+		}
 	}
 
 	public function data_aspirasi_warga()

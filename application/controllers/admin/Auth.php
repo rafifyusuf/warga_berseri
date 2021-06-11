@@ -230,9 +230,10 @@ class Auth extends CI_Controller
 
 	public function blocked()
 	{
-		$this->load->view('templates/header');
-		$this->load->view('auth/blocked');
-		$this->load->view('templates/header');
+		$data['title'] = 'blocked';
+		$this->load->view('admin/layouts/header', $data);
+		$this->load->view('admin/pages/auth/blocked');
+		$this->load->view('admin/layouts/footer');
 	}
 
 	public function forgotPassword()
@@ -313,9 +314,9 @@ class Auth extends CI_Controller
 		$this->form_validation->set_rules('password2', 'Confrim Password', 'required|trim|matches[password1]');
 		if ($this->form_validation->run() == false) {
 			$data['title'] = 'change Password';
-			$this->load->view('templates/auth_header', $data);
+			$this->load->view('admin/layouts/header', $data);
 			$this->load->view('auth/change-password');
-			$this->load->view('templates/auth_footer');
+			$this->load->view('admin/layouts/footer');
 		} else {
 			$password = password_hash($this->input->post('password1'), PASSWORD_DEFAULT);
 			$email = $this->session->userdata('reset_email');
@@ -327,27 +328,7 @@ class Auth extends CI_Controller
 			$this->session->set_flashdata('message', '<div class="alert alert-success" role="alert">
       Password has been change! Please login!
       </div>');
-			redirect('auth');
-		}
-	}
-
-	public function proses_login()
-	{
-		$username = $this->input->POST('username_admin');
-		$password = $this->input->POST('password_admin');
-
-		$data = array(
-			'username_admin' => $username,
-			'password_admin' => $password
-		);
-		$cek_user = $this->Auth_model->login($data);
-		if ($cek_user->num_rows() > 0) {
-
-			$this->session->set_userdata($cek_user->row_array());
-			redirect(base_url('Dashboard'));
-		} else {
-			$this->session->set_flashdata('error', 'Username & password tidak cocok');
-			redirect(base_url());
+			redirect('admin/auth');
 		}
 	}
 }

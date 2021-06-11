@@ -33,7 +33,6 @@ class Iuran extends CI_Controller
 		$this->load->view('admin/layouts/footer');
 	}
 
-
 	public function tambah_penggunaan()
 	{
 		$this->generate_data_iuran();
@@ -41,13 +40,11 @@ class Iuran extends CI_Controller
 		$this->load->view('penggunaan/tambahPenggunaan');
 		$this->load->view('admin/layouts/footer');
 	}
+
 	public function input_data_penggunaan()
 	{
 		$this->generate_data_iuran();
 		$data_form = $this->input->post();
-
-
-
 		$config['upload_path'] = './bukti_pengeluaran_penggunaan/';
 		$config['allowed_types'] = 'jpg|jpeg|png';
 		$config['max_size'] = '10000';
@@ -104,8 +101,6 @@ class Iuran extends CI_Controller
 	}
 	public function hapus_data_penggunaan($id)
 	{
-
-
 		$this->PenggunaanIuranModel->hapusdataPenggunaan($id);
 		redirect('IuranController/data_penggunaan_iuran');
 	}
@@ -114,6 +109,7 @@ class Iuran extends CI_Controller
 	public function view_dataIuran()
 	{
 		$this->generate_data_iuran();
+		$data['title'] = "iuran";
 		$data['aspirasi'] = $this->AspirasiModel->getBelumTertangani()->result();
 		$dataIuran['iuran'] = $this->IuranModel->tampilDataPembayaran()->result();
 		$this->load->view('admin/layouts/header', $data);
@@ -141,7 +137,6 @@ class Iuran extends CI_Controller
 		$this->load->view('admin/layouts/footer');
 	}
 
-
 	public function tambah_iuran()
 	{
 		$this->generate_data_iuran();
@@ -159,8 +154,6 @@ class Iuran extends CI_Controller
 		$this->load->view('admin/pages/iuran/tambahIuran', $data);
 		$this->load->view('admin/layouts/footer');
 	}
-
-
 
 	public function input_data_iuran()
 	{

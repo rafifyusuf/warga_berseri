@@ -84,6 +84,7 @@ class Warga extends CI_Controller
 		$this->form_validation->set_rules('rt', 'RT', 'required|numeric');
 		$this->form_validation->set_rules('rw', 'RW', 'required|numeric');
 		$this->form_validation->set_rules('status_rumah', 'Status Rumah', 'required');
+		$this->form_validation->set_rules('status_rumah_tangga[]', 'Status Rumah Tangga', 'required');
 	}
 
 	public function proses_tambah_warga()
@@ -106,6 +107,8 @@ class Warga extends CI_Controller
 			$status_rumah            = $this->input->post('status_rumah');
 			$rt   				     = $this->input->post('rt');
 			$rw   				     = $this->input->post('rw');
+			$status_rt 	 		     = $this->input->post('status_rumah_tangga');
+			$status_rumah_tangga     = implode(", ", $status_rt);
 
 			$config['upload_path']   = './uploads/kk/';
 			$config['allowed_types'] = 'pdf|jpeg|jpg|png';
@@ -118,15 +121,16 @@ class Warga extends CI_Controller
 			} else {
 				$file_kk = $this->upload->data('file_name');
 				$data_warga = [
-					'id_warga'  		 => $id_warga,
-					'no_rumah'   		 => $no_rumah,
-					'no_kk'   			 => $no_kk,
-					'alamat'   			 => $alamat,
-					'jumlah_keluarga'	 => $jumlah_keluarga,
-					'status_rumah' 		 => $status_rumah,
-					'rt'   				 => $rt,
-					'rw'   			     => $rw,
-					'file_kk'			 => $file_kk,
+					'id_warga'  		  => $id_warga,
+					'no_rumah'   		  => $no_rumah,
+					'no_kk'   			  => $no_kk,
+					'alamat'   			  => $alamat,
+					'jumlah_keluarga'	  => $jumlah_keluarga,
+					'status_rumah' 		  => $status_rumah,
+					'rt'   				  => $rt,
+					'rw'   			      => $rw,
+					'status_rumah_tangga' => $status_rumah_tangga,
+					'file_kk'			  => $file_kk,
 				];
 				$data_hunian = [
 					'id_warga'  	    => $id_warga,

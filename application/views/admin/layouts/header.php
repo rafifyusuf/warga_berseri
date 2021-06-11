@@ -182,7 +182,7 @@
 						<img src="<?php echo base_url() ?>assets/admin/images/pbb-logo.png" alt="" height="35">
 					</span>
 					<span class="logo-sm">
-						<img src="<?php echo base_url() ?>assets/admin/images/logo-sm.png" alt="" height="24">
+						<img src="<?php echo base_url() ?>assets/admin/images/pbb-logo.png" alt="" height="24">
 					</span>
 				</a>
 			</div>
