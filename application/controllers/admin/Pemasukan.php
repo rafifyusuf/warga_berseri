@@ -25,6 +25,17 @@ class Pemasukan extends CI_Controller
 		$this->load->view('admin/layouts/footer');
 		$this->generate_data_iuran();
 	}
+	
+	public function tampil_bulanan($bulan)
+	{
+		$data['aspirasi'] = $this->AspirasiModel->getBelumTertangani()->result();
+		$data['saldo'] = $this->KeuanganModel->getTotalSaldo()->result();
+		$data['pemasukan'] = $this->PemasukanIuranModel->tampilDataPemasukan($bulan)->result();
+		$this->load->view('admin/layouts/header', $data);
+		$this->load->view('admin/pages/pemasukan/pemasukanBulanan', $data);
+		$this->load->view('admin/layouts/footer');
+		$this->generate_data_iuran();
+	}
 
 	public function detail_pemasukan($id_pemasukan)
 	{
@@ -50,10 +61,14 @@ class Pemasukan extends CI_Controller
 		$data_form = $this->input->post();
 		$total_saldo = $this->KeuanganModel->getTotalSaldo()->result();
 		$pemasukan = $total_saldo[0]->total_saldo + $data_form['jumlah_pemasukan'];
-		if ($pemasukan < 0) {
-			$this->session->set_flashdata('error', 'Saldo Tidak Mencukupi');
-			redirect('admin/pemasukan/tambah_pemasukan');
-		} else {
+		$bulan_convert = strtotime($data_form['tanggal_pemasukan']);
+		$bulan = date('M',$bulan_convert);
+		$tahun = date('Y',$bulan_convert);
+
+		$check = $this->KeuanganModel->check_bulan_tahun($bulan,$tahun)->result();
+
+		//print_r($check);
+		// echo $bulan;
 
 			$config['upload_path'] = './uploads/bukti_pemasukan/';
 			$config['allowed_types'] = 'jpg|jpeg|png';
@@ -70,24 +85,46 @@ class Pemasukan extends CI_Controller
 			} else {
 				$data = array('upload_data'	=>	$this->upload->data());
 				$admin = $this->session->all_userdata();
-
 				$data = array(
 					'nama_pemasukan' => $data_form['nama_pemasukan'],
 					'kategori' => $data_form['kategori'],
 					'jumlah_pemasukan' => $data_form['jumlah_pemasukan'],
 					'tanggal_pemasukan' => $data_form['tanggal_pemasukan'],
-					'bukti_pemasukan'	=> "/uploads/bukti_pemasukan/" . $data['upload_data']['file_name'],
+					'bukti_pemasukan'	=> "/uploads/bukti_pemasukan_pemasukan/" . $data['upload_data']['file_name'],
 					'keterangan' => $data_form['keterangan'],
-					'id_admin' => $admin['id']
+					'id_admin' => $admin['id'],
+					'bulan_pemasukan' => $bulan,
+					'tahun_pemasukan' => $tahun
 				);
 				$totalsaldo = array('total_saldo' => $pemasukan);
-
+				if (empty($check)) {
+					$tagihan_bulanan = date('ym');
+					$jumlah_warga = $this->WargaModel->jumlah_rumah()->result();
+					$tagihan_lunas_bulanan = $this->IuranModel->data_iuran_lunas_bulanan($bulan, $tahun)->result();
+					$jumlah_warga_iuran = count($jumlah_warga);
+					$warga_sudah_bayar = count($tagihan_lunas_bulanan);
+					$warga_belum_bayar = count($tagihan_bulanan);
+					$check_rekap_iuran = $this->IuranModel->check_rekap_iuran_bulanan($bulan, $tahun)->result();
+					$data_keuangan = array(
+						'bulan'              => $bulan,
+						'tahun'              => $tahun,
+						'jumlah_warga'       => $jumlah_warga_iuran,
+						'jumlah_sudah_bayar' => $warga_sudah_bayar,
+						'jumlah_belum_bayar' => $warga_belum_bayar,
+		
+			 		); 	
+				$this->IuranModel->rekap_iuran_bulanan($data_keuangan);
 				$this->PemasukanIuranModel->tambahdataPemasukan($data);
 				$this->KeuanganModel->updateSaldo($totalsaldo);
 				redirect('admin/pemasukan/');
+				} else{
+				$this->PemasukanIuranModel->tambahdataPemasukan($data);
+				$this->KeuanganModel->updateSaldoPem($bulan,$tahun,$totalsaldo);
+				redirect('admin/pemasukan/');
+				}
+			} 
+			//print_r($check);
 			}
-		}
-	}
 
 	public function edit_data_pemasukan($id)
 	{
