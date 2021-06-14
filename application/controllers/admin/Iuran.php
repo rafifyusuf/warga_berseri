@@ -259,11 +259,9 @@ class Iuran extends CI_Controller
 		for ($i = 0; $i < count($get_rumah); $i++) {
 			$sw = $this->IuranModel->check_status($get_rumah[$i]->id_warga)->result();
 			$get_kepkel = $this->IuranModel->get_kepala_keluarga($get_rumah[$i]->id_warga)->result();
-			$stat = $sw[0]->status_rumah;
 			$kepkel = $get_kepkel[0]->nama_warga;
 
 			$notagihan = date('ymhis');
-			$nominal = 0;
 			$data_iuran = array(
 				'no_tagihan'      => $notagihan + $i,
 				'id_warga' => $get_rumah[$i]->id_warga,
