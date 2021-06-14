@@ -29,7 +29,6 @@ class Keuangan extends CI_Controller
 	{
 		$warga['iuran'] = $this->WargaModel->getrumah();
 
-
 		$this->load->view('admin/pages/keuangan/coba', $warga);
 	}
 
@@ -98,29 +97,6 @@ class Keuangan extends CI_Controller
 		}
 	}
 
-	//public function generate_iuran()
-	//{
-	//	$tagihan_bulanan = date('ym');
-	//	$get_warga = $this->WargaModel->getwarga();
-
-
-	//	for ($i = 0; $i < count($get_warga); $i++) {
-	//		$check_tagihan_bulanan  = $this->IuranModel->check_data_iuran($tagihan_bulanan, $get_warga[$i]->id_detail_warga)->result();
-
-	//		if (empty($check_tagihan_bulanan)) {
-	//			$notagihan = date('ymhis');
-	//			$data_iuran = array(
-	//				'no_tagihan'      => $notagihan + $i,
-	//				'nama'            => $get_warga[$i]->nama_warga,
-	//				'id_detail_warga' => $get_warga[$i]->id_detail_warga,
-	//				'bulan_iuran'     => date('M'),
-	//				'tahun_iuran'     => date('Y')
-	//			);
-	//			$this->IuranModel->tambahDataIuran($data_iuran);
-	//		}
-	//	}
-	//}
-
 	public function generate_rekap_iuran()
 	{
 		$bulan = date('M');
@@ -131,7 +107,7 @@ class Keuangan extends CI_Controller
 		$jumlah_warga_iuran = count($jumlah_warga);
 		$warga_sudah_bayar = count($tagihan_lunas_bulanan);
 		$warga_belum_bayar = $jumlah_warga_iuran - $warga_sudah_bayar;
-		$uang_iuran = count($tagihan_lunas_bulanan) * 100000;
+
 
 		$check_rekap_iuran = $this->IuranModel->check_rekap_iuran_bulanan($bulan, $tahun)->result();
 
@@ -143,7 +119,6 @@ class Keuangan extends CI_Controller
 				'jumlah_warga'       => $jumlah_warga_iuran,
 				'jumlah_sudah_bayar' => $warga_sudah_bayar,
 				'jumlah_belum_bayar' => $warga_belum_bayar,
-				'saldo'              => $uang_iuran
 			);
 
 			$this->IuranModel->rekap_iuran_bulanan($data_keuangan);
@@ -155,7 +130,7 @@ class Keuangan extends CI_Controller
 				'jumlah_warga'      => $jumlah_warga_iuran,
 				'jumlah_sudah_bayar'  => $warga_sudah_bayar,
 				'jumlah_belum_bayar'  => $warga_belum_bayar,
-				'saldo'         => $uang_iuran
+				
 			);
 
 			$this->IuranModel->update_rekap_iruan_bulanan($bulan, $tahun, $data_keuangan);
