@@ -8,8 +8,9 @@ class PemasukanIuranModel extends CI_Model
 		$this->db->insert('data_pemasukan_iuran', $data);
 	}
 
-	public function tampilDataPemasukan()
+	public function tampilDataPemasukan($bulan)
 	{
+		$this->db->where('bulan_pemasukan',$bulan);
 		return $this->db->get('data_pemasukan_iuran');
 	}
 
@@ -29,5 +30,12 @@ class PemasukanIuranModel extends CI_Model
 	{
 		$this->db->where('id_pemasukan', $id);
 		return $this->db->get('data_pemasukan_iuran');
+	}
+	public function pemasukan_bulanan()
+	{
+		$this->db->select('bulan_pemasukan , SUM(jumlah_pemasukan) as pemasukan' );
+		$this->db->from('data_pemasukan_iuran');
+		$this->db->group_by('bulan_pemasukan');
+		return $this->db->get();
 	}
 }
