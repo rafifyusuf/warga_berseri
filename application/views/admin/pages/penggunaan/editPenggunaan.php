@@ -1,3 +1,12 @@
+<link href="http://code.jquery.com/ui/1.9.2/themes/smoothness/jquery-ui.css" rel="stylesheet">
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+	$(function() {
+		$("#datepicker").datepicker({
+			maxDate: "D"
+		});
+	});
+</script>
 <div class="content-page">
 	<div class="content">
 
@@ -9,7 +18,7 @@
 					<!-- Illustrations -->
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
-							<h4 class="page-title">Form Tambah Data Penggunaan</h6>
+							<h4 class="page-title">Form Edit Data Penggunaan</h6>
 						</div>
 						<div class="card-body">
 							<div class="text-center">
@@ -35,7 +44,7 @@
 								<div class="form-group row">
 									<label style="text-align: left" class="col-sm-2 col-form-label">Tanggal Penggunaan</label>
 									<div class="col-sm-10">
-										<input type="date" class="form-control" name="tanggal_penggunaan" required="" value="<?php echo $penggunaan[0]->tanggal_penggunaan; ?>">
+										<input type="text" id="datepicker" class="form-control" name="tanggal_penggunaan" required value="<?php echo $penggunaan[0]->tanggal_penggunaan; ?>">
 									</div>
 								</div>
 								<div class="form-group row">

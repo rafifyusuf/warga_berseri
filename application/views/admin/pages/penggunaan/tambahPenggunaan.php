@@ -1,3 +1,12 @@
+<link href="http://code.jquery.com/ui/1.9.2/themes/smoothness/jquery-ui.css" rel="stylesheet">
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script>
+	$(function() {
+		$("#datepicker").datepicker({
+			maxDate: "D"
+		});
+	});
+</script>
 <div class="content-page">
 	<div class="content">
 
@@ -59,7 +68,7 @@
 							<div class="form-group row">
 								<label style="text-align: left" class="col-sm-2 col-form-label">Tanggal Penggunaan</label>
 								<div class="col-sm-10">
-									<input type="date" class="form-control" id="datepicker" name="tanggal_penggunaan" required>
+									<input type="text" class="form-control" id="datepicker" name="tanggal_penggunaan" required>
 								</div>
 							</div>
 							<div class="form-group row">

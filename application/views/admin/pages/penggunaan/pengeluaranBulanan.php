@@ -15,10 +15,10 @@
 						<div class="page-title-right">
 							<ol class="breadcrumb m-0">
 								<li class="breadcrumb-item"><a href="javascript: void(0);">Admin Warga Berseri</a></li>
-								<li class="breadcrumb-item"><a href="javascript: void(0);">Penggunaan</a></li>
+								<li class="breadcrumb-item"><a href="javascript: void(0);">Pengeluaran Iuran</a></li>
 							</ol>
 						</div>
-						<h4 class="page-title">Data Penggunaan</h4>
+						<h4 class="page-title">Data Pengeluaran</h4>
 					</div>
 				</div>
 			</div>
@@ -35,14 +35,13 @@
 									<div class="form-group mr-2">
 										<select id="demo-foo-filter-status" class="custom-select custom-select-sm">
 											<option value="">Tampilkan Semua</option>
-											<!--<option value="May">May</option>-->
 										</select>
 									</div>
 									<div class="form-group">
 										<input id="demo-foo-search" type="text" placeholder="Search" class="form-control form-control-sm" autocomplete="on">
 									</div>
 									<p style="float: right; margin-right:50%;">
-									<h6 class="m-0 font-weight-bold text-primary"><a href="<?php echo base_url('admin/penggunaan/tambah_penggunaan') ?>"><button class="btn btn-primary" type="submit">Tambah Data +</button></a></h6>
+									<h6 class="m-0 font-weight-bold text-primary"><a href="<?php echo base_url('admin/Pengeluaran/tambah_Pengeluaran') ?>"><button class="btn btn-primary" type="submit">Tambah Data +</button></a></h6>
 									</p>
 								</div>
 							</div>
@@ -52,29 +51,35 @@
 								<thead>
 									<tr>
 										<th>No.</th>
-										<th data-toggle="true">Bulan Penggunaan</th>
+										<th data-toggle="true">Nama Pengeluaran</th>
 										<th>Jumlah Pengeluaran</th>
+										<th>Tanggal Pengeluaran</th> 
 										<th>Aksi</th>
 									</tr>
 								</thead>
 								<tbody>
 									<?php $no = 1;
-									foreach ($penggunaan as $data_penggunaan) : ?>
+									foreach ($penggunaan as $data_pengeluaran) : ?>
 										<tr>
 											<td><?php echo $no++ ?></td>
-											<td><?php echo $data_penggunaan->bulan_penggunaan; ?></td>
-											<td><?php echo $hasil_rupiah = "Rp " . number_format($data_penggunaan->pengeluaran, 0, ',', '.') ?></td>
-											<td><a href=" <?php echo base_url('admin/penggunaan/tampil_bulanan/' . $data_penggunaan->bulan_penggunaan ) ?>" class="ladda-button btn btn-primary" data-style="slide-up">
-													<i class="mdi mdi-information-outline"></i> Info</a> </td>
-											<!--<td><?php $waktu =  strtotime($data_penggunaan->tanggal_penggunaan);
-													echo date('d-M-Y', $waktu); ?></td> -
-											<td> <a href=" <?php echo base_url('admin/penggunaan/detail_penggunaan/' . $data_penggunaan->id_penggunaan) ?>" class="ladda-button btn btn-primary" data-style="slide-up">
+											<!-- <td><?php echo $data_Pengeluaran->bulan_Pengeluaran; ?></td>
+											<td><?php echo $hasil_rupiah = "Rp " . number_format($data_Pengeluaran->Pengeluaran , 0 ,',','.') ?></td>
+											<td><a href=" <?php echo base_url('admin/pengeluaran/tampil_bulanan/' ) ?>" class="ladda-button btn btn-primary" data-style="slide-up">
+													<i class="mdi mdi-information-outline"></i> Info</a> </td> -->
+											<td><?php echo $data_pengeluaran->nama_kebutuhan; ?></td>
+											<td><?php echo $hasil_rupiah = "Rp " . number_format($data_pengeluaran->jumlah_pengeluaran, 0, ',', '.') ?></td>
+											<td><?php $waktu =  strtotime($data_pengeluaran->tanggal_penggunaan);
+													echo date('d-M-Y', $waktu); ?></td> 
+											<td> <a href=" <?php echo base_url('admin/penggunaan/detail_penggunaan/' . $data_pengeluaran->id_penggunaan) ?>" class="ladda-button btn btn-primary" data-style="slide-up">
 													<i class="mdi mdi-information-outline"></i> Info</a> &nbsp;&nbsp;
-												<a href=" <?php echo base_url('admin/penggunaan/edit_data_penggunaan/' . $data_penggunaan->id_penggunaan) ?>" class="ladda-button btn btn-success" data-style="slide-up">
+												<a href=" <?php echo base_url('admin/penggunaan/edit_data_pengggunaan/' . $data_pengeluaran->id_penggunaan) ?>" class="ladda-button btn btn-success" data-style="slide-up">
 													<i class="mdi mdi-pencil"></i> Edit</a>&nbsp;&nbsp;
-												<a href=" <?php echo base_url('admin/penggunaan/hapus_data_penggunaan/' . $data_penggunaan->id_penggunaan) ?>" class="ladda-button btn btn-danger" data-style="slide-up">
-													<i class="mdi mdi-delete"></i> Delete</a> -->
+												<a href=" <?php echo base_url('admin/penggunaan/hapus_data_penggunaan/' . $data_pengeluaran->id_penggunaan) ?>" class="ladda-button btn btn-danger" data-style="slide-up">
+													<i class="mdi mdi-delete"></i> Delete</a> 
 											</td>
+
+
+
 										</tr>
 									<?php endforeach; ?>
 								</tbody>

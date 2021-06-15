@@ -24,7 +24,7 @@
 								<div class="form-group row">
 									<label style="text-align: left" class="col-sm-2 col-form-label">Jumlah Pengeluaran</label>
 									<div class="col-sm-10">
-										<input type="number" name="jumlah_pengeluaran" class="form-control" required="" value="<?php echo $penggunaan[0]->jumlah_pengeluaran; ?>" readonly>
+										<input type="number" name="jumlah_pengeluaran" class="form-control" required="" value="<?php echo number_format($penggunaan[0]->jumlah_pengeluaran,0,',','.');  ?>" readonly>
 									</div>
 								</div>
 								<div class="form-group row">
