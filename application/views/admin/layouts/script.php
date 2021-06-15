@@ -1,7 +1,6 @@
 <!-- SWEETALLERT -->
 <script src="<?php echo base_url('assets/js/sweetalert2.all.min.js') ?>"></script>
 
-
 <!-- Vendor js -->
 <script src="<?php echo base_url() ?>assets/admin/js/vendor.min.js"></script>
 
@@ -35,8 +34,8 @@
 <script src="https://code.highcharts.com/modules/exporting.js"></script>
 <script src="https://code.highcharts.com/modules/export-data.js"></script>
 <script src="https://code.highcharts.com/modules/accessibility.js"></script>
-
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 
 
 <script type="text/javascript">

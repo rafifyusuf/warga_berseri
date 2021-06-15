@@ -88,4 +88,13 @@ class SuratModel extends CI_Model
 	{
 		$this->db->delete('surat', ['id_surat' => $id_template_surat]);
 	}
+
+	public function get_template_surat($id_template)
+	{
+		$this->db->select('file_surat');
+		$this->db->from('surat');
+		$this->db->where('id_surat', $id_template);
+		$query = $this->db->get();
+		return $query;
+	}
 }

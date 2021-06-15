@@ -53,6 +53,8 @@
 	<div class="content">
 		<!-- Start Content-->
 		<div class="container-fluid">
+			<div class="flash-data" data-flashdata="<?= $this->session->flashdata('flash'); ?>"></div>
+			<?php unset($_SESSION['flash']); ?>
 			<!-- start page title -->
 			<div class="row">
 				<div class="col-12">
@@ -130,7 +132,7 @@
 											</td>
 											<td>
 												<center>
-													<a href="<?php echo base_url('admin/kendaraan/hapus_kendaraan/' . $kendaraan->id_kendaraan . '/' . $id) ?>" class="ladda-button btn btn-danger" data-style="slide-up">
+													<a href="<?php echo base_url('admin/kendaraan/hapus_kendaraan/' . $kendaraan->id_kendaraan . '/' . $id) ?>" class="ladda-button btn btn-danger hapus" data-style="slide-up">
 														<i class="mdi mdi-delete"></i> Hapus
 													</a>
 											</td>
@@ -177,3 +179,37 @@
 			<!-- end row-->
 		</div> <!-- container -->
 	</div> <!-- content -->
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="<?php echo base_url('assets/js/sweetalert2.all.min.js') ?>"></script>
+
+	<script>
+		const flashData = $('.flash-data').data('flashdata');
+		console.log(flashData);
+		if (flashData) {
+			Swal.fire({
+				icon: 'success',
+				title: 'Data kendaraan',
+				text: 'Berhasil ' + flashData
+			});
+		}
+	</script>
+	<script>
+		$('.hapus').on('click', function(e) {
+			e.preventDefault();
+			const href = $(this).attr('href');
+			Swal.fire({
+				title: 'Anda yakin ingin menghapus kendaraan?',
+				text: "Data tidak dapat kembali setelah dihapus!",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Ya, hapus data!'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					document.location.href = href;
+				}
+			});
+		});
+	</script>

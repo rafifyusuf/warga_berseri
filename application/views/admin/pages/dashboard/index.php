@@ -6,7 +6,7 @@
 		display: none;
 	}
 </style>
-
+<?php unset($_SESSION['flash']); ?>
 <div class="content-page">
 	<div class="content">
 		<!-- Start Content-->

@@ -43,6 +43,9 @@
 
 		<!-- Start Content-->
 		<div class="container-fluid">
+			<div class="flash-data" data-flashdata="<?= $this->session->flashdata('flash'); ?>"></div>
+			<?php unset($_SESSION['flash']); ?>
+
 			<!-- start page title -->
 			<div class="row">
 				<div class="col-12">
@@ -101,13 +104,13 @@
 											</td>
 											<td style="width: 300px;">
 												<center>
-													<a href="<?= base_url('admin/surat/hapus_template_surat/' . $surat->id_surat) ?>">
+													<a href="<?= base_url('admin/surat/download_template_surat/' . $surat->id_surat) ?>">
 														<button class="ladda-button btn btn-success" data-style="slide-up">
 															<i class="mdi mdi-download"></i>
 															Unduh
 														</button>
 													</a>
-													<a href="<?= base_url('admin/surat/hapus_template_surat/' . $surat->id_surat) ?>">
+													<a href="<?= base_url('admin/surat/hapus_template_surat/' . $surat->id_surat) ?>" class="hapus">
 														<button class="ladda-button btn btn-danger" data-style="slide-up">
 															<i class="mdi mdi-delete"></i>
 															Hapus
@@ -135,3 +138,37 @@
 			<!-- end row -->
 		</div> <!-- container -->
 	</div> <!-- content -->
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="<?php echo base_url('assets/js/sweetalert2.all.min.js') ?>"></script>
+
+	<script>
+		const flashData = $('.flash-data').data('flashdata');
+		console.log(flashData);
+		if (flashData) {
+			Swal.fire({
+				icon: 'success',
+				title: 'Template Surat',
+				text: 'Berhasil ' + flashData
+			});
+		}
+	</script>
+	<script>
+		$('.hapus').on('click', function(e) {
+			e.preventDefault();
+			const href = $(this).attr('href');
+			Swal.fire({
+				title: 'Anda yakin ingin menghapus surat?',
+				text: "Data tidak dapat kembali setelah dihapus!",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Ya, hapus data!'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					document.location.href = href;
+				}
+			});
+		});
+	</script>

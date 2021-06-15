@@ -6,8 +6,9 @@ class Dashboard extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->model('user/KeluhanAspirasi_Model','KeluhanAspirasi_Model');
-		$this->load->model('user/BeritaPengumuman_Model','BeritaPengumuman_Model');
+		$this->load->model('user/KeluhanAspirasi_Model', 'KeluhanAspirasi_Model');
+		$this->load->model('user/BeritaPengumuman_Model', 'BeritaPengumuman_Model');
+		$this->load->model('user/FasilitasModel', 'FasilitasModel');
 		$this->load->library('pagination');
 	}
 	public function index()
@@ -277,9 +278,6 @@ class Dashboard extends CI_Controller
 		$this->load->view('user/layouts/footer');
 	}
 
-
-
-
 	public function detailInformasi($id = 1)
 	{
 		$data['pengumuman'] = $this->db->get_where('pengumuman', ['id' => $id])->row_array();
@@ -301,6 +299,7 @@ class Dashboard extends CI_Controller
 		$this->load->view('user/pages/dashboard/detail-peraturan', $data);
 		$this->load->view('user/layouts/footer');
 	}
+
 	public function detailNotulensi($id = 1)
 	{
 		if (!$this->session->userdata('id_warga')) {
@@ -309,6 +308,16 @@ class Dashboard extends CI_Controller
 		$data['notulensi'] = $this->db->get_where('notulensi', ['id' => $id])->row_array();
 		$this->load->view('user/layouts/header');
 		$this->load->view('user/pages/dashboard/detail-notulensi', $data);
+		$this->load->view('user/layouts/footer');
+	}
+
+	public function view_fasilitas()
+	{
+		$query = $this->FasilitasModel->get_fasilitas()->result();
+		$data['data_fasilitas'] = $query;
+
+		$this->load->view('user/layouts/header');
+		$this->load->view('user/pages/dashboard/V_fasilitas', $data);
 		$this->load->view('user/layouts/footer');
 	}
 }

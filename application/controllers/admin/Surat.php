@@ -38,10 +38,9 @@ class Surat extends CI_Controller
 
 	public function verifikasi_surat_rt()
 	{
-		$id_pengajuan_surat = $this->input->post('id_pengajuan_surat');
 		$rt 				= $this->input->post('rt');
 		$nama_rt 			= $this->session->name;
-
+		$id_pengajuan_surat = $this->input->post('id_pengajuan_surat');
 		$data = [
 			'rt'            => $rt,
 			'nama_rt'       => $nama_rt,
@@ -120,15 +119,15 @@ class Surat extends CI_Controller
 				'file_surat'       => $file_surat
 			);
 			$this->SuratModel->tambah_template_surat($data);
-			$this->session->set_flashdata('file', 'File berhasil diupload');
+			$this->session->set_flashdata('flash', 'File berhasil diupload');
 			redirect(base_url('admin/surat/template_surat'));
 		}
 	}
-	public function download_template_surat($id_pengajuan_surat)
+	public function download_template_surat($id_surat)
 	{
 		$this->load->helper('download');
-		$fileinfo = $this->WargaModel->download_surat($id_pengajuan_surat)->row_array();
-		$file = 'uploads/' . $fileinfo['file_surat'];
+		$fileinfo = $this->SuratModel->get_template_surat($id_surat)->row();
+		$file = 'uploads/template_surat/' . $fileinfo->file_surat;
 		force_download($file, NULL);
 	}
 
@@ -137,6 +136,7 @@ class Surat extends CI_Controller
 		$id_surat = $this->SuratModel->get_single_surat($id_template_surat)->row();
 		unlink(FCPATH . 'uploads/template_surat/' . $id_surat->file_surat);
 		$this->SuratModel->hapus_template_surat($id_template_surat);
+		$this->session->set_flashdata('flash', 'Dihapus');
 		redirect(base_url('admin/surat/template_surat'));
 	}
 }

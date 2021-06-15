@@ -5,6 +5,8 @@
 	<div class="content">
 		<!-- Start Content-->
 		<div class="container-fluid">
+			<div class="flash-data" data-flashdata="<?= $this->session->flashdata('flash'); ?>"></div>
+			<?php unset($_SESSION['flash']); ?>
 			<!-- start page title -->
 			<div class="row">
 				<div class="col-12">
@@ -86,17 +88,20 @@
 													<i class="mdi mdi-eye-outline"></i> Lihat
 												</button>
 											</td>
-											<td width='310px'>
+											<td style="width:310px;">
 												<center>
 													<a href=" <?php echo base_url('admin/warga/detail_warga/' . $warga->id_warga) ?>" class="ladda-button btn btn-primary" data-style="slide-up">
-														<i class="mdi mdi-information-outline"></i> Info Warga
+														<i class="mdi mdi-information-outline"></i> Warga
 													</a>
 													<a href=" <?php echo base_url('admin/kendaraan/data/' . $warga->id_warga . '/' . $warga->no_rumah) ?>" class="ladda-button btn btn-warning" data-style="slide-up">
-														<i class="mdi mdi-information-outline"></i> Info Kendaraan
+														<i class="mdi mdi-information-outline"></i> Kendaraan
 													</a>
-													<!-- <a href="<?php echo base_url('Warga/delete_warga/' . $warga->id_warga) ?>" class="ladda-button btn btn-danger" data-style="slide-up">
+													<a href="<?php echo base_url('admin/warga/hapus_warga/' . $warga->id_warga) ?>" class="ladda-button btn btn-danger hapus mt-2" data-style="slide-up">
 														<i class="mdi mdi-delete"></i> Hapus
-													</a> -->
+													</a>
+													<a href="<?php echo base_url('admin/warga/sunting_warga/' . $warga->id_warga) ?>" class="ladda-button btn btn-info mt-2" data-style="slide-up">
+														<i class=" mdi mdi-square-edit-outline"></i> Sunting
+													</a>
 												</center>
 											</td>
 										</tr>
@@ -141,3 +146,37 @@
 			<!-- end row -->
 		</div> <!-- container -->
 	</div> <!-- content -->
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="<?php echo base_url('assets/js/sweetalert2.all.min.js') ?>"></script>
+
+	<script>
+		const flashData = $('.flash-data').data('flashdata');
+		console.log(flashData);
+		if (flashData) {
+			Swal.fire({
+				icon: 'success',
+				title: 'Data Warga',
+				text: 'Berhasil ' + flashData
+			});
+		}
+	</script>
+	<script>
+		$('.hapus').on('click', function(e) {
+			e.preventDefault();
+			const href = $(this).attr('href');
+			Swal.fire({
+				title: 'Anda yakin ingin menghapus data?',
+				text: "Data tidak dapat kembali setelah dihapus!",
+				icon: 'warning',
+				showCancelButton: true,
+				confirmButtonColor: '#3085d6',
+				cancelButtonColor: '#d33',
+				confirmButtonText: 'Ya, hapus data!'
+			}).then((result) => {
+				if (result.isConfirmed) {
+					document.location.href = href;
+				}
+			});
+		});
+	</script>

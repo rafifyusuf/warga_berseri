@@ -34,6 +34,56 @@ class Warga extends CI_Controller
 		$this->load->view('admin/layouts/footer');
 	}
 
+	public function sunting_warga($id_warga)
+	{
+
+		$query = $this->WargaModel->get_single_warga($id_warga)->row();
+		$data['warga'] = $query;
+		$data['title'] = 'Sunting Warga';
+		$this->load->view('admin/layouts/header', $data);
+		$this->load->view('admin/pages/warga/sunting-warga', $data);
+		$this->load->view('admin/layouts/footer');
+	}
+
+	public function proses_update_warga()
+	{
+		$id_warga = $this->input->post('id_warga');
+		$warga    = $this->WargaModel->get_single_warga($id_warga)->row();
+		// Memanggil function untuk validasi
+		// $this->validasi_tambah_warga();
+		// if ($this->form_validation->run() == FALSE) {
+		// 	$this->sunting_warga($id_warga);
+		// }
+		$no_rumah   		     = $this->input->post('no_rumah');
+		$no_kk   		         = $this->input->post('no_kk');
+		$alamat   		         = $this->input->post('alamat');
+		$jumlah_keluarga         = $this->input->post('jumlah_keluarga');
+		$status_rumah            = $this->input->post('status_rumah');
+		$rt   				     = $this->input->post('rt');
+		$rw   				     = $this->input->post('rw');
+		$status_rt 	 		 	 = $this->input->post('status_rumah_tangga');
+		if ($status_rt == NULL) {
+			$status_rumah_tangga = 	$warga->status_rumah_tangga;
+		} else {
+			$status_rumah_tangga 	 = implode(", ", $status_rt);
+		}
+		$data_warga = [
+			'no_rumah'   		  => $no_rumah,
+			'no_kk'   			  => $no_kk,
+			'alamat'   			  => $alamat,
+			'jumlah_keluarga'	  => $jumlah_keluarga,
+			'status_rumah' 		  => $status_rumah,
+			'status_rumah_tangga' => $status_rumah_tangga,
+			'rt'   				  => $rt,
+			'rw'   			      => $rw,
+		];
+		$query = $this->WargaModel->update_warga($id_warga, $data_warga);
+		if ($query) {
+			$this->session->set_flashdata('flash', 'Update');
+			redirect(base_url('admin/warga/sunting_warga/' . $id_warga));
+		}
+	}
+
 	public function verifikasi_warga_info($id_detail_warga)
 	{
 		$data = [
@@ -142,15 +192,17 @@ class Warga extends CI_Controller
 				];
 				$this->WargaModel->tambah_warga($data_warga);
 				$this->WargaModel->tambah_anggota_warga($data_hunian);
+				$this->session->set_flashdata('flash', 'Ditambah');
 				redirect(base_url('admin/warga/data_warga'));
 			}
 		}
 	}
 
-	public function delete_warga($id)
+	public function hapus_warga($id_warga)
 	{
-		$this->WargaModel->delete_warga($id);
-		return redirect(base_url('admin/warga/data_warga'));
+		$this->WargaModel->hapus_warga($id_warga);
+		$this->session->set_flashdata('flash', 'Hapus');
+		redirect(base_url('admin/warga/data_warga'));
 	}
 
 	// ----------------------End Data Warga------------------------

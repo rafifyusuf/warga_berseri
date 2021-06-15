@@ -100,8 +100,8 @@ class Kendaraan extends CI_Controller
 	public function hapus_kendaraan($id_kendaraan)
 	{
 		$id_warga = $this->uri->segment(5);
-		// $no_rumah = $this->uri->segment(6);
 		$this->KendaraanModel->hapus_kendaraan($id_kendaraan);
+		$this->session->set_flashdata('flash', 'Dihapus');
 		redirect(base_url('admin/kendaraan/data/' . $id_warga));
 	}
 }

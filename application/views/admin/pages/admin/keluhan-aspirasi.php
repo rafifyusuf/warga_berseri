@@ -107,7 +107,7 @@
     									<td><?= $key['waktu_kirim'] ?></td>
     									<td>
     										<a href="" class="badge badge-primary detailAspirasiModalButton" data-toggle="modal" data-target="#newAspirasiModal" data-id="<?= $key['id'] ?>">Detail</a>
-    										<a href="<?= base_url("admin/Admin/deleteAspirasi/$key[id]"); ?>" class="badge badge-danger" onclick="return confirm('Are you sure?');">Delete</a>
+    										<a href="<?= base_url("admin/keluhanaspirasi/deleteAspirasi/$key[id]"); ?>" class="badge badge-danger" onclick="return confirm('Are you sure?');">Delete</a>
     									</td>
     								</tr>
     								<?php $no++; ?>
@@ -141,10 +141,6 @@
     					<div class="form-group">
     						<label for="name">Nama Lengkap</label>
     						<input type="text" class="form-control" id="nama_aspirasi" name="nama" readonly>
-    					</div>
-    					<div class="form-group">
-    						<label for="email">Email</label>
-    						<input type="email" class="form-control" id="email_aspirasi" name="email" readonly>
     					</div>
     					<div class="form-group">
     						<label for="no_wa">Nomor WhatsApp</label>
@@ -197,16 +193,12 @@
     					<span aria-hidden="true">&times;</span>
     				</button>
     			</div>
-    			<form action="<?= base_url('KeluhanAspirasi/updateKeluhan') ?>" method="post">
+    			<form action="<?= base_url('admin/KeluhanAspirasi/updateKeluhan') ?>" method="post">
     				<input type="hidden" name="id" id="idk">
     				<div class="modal-body">
     					<div class="form-group">
     						<label for="name">Nama Lengkap</label>
     						<input type="text" class="form-control" id="nama_keluhan" name="nama" readonly>
-    					</div>
-    					<div class="form-group">
-    						<label for="email">Email</label>
-    						<input type="email" class="form-control" id="email_keluhan" name="email" readonly>
     					</div>
     					<div class="form-group">
     						<label for="no_wa">Nomor WhatsApp</label>

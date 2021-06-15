@@ -131,6 +131,12 @@ class WargaModel extends CI_Model
 		$this->db->where('id_detail_warga', $id_detail_warga);
 		return $this->db->update('detail_warga', $data);
 	}
+
+	public function update_warga($id_warga, $data)
+	{
+		$this->db->where('id_warga', $id_warga);
+		return $this->db->update('warga', $data);
+	}
 	// ---------------------------End update data---------------------------
 
 
@@ -157,6 +163,10 @@ class WargaModel extends CI_Model
 		$this->db->delete('detail_warga', array('id_detail_warga' => $id_hunian));
 	}
 
+	public function hapus_warga($id_warga)
+	{
+		$this->db->delete('warga', array('id_warga' => $id_warga));
+	}
 
 	// ---------------------------End delete data-----------------------------
 

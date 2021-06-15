@@ -6,11 +6,11 @@ class Aspirasi extends CI_Controller
 	public function __construct()
 	{
 		parent::__construct();
-		// if (!$this->session->id_warga) {
-		// 	redirect('user/auth');
-		// }
-		$this->load->model('user/KeluhanAspirasi_Model','KeluhanAspirasi_Model');
-		$this->load->model('user/BeritaPengumuman_Model','BeritaPengumuman_Model');
+		if (!$this->session->id_warga) {
+			redirect('user/auth');
+		}
+		$this->load->model('user/KeluhanAspirasi_Model', 'KeluhanAspirasi_Model');
+		$this->load->model('user/BeritaPengumuman_Model', 'BeritaPengumuman_Model');
 	}
 
 	//============================== TIKETING ASPIRASI ========================//
