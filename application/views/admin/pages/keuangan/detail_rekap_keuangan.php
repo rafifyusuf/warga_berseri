@@ -53,7 +53,9 @@
 								<li class="breadcrumb-item"><a href="javascript: void(0);">Data Iuran Warga</a></li>
 							</ol>
 						</div>
-						<h4 class="page-title">Data Iuran Warga, <?php echo $iuran[0]->bulan_iuran . " / " . $iuran[0]->tahun_iuran; ?></h4>
+						<h4 class="page-title">Data Iuran Warga, <?php if (empty($iuran)) {
+												echo " ";
+											} else { $iuran[0]->bulan_iuran . " / " . $iuran[0]->tahun_iuran; }?></h4>
 					</div>
 				</div>
 			</div>
@@ -94,7 +96,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<?php $no = 1;
+									<?php $no = 1; 
 									foreach ($iuran as $warga) : ?>
 										<tr>
 											<td><?php echo $no++ ?></td>
@@ -113,15 +115,16 @@
 												<ul class="pagination pagination-rounded justify-content-end footable-pagination m-t-10 mb-0"></ul>
 											</div>
 										</td>
-									</tr>
+									 </tr>
 								</tfoot>
 							</table>
 						</div> <!-- end .table-responsive-->
 					</div> <!-- end card-box -->
 				</div> <!-- end col -->
 			</div>
+			
 			<!-- end row -->
 			<button onclick="exportTableToExcel('demo-foo-filtering', 'data-iuran')" class="ladda-button btn btn-primary" data-style="slide-up">Export Table Data To Excel File</button>
 		</div> <!-- container -->
-
+ 
 	</div> <!-- content -->
