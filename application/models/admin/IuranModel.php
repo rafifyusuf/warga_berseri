@@ -73,7 +73,7 @@ class IuranModel extends CI_Model
 
 	public function getsaldo()
 	{
-		$this->db->select('SUM(saldo) as "total_saldo" ');
+		$this->db->select('total_saldo');
 		$this->db->from('data_keuangan_iuran');
 		return $this->db->get();
 	}
@@ -142,12 +142,22 @@ class IuranModel extends CI_Model
 		$this->db->where('no_tagihan', $no_tagihan);
 		$this->db->update('data_iuran_warga', $data_iuran);
 	}
-
-	public function saldoIuran()
+	
+	public function tolak_verifikasi($no_tagihan)
 	{
-		$this->db->where('saldo', 0);
-		return $this->db->get('data_keuangan_iuran');
+		$data_iuran = array('tanggal_pembayaran' => '',
+							'bukti_pembayaran' => '',
+							'status_iuran'=>'Ditolak');			
+		$this->db->where('no_tagihan',$no_tagihan);
+		$this->db->update('data_iuran_warga', $data_iuran);
+
 	}
+
+// 	public function saldoIuran()
+// 	{
+// 		$this->db->where('saldo', 0);
+// 		return $this->db->get('data_keuangan_iuran');
+// 	}
 
 	public function dataIuran($id_warga)
 	{
@@ -184,7 +194,7 @@ class IuranModel extends CI_Model
 	{
 		$this->db->where('bulan_iuran', $bulan);
 		$this->db->where('tahun_iuran', $tahun);
-		$this->db->where('status_iuran', 'Lunas');
+		$this->db->group_by('status_iuran');
 		$this->db->select('SUM(nominal) as total_nominal');
 		$this->db->from('data_iuran_warga');
 		return $this->db->get();
@@ -198,11 +208,23 @@ class IuranModel extends CI_Model
 		$this->db->from('data_iuran_warga');
 		return $this->db->get();
 	}
-
-
-
-
-
+	
+	public function nominal($id)
+	{
+		$this->db->where('id_warga',$id);
+		$this->db->select('nominal');
+		$this->db->from('data_iuran_warga');
+		return $this->db->get();
+	}
+	
+	public function nominal_tagihan($no_tagihan)
+	{
+		$this->db->where('no_tagihan',$no_tagihan);
+		$this->db->select('nominal');
+		$this->db->from('data_iuran_warga');
+		return $this->db->get();
+		
+	}
 
 	public function getBulanBelomLunas($id_warga)
 	{
