@@ -23,7 +23,7 @@
 		<div class="container">
 			<div class="table-responsive">
 				<div class="card mt-4">
-					<div class="card-header">Data Iuran <?php echo $warga['nama_warga']; ?><?php echo  " | " . $warga['id_detail_warga']; ?>
+					<div class="card-header">Data Iuran <?php echo $warga['nama_warga']; ?><?php echo  " | " . $warga['id_warga']; ?>
 					</div>
 
 					<div class="card-body">
@@ -34,8 +34,9 @@
 									<th>No Tagihan</th>
 									<th>Bulan</th>
 									<th>Tahun</th>
-									<th>Nama</th>
+									<th>Nama Kepala Keluarga</th>
 									<th>Status Iuran</th>
+									<th>Jenis</th>
 									<th>Tagihan</th>
 									<th>Aksi</th>
 								</tr>
@@ -46,19 +47,24 @@
 
 								foreach ($iuran as $pengguna) {
 								?>
-									<?php $nom = $pengguna->nominal; ?>
+											
 									<tr>
 										<th><?php echo $no++; ?></th>
-										<th> <?php echo $pengguna->no_tagihan; ?></th>
+										<th><?php echo $pengguna->no_tagihan; ?></th>
 										<th><?php echo $pengguna->bulan_iuran; ?></th>
 										<th><?php echo $pengguna->tahun_iuran; ?></th>
-										<th> <?php echo $pengguna->nama; ?></th>
-										<th> <?php echo $pengguna->status_iuran; ?></th>
-										<th><?php echo number_format($nom, 0, '', '.'); ?></th>
+										<th><?php echo $pengguna->nama; ?></th>
+										<th><?php if ($pengguna->status_iuran == "Ditolak") {
+											?> <button class="btn btn-warning" color="red">Ditolak</button>
+										 <?php }else{
+										 	echo $pengguna->status_iuran;
+										 } ?> </th>
+										<th><?php echo $pengguna->jenis; ?></th>
+										<th><?php echo number_format($pengguna->nominal, 0, '', '.'); ?></th>
 										<?php if ($pengguna->status_iuran == "Belum Diverifikasi") : ?>
 											<th>Sudah Bayar</th>
 										<?php endif; ?>
-										<?php if ($pengguna->status_iuran == "Belum Lunas") : ?>
+										<?php if ($pengguna->status_iuran == "Belum Lunas" || $pengguna->status_iuran == "Ditolak") : ?>
 											<th>
 												<a href="<?php echo base_url(); ?>user/iuran/tambah_data_pembayaran/<?php echo $pengguna->no_tagihan; ?>">
 													<button class="btn btn-primary">Bayar</button>
@@ -71,9 +77,14 @@
 						</table>
 						<div class="right">
 							<b>
-								<?php $nom = $nom + $nom;
-								echo  "Total Tagihan Rp. " . number_format($nom, 0, '', '.');   ?>
-							</b>
+								<?php 
+								if (empty($iuran)) {
+									echo  "Total Tagihan Rp. 0"; 
+								}else{
+								$tagihan = $nominal[0]->tagihan;
+								echo  "Total Tagihan Rp. " . number_format($tagihan, 0, '', '.'); 
+								}  ?>
+							</b> 
 						</div>
 					</div>
 				</div>

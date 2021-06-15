@@ -34,8 +34,8 @@
 
 								<th>Bulan Iuran</th>
 								<th>Tahun Iuran</th>
-								<th>Nama</th>
 								<th>Tanggal Pembayaran</th>
+								<th>Jenis</th>
 								<th>Status</th>
 								<!--<th>Aksi</th>-->
 							</tr>
@@ -50,10 +50,16 @@
 									<!--<th><?php echo $admin[0]->username_admin; ?></th>-->
 									<th><?php echo $iuran_warga->bulan_iuran; ?></th>
 									<th><?php echo $iuran_warga->tahun_iuran; ?></th>
-									<th> <?php echo $iuran_warga->nama; ?></th>
 									<th><?php $tanggal =  strtotime($iuran_warga->tanggal_pembayaran);
 										echo date('d-M-Y', $tanggal); ?></th>
-									<th><button type="submit" class="btn btn-success"> <?php echo $iuran_warga->status_iuran; ?></button></th>
+										<th> <?php echo $iuran_warga->jenis; ?></th>
+									<th><a href="<?= base_url('user/iuran/download_bukti_pembayaran/' . $iuran_warga->no_tagihan) ?>">
+														<button class="btn btn-success btn-sm">
+															<i class="fas fa-download"></i><?php echo " ". $iuran_warga->status_iuran; ?>
+														</button>
+													</a>
+													<!--<button type="submit" class="btn btn-success"> 
+									<?php echo $iuran_warga->status_iuran; ?></button></th>-->
 								</tr>
 								<!-- <th>Cetak Bukti Pembayaran</th> -->
 							<?php } ?>

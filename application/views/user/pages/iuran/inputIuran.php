@@ -10,9 +10,9 @@
 					<ul class="list-inline mb-0">
 						<li class="list-inline-item"><a href="index.html" class="text-sm letter-spacing text-white text-uppercase font-weight-bold">Home</a></li>
 						<li class="list-inline-item"><span class="text-white">|</span></li>
-						<li class="list-inline-item"><a href="#" class="text-color text-uppercase text-sm letter-spacing">Pendataan Warga</a></li>
+						<li class="list-inline-item"><a href="#" class="text-color text-uppercase text-sm letter-spacing">Iuran Warga</a></li>
 					</ul>
-					<h1 class="text-lg text-white mt-2">Info Aspirasi Warga</h1>
+					<h1 class="text-lg text-white mt-2">Pembayaran Iuran Warga</h1>
 				</div>
 			</div>
 		</div>
@@ -36,6 +36,10 @@
 							<label for="nama">Nama Penghuni</label>
 							<input type="text" id="fname" name="nama_warga" value="<?php echo $warga['nama_warga']; ?>" readonly>
 							<input type="hidden" name="id_detail_warga" value="<?php echo $warga['id_detail_warga']; ?>">
+							<br><br>
+							<label for="pembayaran">Nominal</label>
+							<br>
+							<input type="text" name="nominal" value="<?php echo $bayar->nominal; ?>" required>
 							<br><br>
 							<label for="pembayaran">Tanggal Pembayaran</label>
 							<br>
