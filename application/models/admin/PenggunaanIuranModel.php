@@ -8,8 +8,9 @@ class PenggunaanIuranModel extends CI_Model
 		$this->db->insert('data_penggunaan_iuran', $data);
 	}
 
-	public function tampilDataPenggunaan()
+	public function tampilDataPenggunaan($bulan)
 	{
+		$this->db->where('bulan_penggunaan',$bulan);
 		return $this->db->get('data_penggunaan_iuran');
 	}
 
@@ -29,5 +30,13 @@ class PenggunaanIuranModel extends CI_Model
 	{
 		$this->db->where('id_penggunaan', $id);
 		return $this->db->get('data_penggunaan_iuran');
+	}
+	
+	public function penggunaan_bulanan()
+	{
+		$this->db->select('bulan_penggunaan , SUM(jumlah_pengeluaran) as pengeluaran' );
+		$this->db->from('data_penggunaan_iuran');
+		$this->db->group_by('bulan_penggunaan');
+		return $this->db->get();
 	}
 }
