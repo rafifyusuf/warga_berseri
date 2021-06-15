@@ -35,11 +35,34 @@ class IuranModel extends CI_Model
 		$this->db->where('status_iuran', 'Lunas');
 		return $this->db->get('data_iuran_warga');
 	}
+	
+	public function nominal_tagihan_iuran($id)
+	{	
+		$this->db->select('SUM(nominal) as tagihan');
+		$this->db->where('id_warga', $id);
+		$this->db->where_not_in('status_iuran', 'Belum Diverifikasi');
+		$this->db->where_not_in('status_iuran', 'Lunas');
+		return $this->db->get('data_iuran_warga');
+	}
+	
+	public function get_IuranWarga_lunas($id)
+	{
+		$this->db->where('id_warga', $id);
+		$this->db->where('status_iuran', 'Lunas');
+		return $this->db->get('data_iuran_warga');
+	}
 
 	public function get_tagihanIuran($id)
 	{
 		$this->db->where('no_tagihan', $id);
 		$this->db->where_not_in('status_iuran', 'Lunas');
+		return $this->db->get('data_iuran_warga');
+	}
+	
+	public function get_Iuran($id)
+	{
+		$this->db->where('no_tagihan', $id);
+		$this->db->where('status_iuran', 'Lunas');
 		return $this->db->get('data_iuran_warga');
 	}
 
