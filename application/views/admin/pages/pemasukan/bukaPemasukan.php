@@ -9,7 +9,7 @@
 				<!-- Illustrations -->
 				<div class="card shadow mb-4">
 					<div class="card-header py-3">
-						<h4 class="m-0 font-weight-bold text-primary">Data pemasukan <?php echo $pemasukan[0]->nama_pemasukan; ?></h6>
+						<h4 class="page-title">Data pemasukan <?php echo $pemasukan[0]->nama_pemasukan; ?></h6>
 					</div>
 					<div class="card-body">
 						<div class="text-center">
@@ -21,13 +21,13 @@
 									</div>
 								</div>
 								<div class="form-group row">
-									<label style="text-align: left" class="col-sm-2 col-form-label">Jumlah Pengeluaran</label>
+									<label style="text-align: left" class="col-sm-2 col-form-label">Jumlah Pemasukan</label>
 									<div class="col-sm-10">
-										<input type="number" name="jumlah_pengeluaran" class="form-control" required="" value="<?php echo $pemasukan[0]->jumlah_pengeluaran; ?>" readonly>
+										<input type="number" name="jumlah_pengeluaran" class="form-control" required="" value="<?php echo $pemasukan[0]->jumlah Pemasukan; ?>" readonly>
 									</div>
 								</div>
 								<div class="form-group row">
-									<label style="text-align: left" class="col-sm-2 col-form-label">Tanggal pemasukan</label>
+									<label style="text-align: left" class="col-sm-2 col-form-label">Tanggal Pemasukan</label>
 									<div class="col-sm-10">
 										<input type="date" class="form-control" name="tanggal_pemasukan" required="" value="<?php echo $pemasukan[0]->tanggal_pemasukan; ?>" readonly>
 									</div>
@@ -44,9 +44,9 @@
 										<textarea class="form-control" rows="10" name="keterangan" required readonly><?php echo $pemasukan[0]->keterangan; ?></textarea>
 									</div>
 								</div>
-								<div style="text-align: center" class="col-sm-12">
+<!-- 								<div style="text-align: center" class="col-sm-12">
 									<a href="<?php echo base_url('pemasukan/') ?>" style="text-decoration: none;"><button class="btn btn-primary" type="button">Kembali</button></a>
-								</div>
+								</div> -->
 								<!--      </form> -->
 						</div>
 					</div>
