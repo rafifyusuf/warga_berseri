@@ -41,7 +41,7 @@
 										<input id="demo-foo-search" type="text" placeholder="Search" class="form-control form-control-sm" autocomplete="on">
 									</div>
 									<p style="float: right; margin-right:50%;">
-									<h6 class="m-0 font-weight-bold text-primary"><a href="<?php echo base_url('admin/Pengeluaran/tambah_Pengeluaran') ?>"><button class="btn btn-primary" type="submit">Tambah Data +</button></a></h6>
+									<h6 class="m-0 font-weight-bold text-primary"><a href="<?php echo base_url('admin/Penggunaan/tambah_penggunaan') ?>"><button class="btn btn-primary" type="submit">Tambah Data +</button></a></h6>
 									</p>
 								</div>
 							</div>
@@ -62,8 +62,8 @@
 									foreach ($penggunaan as $data_pengeluaran) : ?>
 										<tr>
 											<td><?php echo $no++ ?></td>
-											<!-- <td><?php echo $data_Pengeluaran->bulan_Pengeluaran; ?></td>
-											<td><?php echo $hasil_rupiah = "Rp " . number_format($data_Pengeluaran->Pengeluaran , 0 ,',','.') ?></td>
+											<!-- <td><?php echo $data_pengeluaran->bulan_pengeluaran; ?></td>
+											<td><?php echo $hasil_rupiah = "Rp " . number_format($data_pengeluaran->pengeluaran , 0 ,',','.') ?></td>
 											<td><a href=" <?php echo base_url('admin/pengeluaran/tampil_bulanan/' ) ?>" class="ladda-button btn btn-primary" data-style="slide-up">
 													<i class="mdi mdi-information-outline"></i> Info</a> </td> -->
 											<td><?php echo $data_pengeluaran->nama_kebutuhan; ?></td>
