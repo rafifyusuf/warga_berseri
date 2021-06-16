@@ -90,7 +90,7 @@ class Pemasukan extends CI_Controller
 					'kategori' => $data_form['kategori'],
 					'jumlah_pemasukan' => $data_form['jumlah_pemasukan'],
 					'tanggal_pemasukan' => $data_form['tanggal_pemasukan'],
-					'bukti_pemasukan'	=> "/uploads/bukti_pemasukan_pemasukan/" . $data['upload_data']['file_name'],
+					'bukti_pemasukan'	=> "/uploads/bukti_pemasukan/" . $data['upload_data']['file_name'],
 					'keterangan' => $data_form['keterangan'],
 					'id_admin' => $admin['id'],
 					'bulan_pemasukan' => $bulan,
@@ -174,7 +174,7 @@ class Pemasukan extends CI_Controller
 				redirect('Pemasukan/');
 			} else {
 
-				$config['upload_path'] = './uploads/bukti_pemasukan_Pemasukan/';
+				$config['upload_path'] = './uploads/bukti_pemasukan/';
 				$config['allowed_types'] = 'jpg|jpeg|png';
 				$config['max_size'] = '10000';
 				$config['max_width'] = '10000';
