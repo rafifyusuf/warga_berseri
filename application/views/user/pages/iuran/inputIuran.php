@@ -45,10 +45,6 @@
 							<br>
 							<input type="text" name="tanggal_pembayaran" id="datepicker" required>
 							<br><br>
-							<label for="pembayaran">Pembayaran</label>
-							<br>
-							<input type="text" name="pembayaran" readonly value="Transfer">
-							<br><br>
 							<label for="bukti">Bukti Pembayaran</label>
 							<br>
 							<input id="bukti" type="file" name="bukti_pembayaran" required="">
