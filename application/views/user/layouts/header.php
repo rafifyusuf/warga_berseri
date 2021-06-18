@@ -38,13 +38,13 @@
 						<a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Iuran</a>
 						<ul class="dropdown-menu">
 							<li>
-								<a class="dropdown-item" href="<?php echo base_url(); ?>user/iuran">Pembayaran Iuran</a>
+								<a class="dropdown-item" href="<?php echo base_url(); ?>user/iuran">Data Iuran</a>
 							</li>
 							<li>
 								<a class="dropdown-item" href="<?php echo base_url(); ?>user/iuran/riwayat_iuran">Riwayat Pembayaran Iuran</a>
 							</li>
 							<li>
-								<a class="dropdown-item" href="<?php echo base_url(); ?>user/iuran/data_penggunaan">Data Penggunaan</a>
+								<a class="dropdown-item" href="<?php echo base_url(); ?>user/iuran/data_penggunaan">Info Keuangan</a>
 							</li>
 						</ul>
 					</li>
