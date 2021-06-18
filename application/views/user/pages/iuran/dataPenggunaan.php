@@ -23,7 +23,7 @@
 			<div class=container>
 				<div class="card my-4">
 					<div class="card-header">
-						Data Penggunaan Iuran
+						Info Iuran
 					</div>
 
 					<div class="card-body">
