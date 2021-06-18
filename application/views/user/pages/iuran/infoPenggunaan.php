@@ -10,7 +10,7 @@
 						<li class="list-inline-item"><span class="text-white">|</span></li>
 						<li class="list-inline-item"><a href="#" class="text-color text-uppercase text-sm letter-spacing">Iuran Warga</a></li>
 					</ul>
-					<h1 class="text-lg text-white mt-2">Info Penggunaan Iuran</h1>
+					<h1 class="text-lg text-white mt-2">Info Keuangan</h1>
 				</div>
 			</div>
 		</div>
