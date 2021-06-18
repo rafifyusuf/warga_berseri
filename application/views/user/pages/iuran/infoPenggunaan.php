@@ -19,7 +19,7 @@
 	<div class="container-fluid">
 		<div class="card mt-4">
 			<div class="card-header">
-				Detail Penggunaan Uang Iuran
+				Info Keuangan
 			</div>
 			<div class="card-body">
 				<div class="container">
