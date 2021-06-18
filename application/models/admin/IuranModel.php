@@ -21,6 +21,7 @@ class IuranModel extends CI_Model
 	public function tampilRiwayatPembayaran()
 	{
 		$this->db->where('status_iuran', 'Lunas');
+		$this->db->order_by('tanggal_pembayaran','DESC');
 		return $this->db->get('data_iuran_warga');
 	}
 
