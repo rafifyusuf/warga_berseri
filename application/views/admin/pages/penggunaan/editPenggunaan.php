@@ -18,7 +18,7 @@
 					<!-- Illustrations -->
 					<div class="card shadow mb-4">
 						<div class="card-header py-3">
-							<h4 class="page-title">Form Edit Data Penggunaan</h6>
+							<h4 class="page-title">Form Edit Data Pengeluaran</h6>
 						</div>
 						<div class="card-body">
 							<div class="text-center">
@@ -42,20 +42,20 @@
 									</div>
 								</div>
 								<div class="form-group row">
-									<label style="text-align: left" class="col-sm-2 col-form-label">Tanggal Penggunaan</label>
+									<label style="text-align: left" class="col-sm-2 col-form-label">Tanggal Pengeluaran</label>
 									<div class="col-sm-10">
 										<input type="text" id="datepicker" class="form-control" name="tanggal_penggunaan" required value="<?php echo $penggunaan[0]->tanggal_penggunaan; ?>">
 									</div>
 								</div>
 								<div class="form-group row">
-									<label style="text-align: left" class="col-sm-2 col-form-label">Bukti Penggunaan </label>
+									<label style="text-align: left" class="col-sm-2 col-form-label">Bukti Pengeluaran</label>
 									<div class="col-sm-5">
 										<a href="<?= base_url($penggunaan[0]->bukti_pengeluaran); ?>" target="_blank">
 											<img src="<?= base_url($penggunaan[0]->bukti_pengeluaran); ?>" style="height: 70%; width: 50%; float: left;"></a>
 									</div>
 								</div>
 								<div class="form-group row">
-									<label style="text-align: left" class="col-sm-2 col-form-label">Bukti Penggunaan Baru</label>
+									<label style="text-align: left" class="col-sm-2 col-form-label">Bukti Pengeluaran Baru</label>
 									<div class="col-sm-10">
 										<input type="file" class="form-control-file" name="bukti_pengeluaran">
 									</div>
