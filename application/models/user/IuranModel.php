@@ -44,13 +44,6 @@ class IuranModel extends CI_Model
 		$this->db->where_not_in('status_iuran', 'Lunas');
 		return $this->db->get('data_iuran_warga');
 	}
-	
-	public function get_IuranWarga_lunas($id)
-	{
-		$this->db->where('id_warga', $id);
-		$this->db->where('status_iuran', 'Lunas');
-		return $this->db->get('data_iuran_warga');
-	}
 
 	public function get_tagihanIuran($id)
 	{
