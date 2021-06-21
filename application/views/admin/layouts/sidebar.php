@@ -72,7 +72,7 @@
 				<li>
 					<a href="javascript: void(0);">
 						<!-- <i class="fe-users"></i> -->
-						<i class="far fa-money-bill-alt"></i>
+						<i class="fas fa-donate"></i>
 						<span> Iuran </span>
 						<span class="menu-arrow"></span>
 					</a>
@@ -154,3 +154,4 @@
 	</div>
 	<!-- Sidebar -left -->
 </div>
+
