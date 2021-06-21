@@ -9,7 +9,7 @@
 				<!-- Illustrations -->
 
 				<div class="card-header py-3">
-					<h4 class="page-title">Data Penggunaan <?php echo $penggunaan[0]->nama_kebutuhan; ?></h6>
+					<h4 class="page-title">Data Pengeluaran <?php echo $penggunaan[0]->nama_kebutuhan; ?></h6>
 				</div>
 				<div class="card shadow mb-4">
 					<div class="card-body">
@@ -28,13 +28,13 @@
 									</div>
 								</div>
 								<div class="form-group row">
-									<label style="text-align: left" class="col-sm-2 col-form-label">Tanggal Penggunaan</label>
+									<label style="text-align: left" class="col-sm-2 col-form-label">Tanggal Pengeluaran</label>
 									<div class="col-sm-10">
 										<input type="date" class="form-control" name="tanggal_penggunaan" required="" value="<?php echo $penggunaan[0]->tanggal_penggunaan; ?>" readonly>
 									</div>
 								</div>
 								<div class="form-group row">
-									<label style="text-align: left" class="col-sm-2 col-form-label">Bukti Penggunaan</label>
+									<label style="text-align: left" class="col-sm-2 col-form-label">Bukti Pengeluaran</label>
 									<div class="col-sm-10">
 										<img src="<?= base_url($penggunaan[0]->bukti_pengeluaran); ?>" style="height: 70%; width: 50%;">
 									</div>
