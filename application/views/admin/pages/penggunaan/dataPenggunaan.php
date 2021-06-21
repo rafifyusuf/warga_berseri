@@ -8,7 +8,7 @@
 <div class="container-fluid">
    <div class="card shadow mb-4">
      <div class="card-header py-3">
-      <h4 style="float: left">Data Penggunaan Iuran</h4>
+      <h4 style="float: left">Data Pegeluaran</h4>
       <h6 class="m-0 font-weight-bold text-primary" style="float: right;"> <a href="<?php echo base_url(); ?>IuranController/tambah_penggunaan"><input class="btn btn-primary" type="submit" value=" Tambah Penggunaan Iuran +"></a></h6>
      </div>
      <div class="card-body">
@@ -19,8 +19,8 @@
               <th scope="col" style="width: 5%">No</th>
               <th scope="col">Nama Kebutuhan</th>
               <th scope="col">Jumlah Pengeluaran</th>
-              <th scope="col">Tanggal Pembayaran</th>
-              <th scope="col">Bukti Pembayaran</th>
+              <th scope="col">Tanggal Pengeluaran</th>
+              <th scope="col">Bukti Pengeluaran</th>
               <th scope="col">Keterangan</th>
               <th scope="col" colspan="3" style="width: 17%">Aksi</th>
            </tr>
