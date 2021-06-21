@@ -47,7 +47,7 @@
 				</div>
 				<div class="form-group">
 					<select class="form-control" name="jenis_pesan" id="jenis_pesan" value="<?= set_value('jenis_pesan') ?>">
-						<option value="" disabled selected>Jenis Keluhan</option>
+						<option value="" disabled selected>Jenis Keluhan atau Aspirasi</option>
 						<option value="kebersihan">Kebersihan</option>
 						<option value="keamanan">Keamanan</option>
 						<option value="fasilitas">Fasilitas</option>
