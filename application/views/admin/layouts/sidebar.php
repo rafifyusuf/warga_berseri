@@ -78,16 +78,18 @@
 					</a>
 					<ul class="nav-second-level" aria-expanded="false">
 						<li>
-							<a href="<?php echo base_url('admin/iuran/view_dataIuran') ?>">
-								</i>
-								<span> Data Pembayaran Iuran </span>
-							</a>
-						</li>
-						<li>
 							<a href="<?php echo base_url('admin/pemasukan') ?>">
 								</i>
 								<span> Pemasukan </span>
 							</a>
+						</li>
+						<li>
+
+                                                        <a href="<?php echo base_url('admin/iuran/view_dataIuran') ?>">
+								</i>
+								<span> Data Pembayaran Iuran </span>
+							</a>
+							
 						</li>
 						<li>
 							<a href="<?php echo base_url('admin/iuran/riwayat_iuran') ?>">
