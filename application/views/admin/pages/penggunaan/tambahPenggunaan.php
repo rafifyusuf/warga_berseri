@@ -26,7 +26,7 @@
 										<li class="breadcrumb-item"><a href="javascript: void(0);">Form</a></li>
 									</ol>
 								</div>
-								<h4 class="page-title"> Form Tambah Data Penggunaan</h4>
+								<h4 class="page-title"> Form Tambah Data Pengeluaran</h4>
 							</div>
 						</div>
 					</div>
@@ -66,13 +66,13 @@
 								</div>
 							</div>
 							<div class="form-group row">
-								<label style="text-align: left" class="col-sm-2 col-form-label">Tanggal Penggunaan</label>
+								<label style="text-align: left" class="col-sm-2 col-form-label">Tanggal Pengeluaran</label>
 								<div class="col-sm-10">
 									<input type="text" class="form-control" id="datepicker" name="tanggal_penggunaan" required>
 								</div>
 							</div>
 							<div class="form-group row">
-								<label style="text-align: left" class="col-sm-2 col-form-label">Bukti Penggunaan</label>
+								<label style="text-align: left" class="col-sm-2 col-form-label">Bukti Pengeluaran</label>
 								<div class="col-sm-10">
 									<input type="file" class="form-control-file dropify" name="bukti_penggunaan" required="">
 								</div>
