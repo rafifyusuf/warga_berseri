@@ -15,10 +15,10 @@
 						<div class="page-title-right">
 							<ol class="breadcrumb m-0">
 								<li class="breadcrumb-item"><a href="javascript: void(0);">Admin Warga Berseri</a></li>
-								<li class="breadcrumb-item"><a href="javascript: void(0);">Penggunaan</a></li>
+								<li class="breadcrumb-item"><a href="javascript: void(0);">Pengeluaran</a></li>
 							</ol>
 						</div>
-						<h4 class="page-title">Data Penggunaan</h4>
+						<h4 class="page-title">Data Pengeluaran</h4>
 					</div>
 				</div>
 			</div>
@@ -52,7 +52,7 @@
 								<thead>
 									<tr>
 										<th>No.</th>
-										<th data-toggle="true">Bulan Penggunaan</th>
+										<th data-toggle="true">Bulan Pengeluaran</th>
 										<th>Jumlah Pengeluaran</th>
 										<th>Aksi</th>
 									</tr>
