@@ -17,25 +17,25 @@
 									<div class="form-group row">
 										<label style="text-align: left" class="col-sm-2 col-form-label">Nama lokasi</label>
 										<div class="col-sm-10">
-											<input type="text" class="form-control" name="nama_lokasi">
+											<input type="text" class="form-control" name="nama_lokasi" required>
 										</div>
 									</div>
 									<div class="form-group row">
 										<label style="text-align: left" class="col-sm-2 col-form-label">Fasilitas lokasi</label>
 										<div class="col-sm-10">
-											<input type="text" class="form-control" name="fasilitas_lokasi">
+											<input type="text" class="form-control" name="fasilitas_lokasi" required>
 										</div>
 									</div>
 									<div class="form-group row">
 										<label style="text-align: left" class="col-sm-2 col-form-label">Alamat lokasi</label>
 										<div class="col-sm-10">
-											<input type="text" class="form-control" name="alamat_lokasi">
+											<input type="text" class="form-control" name="alamat_lokasi" required>
 										</div>
 									</div>
 									<div class="form-group row">
 										<label style="text-align: left" class="col-sm-2 col-form-label">Foto lokasi</label>
 										<div class="col-sm-10">
-											<input type="file" class="form-control-file" name="foto_lokasi">
+											<input type="file" class="form-control-file" name="foto_lokasi" required>
 										</div>
 									</div>
 									<div style="text-align: right" class="col-sm-12">
