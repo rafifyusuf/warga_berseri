@@ -41,7 +41,7 @@
 									foreach ($data_fasilitas as $f) { ?>
 										<tr>
 											<th scope="row"> <?php echo $no++ ?></th>
-											<td style="width: 150px"><img src="<?= base_url('uploads/foto_lokasi/' . $f->foto_lokasi) ?>" width="150px" height="100px"></td>
+											<td style="width: 150px"><img src="<?= $f->foto_lokasi ?>" width="150px" height="100px"></td>
 											<td style="width: 200px"><?php echo $f->nama_lokasi ?></td>
 											<td><?php echo $f->alamat_lokasi ?></td>
 											<td><?php echo $f->fasilitas_lokasi ?></td>
