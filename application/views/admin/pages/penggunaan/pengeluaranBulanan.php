@@ -72,7 +72,7 @@
 													echo date('d-M-Y', $waktu); ?></td> 
 											<td> <a href=" <?php echo base_url('admin/penggunaan/detail_penggunaan/' . $data_pengeluaran->id_penggunaan) ?>" class="ladda-button btn btn-primary" data-style="slide-up">
 													<i class="mdi mdi-information-outline"></i> Info</a> &nbsp;&nbsp;
-												<a href=" <?php echo base_url('admin/penggunaan/edit_data_pengggunaan/' . $data_pengeluaran->id_penggunaan) ?>" class="ladda-button btn btn-success" data-style="slide-up">
+												<a href=" <?php echo base_url('admin/penggunaan/edit_data_penggunaan/' . $data_pengeluaran->id_penggunaan) ?>" class="ladda-button btn btn-success" data-style="slide-up">
 													<i class="mdi mdi-pencil"></i> Edit</a>&nbsp;&nbsp;
 												<a href=" <?php echo base_url('admin/penggunaan/hapus_data_penggunaan/' . $data_pengeluaran->id_penggunaan) ?>" class="ladda-button btn btn-danger" data-style="slide-up">
 													<i class="mdi mdi-delete"></i> Delete</a> 
