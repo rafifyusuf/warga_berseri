@@ -119,6 +119,7 @@ class Pemasukan extends CI_Controller
 				} else{
 				$this->PemasukanIuranModel->tambahdataPemasukan($data);
 				$this->KeuanganModel->updateSaldoPem($bulan,$tahun,$totalsaldo);
+				$this->KeuanganModel->updateSaldo($totalsaldo);
 				redirect('admin/pemasukan/');
 				}
 			} 
