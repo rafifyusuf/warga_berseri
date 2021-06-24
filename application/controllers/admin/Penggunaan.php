@@ -130,6 +130,7 @@ class Penggunaan extends CI_Controller
 					//echo "Bulan ada";
 				$this->PenggunaanIuranModel->tambahDataPenggunaan($data);
 				$this->KeuanganModel->updateSaldoPeng($bulan,$tahun,$totalsaldo);
+				$this->KeuanganModel->updateSaldo($totalsaldo);
 				redirect('admin/penggunaan/');
 				}
 			}
