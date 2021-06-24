@@ -80,8 +80,7 @@ class Pemasukan extends CI_Controller
 			$this->upload->initialize($config);
 
 			if (!$this->upload->do_upload('bukti_pemasukan')) {
-				$error = array('error' => $this->upload->display_errors());
-				print_r($error);
+				echo "<script>alert('Gagal di tambahkan! Periksa kembali file yang anda masukan');history.go(-1);</script>";
 			} else {
 				$data = array('upload_data'	=>	$this->upload->data());
 				$admin = $this->session->all_userdata();
@@ -184,8 +183,7 @@ class Pemasukan extends CI_Controller
 				$this->upload->initialize($config);
 
 				if (!$this->upload->do_upload('bukti_pemasukan')) {
-					$error = array('error' => $this->upload->display_errors());
-					print_r($error);
+					echo "<script>alert('Gagal di tambahkan! Periksa kembali file yang anda masukan');history.go(-1);</script>";
 				} else {
 					$data = array('upload_data'	=>	$this->upload->data());
 					$admin = $this->session->all_userdata();
