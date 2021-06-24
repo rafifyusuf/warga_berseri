@@ -44,6 +44,7 @@ class KeuanganModel extends CI_Model
 
 	public function updateSaldo($data)
 	{
+		$this->db->where('tahun', '0000');
 		$this->db->update('data_keuangan_iuran', $data);
 	}
 	public function check_bulan_tahun($bulan,$tahun)
