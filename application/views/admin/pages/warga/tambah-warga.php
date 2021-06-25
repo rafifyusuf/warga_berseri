@@ -81,7 +81,7 @@
 								<?php if ($role == 6) { ?>
 									<div class="form-group col-md-1">
 										<label class="col-form-label">RT</label>
-										<input type="text" class="form-control" name="rt" value="<?= $user->rt ?>">
+										<input type="text" class="form-control" readonly name="rt" value="<?= $user->rt ?>">
 									</div>
 								<?php	} else { ?>
 									<div class="form-group col-md-1">
@@ -91,10 +91,10 @@
 									</div>
 								<?php	} ?>
 
-								<?php if ($role == 7) { ?>
+								<?php if ($role == 7 || $role == 6) { ?>
 									<div class="form-group col-md-1">
 										<label class="col-form-label">RW</label>
-										<input type="text" class="form-control" name="rw" value="<?= $user->rw ?>">
+										<input type="text" class="form-control" readonly name="rw" value="<?= $user->rw ?>">
 										<span class="form-text text-danger" style=" width:200px"><?= form_error('rw'); ?></span>
 									</div>
 								<?php	} else { ?>
@@ -153,7 +153,7 @@
 
 							<div class="form-row">
 								<div class="form-group col-md-8">
-									<label class="col-form-label">File Kartu Keluarga</label>
+									<label class="col-form-label">Foto Kartu Keluarga</label>
 									<input type="file" class="form-control dropify" name="file_kk" value="<?php echo set_value('file_kk') ?>">
 									<span class="form-text text-danger"><?= form_error('file_kk'); ?></span>
 								</div>

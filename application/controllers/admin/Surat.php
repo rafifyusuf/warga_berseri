@@ -23,7 +23,7 @@ class Surat extends CI_Controller
 	{
 		$role_id = $this->session->role_id;
 		if ($role_id == 6) {
-			$pengajuan_surat = $this->SuratModel->get_pengajuan_by_rt(get_rt())->result();
+			$pengajuan_surat = $this->SuratModel->get_pengajuan_by_rt(get_rt()[0], get_rt()[1])->result();
 		} elseif ($role_id == 7) {
 			$pengajuan_surat = $this->SuratModel->get_pengajuan_by_rw(get_rw())->result();
 		} else {

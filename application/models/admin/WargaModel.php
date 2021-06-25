@@ -53,13 +53,14 @@ class WargaModel extends CI_Model
 		return $this->db->get();
 	}
 
-	public function get_all_warga_by_rt($rt)
+	public function get_all_warga_by_rt($rt, $rw)
 	{
 		$this->db->select('warga.*, nama_warga');
 		$this->db->from('warga');
 		$this->db->join('detail_warga', 'warga.id_warga = detail_warga.id_warga');
 		$this->db->where('status', 'Kepala Keluarga');
 		$this->db->where('rt', $rt);
+		$this->db->where('rw', $rw);
 		return $this->db->get();
 	}
 
@@ -76,12 +77,13 @@ class WargaModel extends CI_Model
 		$query = $this->db->get();
 		return $query;
 	}
-	public function get_all_info_warga_by_rt($rt)
+	public function get_all_info_warga_by_rt($rt, $rw)
 	{
 		$this->db->select('*');
 		$this->db->from('detail_warga');
 		$this->db->join('warga', 'warga.id_warga = detail_warga.id_warga');
 		$this->db->where('rt', $rt);
+		$this->db->where('rw', $rw);
 		$query = $this->db->get();
 		return $query;
 	}
@@ -154,6 +156,13 @@ class WargaModel extends CI_Model
 		$this->db->group_by('status_hunian');
 		$this->db->order_by('total', 'desc');
 		return $this->db->get('detail_warga');
+	}
+	public function get_chart_desil()
+	{
+		$this->db->select('status_rumah_tangga, COUNT(id_warga) as total');
+		$this->db->group_by('status_rumah_tangga');
+		$this->db->order_by('total', 'desc');
+		return $this->db->get('warga');
 	}
 	// ---------------------------End get chart-------------------------------
 

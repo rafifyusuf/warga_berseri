@@ -132,6 +132,23 @@
 											</td>
 											<td>
 												<center>
+													<?php
+													if ($kendaraan->status_verifikasi == 1) {  ?>
+														<?= form_open_multipart('admin/kendaraan/verifikasi_kendaraan', array('method' => 'POST')) ?>
+														<input type="hidden" name="id_warga" value="<?= $id ?>">
+														<input type="hidden" name="no_rumah" value="<?= $this->uri->segment(5) ?>">
+														<input type="hidden" name="id_kendaraan" value="<?= $kendaraan->id_kendaraan ?>">
+														<button type="submit" class="ladda-button btn btn-warning mb-1" data-style="slide-up">
+															<i class="mdi mdi-account-check-outline"></i>
+															Verifikasi
+														</button>
+														<?= form_close() ?>
+													<?php } else { ?>
+														<button disabled class="ladda-button btn btn-success" data-style="slide-up">
+															<i class="mdi mdi-account-check-outline"></i>
+															Terverifikasi
+														</button>
+													<?php		} ?>
 													<a href="<?php echo base_url('admin/kendaraan/hapus_kendaraan/' . $kendaraan->id_kendaraan . '/' . $id) ?>" class="ladda-button btn btn-danger hapus" data-style="slide-up">
 														<i class="mdi mdi-delete"></i> Hapus
 													</a>

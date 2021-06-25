@@ -23,7 +23,7 @@
 							</ol>
 						</div>
 						<?php if ($this->session->role_id == 6) { ?>
-							<h4 class="page-title">Pengajuan Surat RT <?= get_rt() ?></h4>
+							<h4 class="page-title">Pengajuan Surat RT <?= get_rt()[0] ?></h4>
 						<?php	} elseif ($this->session->role_id == 7) { ?>
 							<h4 class="page-title">Pengajuan Surat RW <?= get_rw() ?></h4>
 						<?php } else { ?>

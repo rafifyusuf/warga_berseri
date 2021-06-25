@@ -43,4 +43,10 @@ class KendaraanModel extends CI_Model
 	{
 		$this->db->delete('kendaraan', array('id_kendaraan' => $id_kendaraan));
 	}
+
+	public function update_kendaraan($id_kendaraan, $data)
+	{
+		$this->db->where('id_kendaraan', $id_kendaraan);
+		return $this->db->update('kendaraan', $data);
+	}
 }

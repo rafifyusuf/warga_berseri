@@ -36,17 +36,6 @@
 									<span> Info Warga </span>
 								</a>
 							</li>
-							<!-- <li>
-								<a href="<?php echo base_url('admin/kendaraan') ?>">
-									</i>
-									<span> Data Kendaraan </span>
-								</a>
-							</li> -->
-							<li>
-								<a href="#">
-									<span> Data Posyandu </span>
-								</a>
-							</li>
 						</ul>
 					</li>
 					<li>
@@ -85,11 +74,11 @@
 						</li>
 						<li>
 
-                                                        <a href="<?php echo base_url('admin/iuran/view_dataIuran') ?>">
+							<a href="<?php echo base_url('admin/iuran/view_dataIuran') ?>">
 								</i>
 								<span> Data Pembayaran Iuran </span>
 							</a>
-							
+
 						</li>
 						<li>
 							<a href="<?php echo base_url('admin/iuran/riwayat_iuran') ?>">
@@ -156,4 +145,3 @@
 	</div>
 	<!-- Sidebar -left -->
 </div>
-

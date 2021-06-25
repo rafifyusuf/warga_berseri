@@ -171,7 +171,7 @@
 
 		<!-- START Tabel Anggota Keluarga -->
 		<?php if ($this->session->status == "Kepala Keluarga") : ?>
-			<?php if ($jumlah_hunian >= $this->session->jumlah_keluarga) { ?>
+			<?php if ($jumlah_hunian >= $warga->jumlah_keluarga) { ?>
 				<div class="row ml-4 mt-5">
 					<button type="button" class="btn btn btn-primary" id="tambah">
 						<i class=" fas fa-plus mr-2"></i>
@@ -206,7 +206,7 @@
 										<td>Status</td>
 										<td>No Hp</td>
 										<td>File Ktp</td>
-										<td>Status</td>
+										<td>Status Verfikasi</td>
 										<?php if ($this->session->status == "Kepala Keluarga") : ?>
 											<td>Aksi</td>
 										<?php endif; ?>
@@ -241,9 +241,11 @@
 														<a href="<?= base_url('user/warga/info_hunian/' . $warga->id_detail_warga) ?>">
 															<button class="btn btn-primary btn-sm btn-edit"><i class="fas fa-info px-1"></i></button>
 														</a>
-														<a href="<?= base_url('user/warga/hapus_hunian/' . $warga->id_detail_warga) ?>">
-															<button class="btn btn-danger btn-sm btn-delete"><i class="fa fa-trash"></i></button>
-														</a>
+														<?php if ($this->session->status != $warga->status) : ?>
+															<a href="<?= base_url('user/warga/hapus_hunian/' . $warga->id_detail_warga) ?>" class="hapus">
+																<button class="btn btn-danger btn-sm btn-delete"><i class="fa fa-trash"></i></button>
+															</a>
+														<?php endif; ?>
 													</center>
 												</td>
 											<?php endif; ?>
@@ -302,6 +304,7 @@
 										<th>Nama Pemilik di STNK</th>
 										<th>Nomor Polisi</th>
 										<th>Foto Kendaraan</th>
+										<th>Status Verifikasi</th>
 										<?php if ($this->session->status == "Kepala Keluarga") : ?>
 											<td>
 												Aksi
@@ -325,11 +328,20 @@
 													</button>
 												</center>
 											</td>
+											<td>
+												<center>
+													<?php if ($kendaraan->status_verifikasi == "1") : ?>
+														<span class="badge badge-warning">Belum Terverifikasi</span>
+													<?php else : ?>
+														<span class="badge badge-success">Terverifikasi</span>
+													<?php endif; ?>
+												</center>
+											</td>
 											<?php if ($this->session->status == "Kepala Keluarga") : ?>
 												<td>
 													<center>
 														<!-- <button class="btn btn-primary btn-sm btn-edit"><i class="fas fa-edit"></i></button> -->
-														<a href="<?= base_url("user/kendaraan/hapus_kendaraan/" . $kendaraan->id_kendaraan); ?>" onclick="return confirm('Are you sure?');">
+														<a href="<?= base_url("user/kendaraan/hapus_kendaraan/" . $kendaraan->id_kendaraan); ?>" class="hapus">
 															<button class="btn btn-danger btn-sm btn-delete"><i class="fa fa-trash"></i></button>
 														</a>
 													</center>
@@ -369,13 +381,33 @@
 	</div>
 </div>
 
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
 	document.querySelector("#tambah").addEventListener('click', function() {
 		Swal.fire({
 			icon: "error",
 			title: "Maaf",
 			text: "Anda hanya bisa menambah anggota hunian sebanyak <?= $jumlah_hunian ?> hunian",
+		});
+	});
+</script>
+
+<script>
+	$('.hapus').on('click', function(e) {
+		e.preventDefault();
+		const href = $(this).attr('href');
+		Swal.fire({
+			title: 'Anda yakin ingin menghapus data?',
+			text: "Data tidak dapat kembali setelah dihapus!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Ya, hapus data!'
+		}).then((result) => {
+			if (result.isConfirmed) {
+				document.location.href = href;
+			}
 		});
 	});
 </script>

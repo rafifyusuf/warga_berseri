@@ -21,7 +21,7 @@ class Warga extends CI_Controller
 	{
 		$role_id = $this->session->userdata('role_id');
 		if ($role_id == 6) {
-			$query = $this->WargaModel->get_all_info_warga_by_rt(get_rt())->result();
+			$query = $this->WargaModel->get_all_info_warga_by_rt(get_rt()[0], get_rt()[1])->result();
 		} elseif ($role_id == 7) {
 			$query = $this->WargaModel->get_all_info_warga_by_rw(get_rw())->result();
 		} else {
@@ -49,11 +49,24 @@ class Warga extends CI_Controller
 	{
 		$id_warga = $this->input->post('id_warga');
 		$warga    = $this->WargaModel->get_single_warga($id_warga)->row();
-		// Memanggil function untuk validasi
-		// $this->validasi_tambah_warga();
-		// if ($this->form_validation->run() == FALSE) {
-		// 	$this->sunting_warga($id_warga);
-		// }
+		$upload_image = $_FILES['file_kk']['name'];
+		if ($upload_image) {
+			$config['allowed_types'] = 'gif|jpg|png';
+			$config['upload_path'] = './uploads/kk';
+			$config['max_size']     = '2048';
+			$this->load->library('upload', $config);
+			if ($this->upload->do_upload('file_kk')) {
+				$old_image = $warga->file_kk;
+				if ($old_image != NULL) {
+					unlink(FCPATH . 'uploads/kk/' . $old_image);
+				}
+				$new_image = $this->upload->data('file_name');
+				$this->db->set('file_kk', $new_image);
+			} else {
+				redirect(base_url('admin/warga/sunting_warga/' . $id_warga));
+			}
+		}
+
 		$no_rumah   		     = $this->input->post('no_rumah');
 		$no_kk   		         = $this->input->post('no_kk');
 		$alamat   		         = $this->input->post('alamat');
@@ -66,6 +79,15 @@ class Warga extends CI_Controller
 			$status_rumah_tangga = 	$warga->status_rumah_tangga;
 		} else {
 			$status_rumah_tangga 	 = implode(", ", $status_rt);
+			if ($status_rumah_tangga == "KIS") {
+				$status_rumah_tangga = "Rentan Miskin";
+			} else if ($status_rumah_tangga == "KIS, RASKIN") {
+				$status_rumah_tangga = "Hampir Miskin";
+			} else if ($status_rumah_tangga == "KIS, RASKIN, KIP") {
+				$status_rumah_tangga = "Miskin";
+			} else if ($status_rumah_tangga == "KIS, RASKIN, KIP, PKH") {
+				$status_rumah_tangga = "Sangat Miskin";
+			}
 		}
 		$data_warga = [
 			'no_rumah'   		  => $no_rumah,
@@ -101,7 +123,7 @@ class Warga extends CI_Controller
 	{
 		$role_id = $this->session->userdata('role_id');
 		if ($role_id == 6) {
-			$query = $this->WargaModel->get_all_warga_by_rt(get_rt())->result();
+			$query = $this->WargaModel->get_all_warga_by_rt(get_rt()[0], get_rt()[1])->result();
 		} elseif ($role_id == 7) {
 			$query = $this->WargaModel->get_all_warga_by_rw(get_rw())->result();
 		} else {
@@ -159,6 +181,16 @@ class Warga extends CI_Controller
 			$rw   				     = $this->input->post('rw');
 			$status_rt 	 		     = $this->input->post('status_rumah_tangga');
 			$status_rumah_tangga     = implode(", ", $status_rt);
+
+			if ($status_rumah_tangga == "KIS") {
+				$status_rumah_tangga = "Rentan Miskin";
+			} else if ($status_rumah_tangga == "KIS, RASKIN") {
+				$status_rumah_tangga = "Hampir Miskin";
+			} else if ($status_rumah_tangga == "KIS, RASKIN, KIP") {
+				$status_rumah_tangga = "Miskin";
+			} else if ($status_rumah_tangga == "KIS, RASKIN, KIP, PKH") {
+				$status_rumah_tangga = "Sangat Miskin";
+			}
 
 			$config['upload_path']   = './uploads/kk/';
 			$config['allowed_types'] = 'pdf|jpeg|jpg|png';

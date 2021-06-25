@@ -1,3 +1,11 @@
+<style>
+	.dropify-message {
+		text-align: center;
+		font-size: 2px;
+		visibility: hidden;
+	}
+</style>
+
 <!-- Start Modal Update kk -->
 <div class="modal fade overflow-auto" id="updateKK" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
@@ -13,7 +21,7 @@
 			<div class="modal-body">
 				<div class="form-group">
 					<label>Foto KK</label>
-					<input type="file" name="file_kk" class="form-control dropify" data-max-file-size="1M">
+					<input type="file" name="file_kk" class="form-control dropify">
 				</div>
 			</div>
 			<div class="modal-footer">
@@ -135,26 +143,113 @@
 
 							<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 								<div class="form-group">
-									<label class="col-form-label">Status Rumah Tangga</label>
-									<div class="custom-control custom-checkbox">
-										<input type="checkbox" name="status_rumah_tangga[]" class="custom-control-input" id="customCheck1" value="KIS">
-										<label class="custom-control-label text-info" for="customCheck1">Program Pemerintah berupa KIS (Kartu Indonesia Sehat)</label>
-									</div>
-									<div class="custom-control custom-checkbox">
-										<input type="checkbox" name="status_rumah_tangga[]" class="custom-control-input" id="customCheck2" value="RASKIN">
-										<label class="custom-control-label text-success" for="customCheck2">Program Pemerintah berupa RASKIN (Beras untuk keluarga miskin)</label>
-									</div>
-									<div class="custom-control custom-checkbox">
-										<input type="checkbox" name="status_rumah_tangga[]" class="custom-control-input" id="customCheck3" value="KIP">
-										<label class="custom-control-label text-warning" for="customCheck3">Program Pemerintah berupa KIP (Kartu Indonesia Pintar)</label>
-									</div>
-									<div class="custom-control custom-checkbox">
-										<input type="checkbox" name="status_rumah_tangga[]" class="custom-control-input" id="customCheck4" value="PKH">
-										<label class="custom-control-label text-danger" for="customCheck4">Program Pemerintah berupa PKH (Program Keluarga Harapan)</label>
-									</div>
-									<?php if ($warga->status_rumah_tangga != NULL || $warga->status_rumah_tangga != "") : ?>
-										<span class="form-text text-primary ml-3">Status : <?php echo $warga->status_rumah_tangga ?></span>
-									<?php endif; ?>
+									<label class="col-form-label">Status Bantuan Rumah Tangga</label>
+									<?php switch ($warga->status_rumah_tangga):
+										case "Rentan Miskin": ?>
+											<div>
+												<div class="custom-control custom-checkbox">
+													<input type="checkbox" name="status_rumah_tangga[]" class="custom-control-input" id="customCheck1" value="KIS" checked>
+													<label class="custom-control-label text-info" for="customCheck1">Program Pemerintah berupa KIS (Kartu Indonesia Sehat)</label>
+												</div>
+												<div class="custom-control custom-checkbox">
+													<input type="checkbox" name="status_rumah_tangga[]" class="custom-control-input" id="customCheck2" value="RASKIN">
+													<label class="custom-control-label text-success" for="customCheck2">Program Pemerintah berupa RASKIN (Beras untuk keluarga miskin)</label>
+												</div>
+												<div class="custom-control custom-checkbox">
+													<input type="checkbox" name="status_rumah_tangga[]" class="custom-control-input" id="customCheck3" value="KIP">
+													<label class="custom-control-label text-warning" for="customCheck3">Program Pemerintah berupa KIP (Kartu Indonesia Pintar)</label>
+												</div>
+												<div class="custom-control custom-checkbox">
+													<input type="checkbox" name="status_rumah_tangga[]" class="custom-control-input" id="customCheck4" value="PKH">
+													<label class="custom-control-label text-danger" for="customCheck4">Program Pemerintah berupa PKH (Program Keluarga Harapan)</label>
+												</div>
+											</div>
+											<?php break; ?>
+										<?php
+										case "Hampir Miskin": ?>
+											<div>
+												<div class="custom-control custom-checkbox">
+													<input type="checkbox" name="status_rumah_tangga[]" class="custom-control-input" id="customCheck1" value="KIS" checked>
+													<label class="custom-control-label text-info" for="customCheck1">Program Pemerintah berupa KIS (Kartu Indonesia Sehat)</label>
+												</div>
+												<div class="custom-control custom-checkbox">
+													<input type="checkbox" name="status_rumah_tangga[]" class="custom-control-input" id="customCheck2" value="RASKIN" checked>
+													<label class="custom-control-label text-success" for="customCheck2">Program Pemerintah berupa RASKIN (Beras untuk keluarga miskin)</label>
+												</div>
+												<div class="custom-control custom-checkbox">
+													<input type="checkbox" name="status_rumah_tangga[]" class="custom-control-input" id="customCheck3" value="KIP">
+													<label class="custom-control-label text-warning" for="customCheck3">Program Pemerintah berupa KIP (Kartu Indonesia Pintar)</label>
+												</div>
+												<div class="custom-control custom-checkbox">
+													<input type="checkbox" name="status_rumah_tangga[]" class="custom-control-input" id="customCheck4" value="PKH">
+													<label class="custom-control-label text-danger" for="customCheck4">Program Pemerintah berupa PKH (Program Keluarga Harapan)</label>
+												</div>
+											</div>
+											<?php break; ?>
+										<?php
+										case "Miskin": ?>
+											<div>
+												<div class="custom-control custom-checkbox">
+													<input type="checkbox" name="status_rumah_tangga[]" class="custom-control-input" id="customCheck1" value="KIS" checked>
+													<label class="custom-control-label text-info" for="customCheck1">Program Pemerintah berupa KIS (Kartu Indonesia Sehat)</label>
+												</div>
+												<div class="custom-control custom-checkbox">
+													<input type="checkbox" name="status_rumah_tangga[]" class="custom-control-input" id="customCheck2" value="RASKIN" checked>
+													<label class="custom-control-label text-success" for="customCheck2">Program Pemerintah berupa RASKIN (Beras untuk keluarga miskin)</label>
+												</div>
+												<div class="custom-control custom-checkbox">
+													<input type="checkbox" name="status_rumah_tangga[]" class="custom-control-input" id="customCheck3" value="KIP" checked>
+													<label class="custom-control-label text-warning" for="customCheck3">Program Pemerintah berupa KIP (Kartu Indonesia Pintar)</label>
+												</div>
+												<div class="custom-control custom-checkbox">
+													<input type="checkbox" name="status_rumah_tangga[]" class="custom-control-input" id="customCheck4" value="PKH">
+													<label class="custom-control-label text-danger" for="customCheck4">Program Pemerintah berupa PKH (Program Keluarga Harapan)</label>
+												</div>
+											</div>
+											<?php break; ?>
+										<?php
+										case "Sangat Miskin": ?>
+											<div>
+												<div class="custom-control custom-checkbox">
+													<input type="checkbox" name="status_rumah_tangga[]" class="custom-control-input" id="customCheck1" value="KIS" checked>
+													<label class="custom-control-label text-info" for="customCheck1">Program Pemerintah berupa KIS (Kartu Indonesia Sehat)</label>
+												</div>
+												<div class="custom-control custom-checkbox">
+													<input type="checkbox" name="status_rumah_tangga[]" class="custom-control-input" id="customCheck2" value="RASKIN" checked>
+													<label class="custom-control-label text-success" for="customCheck2">Program Pemerintah berupa RASKIN (Beras untuk keluarga miskin)</label>
+												</div>
+												<div class="custom-control custom-checkbox">
+													<input type="checkbox" name="status_rumah_tangga[]" class="custom-control-input" id="customCheck3" value="KIP" checked>
+													<label class="custom-control-label text-warning" for="customCheck3">Program Pemerintah berupa KIP (Kartu Indonesia Pintar)</label>
+												</div>
+												<div class="custom-control custom-checkbox">
+													<input type="checkbox" name="status_rumah_tangga[]" class="custom-control-input" id="customCheck4" value="PKH" checked>
+													<label class="custom-control-label text-danger" for="customCheck4">Program Pemerintah berupa PKH (Program Keluarga Harapan)</label>
+												</div>
+											</div>
+											<?php break; ?>
+										<?php
+										default: ?>
+											<div>
+												<div class="custom-control custom-checkbox">
+													<input type="checkbox" name="status_rumah_tangga[]" class="custom-control-input" id="customCheck1" value="KIS">
+													<label class="custom-control-label text-info" for="customCheck1">Program Pemerintah berupa KIS (Kartu Indonesia Sehat)</label>
+												</div>
+												<div class="custom-control custom-checkbox">
+													<input type="checkbox" name="status_rumah_tangga[]" class="custom-control-input" id="customCheck2" value="RASKIN">
+													<label class="custom-control-label text-success" for="customCheck2">Program Pemerintah berupa RASKIN (Beras untuk keluarga miskin)</label>
+												</div>
+												<div class="custom-control custom-checkbox">
+													<input type="checkbox" name="status_rumah_tangga[]" class="custom-control-input" id="customCheck3" value="KIP">
+													<label class="custom-control-label text-warning" for="customCheck3">Program Pemerintah berupa KIP (Kartu Indonesia Pintar)</label>
+												</div>
+												<div class="custom-control custom-checkbox">
+													<input type="checkbox" name="status_rumah_tangga[]" class="custom-control-input" id="customCheck4" value="PKH">
+													<label class="custom-control-label text-danger" for="customCheck4">Program Pemerintah berupa PKH (Program Keluarga Harapan)</label>
+												</div>
+											</div>
+									<?php break;
+									endswitch; ?>
 									<span class="form-text text-danger"><?= form_error('status_rumah_tangga[]'); ?></span>
 								</div>
 							</div>

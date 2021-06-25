@@ -4,6 +4,12 @@
 		background: #f5f6fa;
 	}
 
+	.dropify-message {
+		text-align: center;
+		font-size: 2px;
+		visibility: hidden;
+	}
+
 	.account-settings .user-profile {
 		margin: 0 0 1rem 0;
 		padding-bottom: 1rem;
@@ -156,10 +162,6 @@
 								<?php	} else { ?>
 									<button class="btn btn-danger btn-sm">Hapus</button>
 								<?php	} ?>
-							</div>
-							<div class="about">
-								<h5>About</h5>
-								<p>I'm Yuki. Full Stack Designer I enjoy creating user-centric, delightful and human experiences.</p>
 							</div>
 						</div>
 					</div>
@@ -372,7 +374,6 @@
 								<div class="text-right">
 									<input type="hidden" name="id_detail_warga" value="<?= $hunian->id_detail_warga ?>">
 									<input type="hidden" name="status" value="<?= $hunian->status ?>">
-									<button type="button" class="btn btn-secondary">Cancel</button>
 									<button type="submit" class="btn btn-primary">Update</button>
 								</div>
 							</div>

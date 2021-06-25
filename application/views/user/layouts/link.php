@@ -1,6 +1,6 @@
 <!-- bootstrap.min css -->
-<link rel="stylesheet" href="<?php echo base_url('assets/user/') ?>css/style.css">
 <link rel="stylesheet" href="<?php echo base_url('assets/user/') ?>plugins/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="<?php echo base_url('assets/user/') ?>css/style.css">
 <!-- Icofont Css -->
 <link rel="stylesheet" href="<?php echo base_url('assets/user/') ?>plugins/icofont/icofont.min.css">
 
@@ -54,5 +54,12 @@
 		font-weight: 700;
 		color: #232323;
 		letter-spacing: 0.5px;
+	}
+
+	.btn {
+		padding-top: 0.25rem;
+		padding-right: 0.5rem;
+		padding-bottom: 0.25rem;
+		padding-left: 0.5rem;
 	}
 </style>

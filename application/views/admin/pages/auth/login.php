@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Mirrored from coderthemes.com/ubold/layouts/light/pages-login.html by HTTrack Website Copier/3.x [XR&CO'2014], Sat, 11 Apr 2020 14:27:05 GMT -->
-
 <head>
 	<meta charset="utf-8" />
 	<title><?php echo $title ?></title>
@@ -56,13 +54,6 @@
 							</div>
 
 							<?php echo form_close() ?>
-							<hr>
-							<div class="text-center">
-								<a class="small" href="<?= base_url('admin/auth/forgotPassword') ?>">Forgot Password?</a>
-							</div>
-							<div class="text-center">
-								<a class="small" href="<?= base_url('admin/auth/registration') ?>">Create an Account!</a>
-							</div>
 						</div> <!-- end card-body -->
 					</div>
 					<!-- end card -->
@@ -78,7 +69,7 @@
 
 
 	<footer class="footer footer-alt">
-		2015 - 2019 &copy; UBold theme by <a href="#" class="text-white-50">Coderthemes</a>
+		2021 &copy; <a href="#" class="text-white-50">Warga Berseri</a>
 	</footer>
 
 	<!-- Vendor js -->

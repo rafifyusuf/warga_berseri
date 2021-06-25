@@ -1,43 +1,83 @@
-<div class="container">
-	<!-- Outer Row -->
-	<div class="row justify-content-center">
-		<div class="col-xl-5 col-lg-12 col-md-9">
-			<div class="card o-hidden border-0 shadow-lg my-5">
-				<div class="card-body p-0">
-					<!-- Nested Row within Card Body -->
-					<div class="row">
-						<div class="col-lg-12">
-							<div class="p-5">
-								<div class="text-center">
-									<h1 class="h4 text-gray-900 mb-4">Selamat Datang! <br> Warga PBB</h1>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<title><?php echo $title ?></title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description" />
+	<meta content="Coderthemes" name="author" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<!-- App favicon -->
+	<link rel="shortcut icon" href="<?php echo base_url() ?>assets/admin/images/pbb.png">
+
+	<!-- App css -->
+	<link href="<?php echo base_url() ?>assets/admin/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="<?php echo base_url() ?>assets/admin/css/icons.min.css" rel="stylesheet" type="text/css" />
+	<link href="<?php echo base_url() ?>assets/admin/css/app.min.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body class="authentication-bg authentication-bg-pattern">
+
+	<div class="account-pages mt-5 mb-5">
+		<div class="container">
+			<div class="row justify-content-center">
+				<div class="col-md-8 col-lg-6 col-xl-5">
+					<div class="card bg-pattern">
+						<div class="card-body p-4">
+							<?php if ($this->session->flashdata('status')) { ?>
+								<div class="alert alert-danger col-12">
+									<center><?= $this->session->flashdata('status'); ?></center>
 								</div>
-								<?php if (!empty($this->session->flashdata('status'))) : ?>
-									<div class="alert alert-danger">
-										<?php echo $this->session->flashdata('status') ?>
-									</div>
-								<?php endif; ?>
-								<?php echo form_open('user/auth/proses_login', array('method' => 'POST')) ?>
-								<div class="form-group">
-									<input type="text" name="no_hp" class="form-control form-control-user" placeholder="Nomer HandPhone">
-								</div>
-								<div class="form-group">
-									<input type="number" name="no_kk" class="form-control form-control-user" placeholder="Nomer Kartu Keluarga">
-								</div>
-								<div class="form-group">
-									<div class="custom-control custom-checkbox small">
-										<input type="checkbox" class="custom-control-input" id="customCheck">
-										<label class="custom-control-label" for="customCheck">Remember Me</label>
-									</div>
-								</div>
-								<button class="btn btn-primary btn-user btn-block">
-									Login
-								</button>
-								<?php echo form_close() ?>
+							<?php } ?>
+
+							<div class="text-center w-75 m-auto">
+								<span><img src="<?php echo base_url() ?>assets/admin/images/pbb-logo.png" alt="" height="40"></span>
+								<p class="text-muted mb-4 mt-3">Masukkan nomor HandPhone dan Nomor Kartu Keluarga untuk mengakses fitur Warga Berseri.</p>
 							</div>
-						</div>
+
+							<?php echo form_open('user/auth/proses_login', array('method' => 'POST')) ?>
+
+							<div class="form-group mb-3">
+								<label for="hp">No HandPhone</label>
+								<input class="form-control" type="text" name="no_hp" id="hp" placeholder="Masukkan nomor handphone">
+							</div>
+
+							<div class="form-group mb-3">
+								<label for="kk">Nomor Kartu Keluarga</label>
+								<input class="form-control" type="number" name="no_kk" id="kk" placeholder="Masukkan nomor kartu keluarga">
+							</div>
+
+							<div class="form-group mb-0 text-center">
+								<button class="btn btn-primary btn-block" type="submit"> Log In </button>
+							</div>
+
+							<?php echo form_close() ?>
+						</div> <!-- end card-body -->
 					</div>
-				</div>
+					<!-- end card -->
+					<!-- end row -->
+
+				</div> <!-- end col -->
 			</div>
+			<!-- end row -->
 		</div>
+		<!-- end container -->
 	</div>
-</div>
+	<!-- end page -->
+
+
+	<footer class="footer footer-alt">
+		2021 &copy; <a href="#" class="text-white-50">Warga Berseri</a>
+	</footer>
+
+	<!-- Vendor js -->
+	<script src="<?php echo base_url() ?>assets/admin/js/vendor.min.js"></script>
+
+	<!-- App js -->
+	<script src="<?php echo base_url() ?>assets/admin/js/app.min.js"></script>
+
+</body>
+
+</html>

@@ -25,6 +25,8 @@ class Dashboard extends CI_Controller
 				$data['chart_hunian'] = $chart_hunian;
 				$chart_kendaraan = $this->KendaraanModel->get_chart_kendaraan()->result();
 				$data['chart_kendaraan'] = $chart_kendaraan;
+				$chart_desil = $this->WargaModel->get_chart_desil()->result();
+				$data['chart_desil'] = $chart_desil;
 
 				$total_warga = $this->WargaModel->get_all_warga()->num_rows();
 				$data['total_warga'] = $total_warga;

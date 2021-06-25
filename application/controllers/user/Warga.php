@@ -106,7 +106,7 @@ class Warga extends CI_Controller
 				$jenis_kelamin     = $this->input->post('jenis_kelamin', true);
 				$status_perkawinan = $this->input->post('status_perkawinan', true);
 				$hubungan_keluarga = $this->input->post('hubungan_keluarga', true);
-				$status  		   = $this->input->post('status', true);
+				$status  		   = "Anggota Keluarga";
 				$pekerjaan  	   = $this->input->post('pekerjaan', true);
 				$pendidikan  	   = $this->input->post('pendidikan', true);
 				$status_hunian     = $this->input->post('status_hunian', true);
@@ -203,7 +203,7 @@ class Warga extends CI_Controller
 				$this->session->set_flashdata('flash', 'Update');
 				redirect(base_url('user/warga/info_hunian/' . $id_detail_warga));
 			} else {
-				$this->session->set_flashdata('flash', 'Gagal');
+				$this->session->set_flashdata('upload', 'Gagal');
 				redirect(base_url('user/warga/info_hunian/' . $id_detail_warga));
 			}
 		}
@@ -219,6 +219,12 @@ class Warga extends CI_Controller
 		$this->WargaModel->update_anggota_warga($id_detail_warga, $data);
 		$this->session->set_flashdata('flash', 'Update');
 		redirect(base_url('user/warga/info_hunian/' . $id_detail_warga));
+	}
+
+	public function hapus_hunian($id_detail_warga)
+	{
+		$this->WargaModel->hapus_hunian($id_detail_warga);
+		redirect(base_url('user/warga'));
 	}
 
 	// ----------------------End Data Hunian Warga------------------------
@@ -294,10 +300,20 @@ class Warga extends CI_Controller
 		$rt   				     = $this->input->post('rt');
 		$rw   				     = $this->input->post('rw');
 		$status_rt 	 		 	 = $this->input->post('status_rumah_tangga');
+
 		if ($status_rt == NULL) {
 			$status_rumah_tangga = 	$warga->status_rumah_tangga;
 		} else {
 			$status_rumah_tangga 	 = implode(", ", $status_rt);
+			if ($status_rumah_tangga == "KIS") {
+				$status_rumah_tangga = "Rentan Miskin";
+			} else if ($status_rumah_tangga == "KIS, RASKIN") {
+				$status_rumah_tangga = "Hampir Miskin";
+			} else if ($status_rumah_tangga == "KIS, RASKIN, KIP") {
+				$status_rumah_tangga = "Miskin";
+			} else if ($status_rumah_tangga == "KIS, RASKIN, KIP, PKH") {
+				$status_rumah_tangga = "Sangat Miskin";
+			}
 		}
 		$data_warga = [
 			'no_rumah'   		  => $no_rumah,

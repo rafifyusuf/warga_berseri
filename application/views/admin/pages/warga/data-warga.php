@@ -18,7 +18,7 @@
 							</ol>
 						</div>
 						<?php if ($this->session->role_id == 6) { ?>
-							<h4 class="page-title">Data Warga RT <?= get_rt() ?></h4>
+							<h4 class="page-title">Data Warga RT <?= get_rt()[0] ?> / RW <?= get_rt()[1] ?></h4>
 						<?php	} elseif ($this->session->role_id == 7) { ?>
 							<h4 class="page-title">Data Warga RW <?= get_rw() ?></h4>
 						<?php } else { ?>

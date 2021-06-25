@@ -21,7 +21,7 @@ class Iuran extends CI_Controller
 			$warga = $this->session->all_userdata();
 			$data_iuran['iuran'] = $this->IuranModel->get_IuranWarga($warga['id_warga'])->result();
 			if (!empty($data_iuran['iuran'])) {
-				$data_iuran['nominal'] = $this->IuranModel->nominal_tagihan_iuran($data_iuran['iuran'][0]->id_warga)->result();	
+				$data_iuran['nominal'] = $this->IuranModel->nominal_tagihan_iuran($data_iuran['iuran'][0]->id_warga)->result();
 			}
 			$this->load->view('user/layouts/header');
 			$this->load->view('user/pages/iuran/dataIuranWarga', $data_iuran);
@@ -39,13 +39,13 @@ class Iuran extends CI_Controller
 			$dataKeuangan['keuangan'] = $this->PenggunaanIuranModel->getKeuangan()->result();
 			$dataKeuangan['totalsaldo'] = $this->KeuanganModel->getTotalSaldo()->result();
 			$this->load->view('user/layouts/header');
-			$this->load->view('user/pages/iuran/dataPenggunaan', $dataPenggunaan);
+			$this->load->view('user/pages/iuran/dataPenggunaan', $dataKeuangan);
 			$this->load->view('user/layouts/footer');
 		} else {
 			redirect('user/auth');
 		}
 	}
-	
+
 	public function infoPenggunaanIuran($bulan)
 	{
 		$data['totalsaldo'] = $this->KeuanganModel->getTotalSaldo()->result();
@@ -108,7 +108,7 @@ class Iuran extends CI_Controller
 				'bukti_pembayaran'	=> "/uploads/bukti_pembayaran_iuran/" . $data['upload_data']['file_name'],
 				'status_iuran' => 'Belum Diverifikasi'
 			);
-			
+
 			//var_dump($data_iuran);
 			$this->IuranModel->tambahDataPembayaran($data_iuran, $no_tagihan);
 			redirect('user/iuran');
@@ -181,8 +181,7 @@ class Iuran extends CI_Controller
 	public function download_bukti_pembayaran($no_tagihan)
 	{
 		$downloadIuran['iuran'] = $this->IuranModel->get_Iuran($no_tagihan)->result();
-		$this->load->view('user/pages/iuran/downloadIuran',$downloadIuran);
-		
+		$this->load->view('user/pages/iuran/downloadIuran', $downloadIuran);
 	}
 
 
@@ -247,7 +246,7 @@ class Iuran extends CI_Controller
 		$jumlah_warga_iuran = count($jumlah_warga);
 		$warga_sudah_bayar = count($tagihan_lunas_bulanan);
 		$warga_belum_bayar = $jumlah_warga_iuran - $warga_sudah_bayar;
-		
+
 		$check_rekap_iuran = $this->IuranModel->check_rekap_iuran_bulanan($bulan, $tahun)->result();
 
 		if (count($check_rekap_iuran) == 0) {
@@ -258,7 +257,7 @@ class Iuran extends CI_Controller
 				'jumlah_warga'      => $jumlah_warga_iuran,
 				'jumlah_sudah_bayar'  => $warga_sudah_bayar,
 				'jumlah_belum_bayar'  => $warga_belum_bayar,
-				
+
 			);
 
 			$this->IuranModel->rekap_iuran_bulanan($data_keuangan);
@@ -270,7 +269,7 @@ class Iuran extends CI_Controller
 				'jumlah_warga'      => $jumlah_warga_iuran,
 				'jumlah_sudah_bayar'  => $warga_sudah_bayar,
 				'jumlah_belum_bayar'  => $warga_belum_bayar,
-				
+
 			);
 
 			$this->IuranModel->update_rekap_iruan_bulanan($bulan, $tahun, $data_keuangan);

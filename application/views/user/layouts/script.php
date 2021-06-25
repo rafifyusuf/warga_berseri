@@ -1,5 +1,6 @@
 <!-- Main jQuery -->
-<script src="<?php echo base_url('assets/user/') ?>plugins/jquery/jquery.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- <script src="<?php echo base_url('assets/user/') ?>plugins/jquery/jquery.js"></script> -->
 <!-- Bootstrap 4.3.1 -->
 <script src="<?php echo base_url('assets/user/') ?>plugins/bootstrap/js/bootstrap.min.js"></script>
 <!-- Slick Slider -->
@@ -13,8 +14,7 @@
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBu5nZKbeK-WHQ70oqOWo-_4VmwOwKP9YQ"></script>
 <script src="<?php echo base_url('assets/user/') ?>plugins/google-map/gmap.js"></script>
 <script src="<?php echo base_url('assets/user/') ?>js/script.js"></script>
-
-<script src="<?php echo base_url() ?>assets/admin/libs/dropzone/dropzone.min.js"></script>
+<script src="<?php echo base_url() ?>assets/libs/dropzone/dropzone.min.js"></script>
 <script src="<?php echo base_url() ?>assets/admin/libs/dropify/dropify.min.js"></script>
 <script src="<?php echo base_url() ?>assets/admin/js/pages/form-fileuploads.init.js"></script>
 

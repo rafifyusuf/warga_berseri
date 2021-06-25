@@ -182,6 +182,7 @@
 	</script>
 
 	<script>
+		var miskin = "Rentan Miskin";
 		Highcharts.chart('chart2', {
 			chart: {
 				plotBackgroundColor: null,
@@ -190,7 +191,7 @@
 				type: 'pie'
 			},
 			title: {
-				text: 'Grafik Kendaraan'
+				text: 'Grafik Desil'
 			},
 			tooltip: {
 				pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -212,12 +213,12 @@
 			},
 			// colors: ['#FEFEFE', '#50B432', '#ED561B', '#DDDF00', '#24CBE5', '#64E572', '#FF9655', '#FFF263', '#6AF9C4'],
 			series: [{
-				name: 'Brands',
+				name: 'Total',
 				colorByPoint: true,
 				data: [
-					<?php foreach ($chart_kendaraan as $kendaraan) : ?> {
-							name: '<?= $kendaraan->tipe_kendaraan ?>',
-							y: <?= $kendaraan->total ?>,
+					<?php foreach ($chart_desil as $desil) : ?> {
+							name: '<?= $desil->status_rumah_tangga ?>',
+							y: <?= $desil->total ?>,
 						},
 					<?php endforeach ?>
 				]

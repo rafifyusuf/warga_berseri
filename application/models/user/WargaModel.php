@@ -65,5 +65,10 @@ class WargaModel extends CI_Model
 		$this->db->where('id_detail_warga', $id_detail_warga);
 		return $this->db->update('detail_warga', $data);
 	}
+
+	public function hapus_hunian($id_hunian)
+	{
+		$this->db->delete('detail_warga', array('id_detail_warga' => $id_hunian));
+	}
 	// ---------------------------End update data---------------------------
 }

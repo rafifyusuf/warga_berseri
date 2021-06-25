@@ -90,6 +90,7 @@ class Kendaraan extends CI_Controller
 					'nama_stnk'      => $nama_stnk,
 					'no_polisi'      => $no_polisi,
 					'foto_kendaraan' => $foto_kendaraan,
+					'status_verifikasi' => 2,
 				];
 				$this->KendaraanModel->tambah_kendaraan($data_kendaraan);
 				$this->session->set_flashdata('flash', 'Ditambah');
@@ -97,6 +98,19 @@ class Kendaraan extends CI_Controller
 			}
 		}
 	}
+
+	public function verifikasi_kendaraan()
+	{
+		$id_warga = $this->input->post('id_warga');
+		$id_kendaraan = $this->input->post('id_kendaraan');
+		$no_rumah = $this->input->post('no_rumah');
+		$data = [
+			'status_verifikasi' => 2
+		];
+		$this->KendaraanModel->update_kendaraan($id_kendaraan, $data);
+		redirect(base_url('admin/kendaraan/data/' . $id_warga  . '/' . $no_rumah));
+	}
+
 	public function hapus_kendaraan($id_kendaraan)
 	{
 		$id_warga = $this->uri->segment(5);

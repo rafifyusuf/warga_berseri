@@ -1,3 +1,10 @@
+<style>
+	.dropify-message {
+		text-align: center;
+		font-size: 2px;
+		visibility: hidden;
+	}
+</style>
 <div class="main-wrapper">
 	<section class="page-title bg-2">
 		<div class="container">

@@ -18,7 +18,7 @@
 				<div class="col-md-5">
 					<?php $dashboard = $this->db->get_where('dashboard', ['id' => 2])->row_array(); ?>
 					<?= $dashboard['content']; ?>
-					<?php if (!$this->session->username) : ?>
+					<?php if (!$this->session->id_warga) : ?>
 						<a href="<?php echo base_url('user/auth') ?>" class="btn btn-main ">Masuk Sekarang <i class="ti-angle-right ml-3"></i></a>
 					<?php endif; ?>
 				</div>

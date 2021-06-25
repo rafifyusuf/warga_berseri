@@ -33,7 +33,7 @@ class SuratModel extends CI_Model
 		return $query;
 	}
 
-	public function get_pengajuan_by_rt($rt)
+	public function get_pengajuan_by_rt($rt, $rw)
 	{
 		$this->db->select('id_pengajuan_surat,pengajuan,tanggal_pengajuan,pengajuan_surat.verifikasi_rw,
 		pengajuan_surat.verifikasi_rt,nama_warga,no_rumah,warga.rt,warga.rw');
@@ -41,6 +41,7 @@ class SuratModel extends CI_Model
 		$this->db->join('detail_warga', 'detail_warga.id_detail_warga = pengajuan_surat.id_detail_warga');
 		$this->db->join('warga', 'warga.id_warga = detail_warga.id_warga');
 		$this->db->where('warga.rt', $rt);
+		$this->db->where('warga.rw', $rw);
 		$query = $this->db->get();
 		return $query;
 	}
