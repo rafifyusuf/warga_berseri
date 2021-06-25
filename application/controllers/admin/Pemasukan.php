@@ -19,7 +19,7 @@ class Pemasukan extends CI_Controller
 		$data['title'] = "Pemasukan";
 		$data['aspirasi'] = $this->AspirasiModel->getBelumTertangani()->result();
 		$data['saldo'] = $this->KeuanganModel->getTotalSaldo()->result();
-		$data['pemasukan'] = $this->PemasukanIuranModel->tampilDataPemasukan()->result();
+		$data['pemasukan'] = $this->PemasukanIuranModel->pemasukan_bulanan()->result();
 		$this->load->view('admin/layouts/header', $data);
 		$this->load->view('admin/pages/pemasukan/index', $data);
 		$this->load->view('admin/layouts/footer');
