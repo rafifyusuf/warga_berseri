@@ -20,7 +20,7 @@ class Penggunaan extends CI_Controller
 	{
 		$data['aspirasi'] = $this->AspirasiModel->getBelumTertangani()->result();
 		$data['saldo'] = $this->KeuanganModel->getTotalSaldo()->result();
-		$data['penggunaan'] = $this->PenggunaanIuranModel->tampilDataPenggunaan()->result();
+		$data['penggunaan'] = $this->PenggunaanIuranModel->penggunaan_bulanan()->result();
 		$this->load->view('admin/layouts/header', $data);
 		$this->load->view('admin/pages/penggunaan/index', $data);
 		$this->load->view('admin/layouts/footer');
