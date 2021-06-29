@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 11 Jun 2021 pada 15.13
+-- Waktu pembuatan: 29 Jun 2021 pada 19.47
 -- Versi server: 10.4.19-MariaDB
 -- Versi PHP: 8.0.6
 
@@ -25,19 +25,55 @@ DELIMITER $$
 --
 -- Fungsi
 --
-CREATE DEFINER=`root`@`localhost` FUNCTION `cek_pemasukan` (`bulan` VARCHAR(20), `tahun` INT) RETURNS INT(11) BEGIN
+CREATE FUNCTION `cek_iuran` (`bulan` VARCHAR(20), `tahun` YEAR) RETURNS BIGINT(20) NO SQL
+BEGIN
                  DECLARE hasil INT DEFAULT 0;
-                 SELECT jumlah_pemasukan INTO hasil FROM data_pemasukan_iuran
+                 SELECT SUM(nominal) INTO hasil FROM data_iuran_warga
+                 WHERE data_iuran_warga.bulan_iuran = bulan AND data_iuran_warga.tahun_iuran = tahun AND data_iuran_warga.status_iuran = 'Lunas' ;
+                  RETURN hasil;
+              END$$
+
+CREATE FUNCTION `cek_pemasukan` (`bulan` VARCHAR(20), `tahun` INT) RETURNS BIGINT(20) BEGIN
+                 DECLARE hasil INT DEFAULT 0;
+                 SELECT SUM(jumlah_pemasukan) INTO hasil FROM data_pemasukan_iuran
                  WHERE data_pemasukan_iuran.bulan_pemasukan = bulan AND data_pemasukan_iuran.tahun_pemasukan = tahun;
                   RETURN hasil;
               END$$
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `cek_pengeluaran` (`bulan` VARCHAR(20), `tahun` INT) RETURNS INT(11) BEGIN
+CREATE FUNCTION `cek_pengeluaran` (`bulan` VARCHAR(20), `tahun` INT) RETURNS BIGINT(20) BEGIN
                      DECLARE hasil INT DEFAULT 0;
-                     SELECT jumlah_pengeluaran INTO hasil FROM data_penggunaan_iuran
+                     SELECT SUM(jumlah_pengeluaran) INTO hasil FROM data_penggunaan_iuran
                      WHERE data_penggunaan_iuran.bulan_penggunaan = bulan AND data_penggunaan_iuran.tahun_penggunaan = tahun;
                       RETURN hasil;
                   END$$
+
+CREATE FUNCTION `cek_tagihan` (`bulan` VARCHAR(20), `tahun` YEAR) RETURNS BIGINT(20) NO SQL
+BEGIN
+                 DECLARE hasil INT DEFAULT 0;
+                 SELECT SUM(nominal) INTO hasil FROM data_iuran_warga
+                 WHERE data_iuran_warga.bulan_iuran = bulan AND data_iuran_warga.tahun_iuran = tahun AND data_iuran_warga.status_iuran = 'Belum Lunas' ;
+                  RETURN hasil;
+              END$$
+
+CREATE FUNCTION `friwayat_pembayaran_iuran` (`tagihan` INT) RETURNS INT(11) NO SQL
+BEGIN
+DECLARE status VARCHAR(255);
+DECLARE hasil VARCHAR(255);
+SELECT IF(tanggal_diterima IS NOT NULL, 'Benar', 'Salah') INTO status FROM riwayat_pembayaran_iuran WHERE no_tagihan=tagihan;
+IF status = 'Benar' THEN
+SET hasil = 'Sudah Bayar Iuran';
+ELSE 
+SET hasil = 'Belum Bayar Iuran';
+END IF;
+RETURN(hasil);
+END$$
+
+CREATE FUNCTION `ftotal_warga` () RETURNS VARCHAR(100) CHARSET utf8mb4 COLLATE utf8mb4_unicode_ci NO SQL
+BEGIN
+DECLARE total VARCHAR(100);
+SELECT COUNT(id_warga) INTO total FROM pendataan_warga;
+RETURN total;
+END$$
 
 DELIMITER ;
 
@@ -82,13 +118,6 @@ CREATE TABLE `aspirasi` (
   `waktu_kirim` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data untuk tabel `aspirasi`
---
-
-INSERT INTO `aspirasi` (`id`, `nama`, `email`, `no_wa`, `jenis_aspirasi`, `aspirasi`, `status`, `bukti`, `waktu_kirim`) VALUES
-(1, 'Ersaah', '', '08443423243264', 'kebersihan', 'Ayoooo bersih', 'Belum diproses', 'rajekwesi.JPG', '2021-06-09 15:54:55');
-
 -- --------------------------------------------------------
 
 --
@@ -108,16 +137,6 @@ CREATE TABLE `berita` (
 --
 -- Dumping data untuk tabel `berita`
 --
-
-INSERT INTO `berita` (`id`, `judul`, `isi`, `penulis`, `waktu_post`, `terakhir_diubah`, `thumbnail`) VALUES
-(1, 'Ever too late to lose weight?', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum, minima.', 'john stain', '2021-03-22 00:00:00', '2021-03-31 00:00:00', 'post6.jpg'),
-(2, 'Make your fitness Boost with us', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum, minima.', 'john stain', '2021-03-30 00:00:00', '2021-03-31 00:00:00', 'post1.jpg'),
-(3, 'Ethernity beauty health diet plan', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum, minima.', 'john stain', '2021-03-25 00:00:00', '2021-03-25 00:00:00', 'post2.jpg'),
-(4, 'Ever too late to lose weight?', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum, minima.', 'john stain', '2021-03-08 00:00:00', '2021-03-31 00:00:00', 'post3.jpg'),
-(5, 'Make your fitness Boost with us', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum, minima.', 'john stain', '2021-03-27 00:00:00', '2021-03-18 00:00:00', 'post4.jpg'),
-(6, 'Ethernity beauty health diet plan', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum, minima.', 'john stain', '2021-03-19 00:00:00', '2021-03-31 00:00:00', 'post5.jpg'),
-(7, 'Berita <br>Hari Ini <span class=\"text-color\">COVID19</span>', '<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis Theme natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam lorem ante, dapibus in.</p>', 'Muhammad Haitsam', '2021-03-20 21:43:37', '2021-03-20 21:47:25', 'covid.jpg');
-
 -- --------------------------------------------------------
 
 --
@@ -135,13 +154,6 @@ CREATE TABLE `content` (
 --
 -- Dumping data untuk tabel `content`
 --
-
-INSERT INTO `content` (`id`, `header`, `content`, `footer`, `last_updated`) VALUES
-(1, 'Illustration', '<p>Add some quality, svg illustrations to your project courtesy of <a\r\n                                            target=\"_blank\" rel=\"nofollow\" href=\"https://undraw.co/\">unDraw</a>, a\r\n                                        constantly updated collection of beautiful svg images that you can use\r\n                                        completely free and without attribution!</p>\r\n                                    <a target=\"_blank\" rel=\"nofollow\" href=\"https://undraw.co/\">Browse Illustrations on\r\n                                        unDraw &rarr;</a>', '', '2021-03-05 03:51:54'),
-(2, 'Development Approach', '<p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce\r\n                                        CSS bloat and poor page performance. Custom CSS classes are used to create\r\n                                        custom components and custom utility classes.</p>\r\n                                    <p class=\"mb-0\">Before working with this theme, you should become familiar with the\r\n                                        Bootstrap framework, especially the utility classes.</p>', '', '2021-03-05 03:49:49'),
-(3, 'Illustration', '<p>Add some quality, svg illustrations to your project courtesy of <a\r\n                                            target=\"_blank\" rel=\"nofollow\" href=\"https://undraw.co/\">unDraw</a>, a\r\n                                        constantly updated collection of beautiful svg images that you can use\r\n                                        completely free and without attribution!</p>\r\n                                    <a target=\"_blank\" rel=\"nofollow\" href=\"https://undraw.co/\">Browse Illustrations on\r\n                                        unDraw &rarr;</a>', '', '2021-03-05 03:51:44'),
-(4, 'Development Approach', '<p>SB Admin 2 makes extensive use of Bootstrap 4 utility classes in order to reduce\r\n                                        CSS bloat and poor page performance. Custom CSS classes are used to create\r\n                                        custom components and custom utility classes.</p>\r\n                                    <p class=\"mb-0\">Before working with this theme, you should become familiar with the\r\n                                        Bootstrap framework, especially the utility classes.</p>', '', '2021-03-05 03:52:18');
-
 -- --------------------------------------------------------
 
 --
@@ -204,9 +216,6 @@ CREATE TABLE `data_fasilitas` (
 -- Dumping data untuk tabel `data_fasilitas`
 --
 
-INSERT INTO `data_fasilitas` (`no`, `nama_lokasi`, `fasilitas_lokasi`, `alamat_lokasi`, `foto_lokasi`, `lat`, `long`) VALUES
-(14, 'Area Jogging', 'Jalan untuk jogging', 'Blk. C-G 11 Lengkong, Kec. Bojongsoang, Bandung, Jawa Barat 40287', 'warga_berseri/uploads/foto_lokasi/75_-Manfaat-jogging-untuk-kesehatan-anda.jpg', '-6.9717489', '107.6384383');
-
 -- --------------------------------------------------------
 
 --
@@ -218,7 +227,7 @@ CREATE TABLE `data_iuran_warga` (
   `jenis` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `bulan_iuran` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tahun_iuran` year(4) NOT NULL,
-  `nama` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nama` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `tanggal_pembayaran` date DEFAULT NULL,
   `bukti_pembayaran` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `status_iuran` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'Belum Lunas',
@@ -229,17 +238,6 @@ CREATE TABLE `data_iuran_warga` (
 --
 -- Dumping data untuk tabel `data_iuran_warga`
 --
-
-INSERT INTO `data_iuran_warga` (`no_tagihan`, `jenis`, `bulan_iuran`, `tahun_iuran`, `nama`, `tanggal_pembayaran`, `bukti_pembayaran`, `status_iuran`, `nominal`, `id_warga`) VALUES
-(2106033547, 'wajib', 'Jun', 2021, 'Indah Mayangsari', NULL, NULL, 'Belum Lunas', 200000, 'W-PBB-001'),
-(2106033548, 'wajib', 'Jun', 2021, 'Papam', NULL, NULL, 'Belum Lunas', 100000, 'W-PBB-002'),
-(2106033549, 'wajib', 'Jun', 2021, 'Tian', NULL, NULL, 'Belum Lunas', 200000, 'W-PBB-003'),
-(2106033550, 'wajib', 'Jun', 2021, 'siti aminah', NULL, NULL, 'Belum Lunas', 100000, 'W-PBB-004'),
-(2106034047, 'tambahan', 'Jun', 2021, 'Indah Mayangsari', NULL, NULL, 'Belum Lunas', 125, 'W-PBB-001'),
-(2106034050, 'tambahan', 'Jun', 2021, 'Papam', NULL, NULL, 'Belum Lunas', 125, 'W-PBB-002'),
-(2106034051, 'tambahan', 'Jun', 2021, 'Tian', NULL, NULL, 'Belum Lunas', 125, 'W-PBB-003'),
-(2106034052, 'tambahan', 'Jun', 2021, 'siti aminah', NULL, NULL, 'Belum Lunas', 125, 'W-PBB-004');
-
 -- --------------------------------------------------------
 
 --
@@ -253,20 +251,12 @@ CREATE TABLE `data_keuangan_iuran` (
   `jumlah_warga` int(11) NOT NULL,
   `jumlah_sudah_bayar` int(11) NOT NULL,
   `jumlah_belum_bayar` int(11) NOT NULL,
-  `saldo` bigint(20) NOT NULL,
-  `pemasukan` bigint(20) NOT NULL,
   `total_saldo` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data untuk tabel `data_keuangan_iuran`
 --
-
-INSERT INTO `data_keuangan_iuran` (`id_data_keuangan`, `bulan`, `tahun`, `jumlah_warga`, `jumlah_sudah_bayar`, `jumlah_belum_bayar`, `saldo`, `pemasukan`, `total_saldo`) VALUES
-(5, 'Mar', 2021, 2, 2, 0, 200000, 0, 120000),
-(6, 'Apr', 2021, 2, 1, 1, 100000, 0, 120000),
-(7, '', 0000, 0, 0, 0, 0, 0, 120000),
-(8, 'Jun', 2021, 6, 0, 6, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -280,7 +270,7 @@ CREATE TABLE `data_pemasukan_iuran` (
   `jumlah_pemasukan` int(11) NOT NULL,
   `bulan_pemasukan` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tahun_pemasukan` year(4) NOT NULL,
-  `tanggal_pemasukan` date NOT NULL,
+  `tanggal_pemasukan` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `bukti_pemasukan` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `keterangan` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `kategori` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -290,9 +280,6 @@ CREATE TABLE `data_pemasukan_iuran` (
 --
 -- Dumping data untuk tabel `data_pemasukan_iuran`
 --
-
-INSERT INTO `data_pemasukan_iuran` (`id_pemasukan`, `nama_pemasukan`, `jumlah_pemasukan`, `bulan_pemasukan`, `tahun_pemasukan`, `tanggal_pemasukan`, `bukti_pemasukan`, `keterangan`, `kategori`, `id_admin`) VALUES
-(1, 'uang pkk', 20000, 'Apr', 2021, '2021-04-07', '/admin/bukti_pemasukan/Screen_Shot_2021-04-05_at_10_59_35.png', 'dari pemerintah', 'SDM', 1);
 
 -- --------------------------------------------------------
 
@@ -306,7 +293,7 @@ CREATE TABLE `data_penggunaan_iuran` (
   `jumlah_pengeluaran` int(11) NOT NULL,
   `bulan_penggunaan` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tahun_penggunaan` year(4) NOT NULL,
-  `tanggal_penggunaan` date NOT NULL,
+  `tanggal_penggunaan` varchar(10) COLLATE utf8mb4_unicode_ci NOT NULL,
   `bukti_pengeluaran` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `keterangan` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `kategori` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -316,10 +303,6 @@ CREATE TABLE `data_penggunaan_iuran` (
 --
 -- Dumping data untuk tabel `data_penggunaan_iuran`
 --
-
-INSERT INTO `data_penggunaan_iuran` (`id_penggunaan`, `nama_kebutuhan`, `jumlah_pengeluaran`, `bulan_penggunaan`, `tahun_penggunaan`, `tanggal_penggunaan`, `bukti_pengeluaran`, `keterangan`, `kategori`, `id_admin`) VALUES
-(1, 'Pembayaran Uang Kebersihan', 90000, 'Mar', 2021, '2021-03-08', '/admin/bukti_pengeluaran_penggunaan/adidas1.jpg', 'bayar uang kebersihan', 'kebersihan', 1),
-(14, 'beli sapu', 10000, 'Apr', 2021, '2021-04-03', '/admin/bukti_pengeluaran_penggunaan/Screen_Shot_2021-04-05_at_10_59_3511.png', 'pembelian satu buah sapu', 'Kebersihan', 1);
 
 -- --------------------------------------------------------
 
@@ -351,16 +334,6 @@ CREATE TABLE `detail_warga` (
 --
 -- Dumping data untuk tabel `detail_warga`
 --
-
-INSERT INTO `detail_warga` (`id_warga`, `id_detail_warga`, `nama_warga`, `nik`, `status`, `no_hp`, `jenis_kelamin`, `agama`, `tempat_lahir`, `tanggal_lahir`, `pendidikan`, `pekerjaan`, `hubungan_keluarga`, `status_perkawinan`, `status_hunian`, `foto_profile`, `file_ktp`, `status_verifikasi`) VALUES
-('W-PBB-001', 'W-001', 'Indah Mayangsari', NULL, 'Kepala Keluarga', NULL, NULL, NULL, NULL, NULL, 'SMP', NULL, NULL, NULL, 'KTP luar tinggal di Lengkong', NULL, NULL, '2'),
-('W-PBB-002', 'W-003', 'Papam', '1234567890123456', 'Kepala Keluarga', '081322127897', 'Laki-laki', 'Katolik', 'Bandung', '2000-06-28', 'SMP', 'Pegawai Negeri', 'Istri', 'Janda', 'KTP lengkong tinggal di luar', NULL, NULL, '1'),
-('W-PBB-003', 'W-004', 'Tian', NULL, 'Kepala Keluarga', '0813221278123', NULL, NULL, NULL, NULL, 'SMA', NULL, NULL, NULL, 'KTP lengkong tinggal di luar', NULL, NULL, '1'),
-('W-PBB-004', 'W-005', 'siti aminah', '12345678901234567890', 'Kepala Keluarga', '089650161537', 'Laki-laki', 'Kristen', 'Bandung', '2021-06-09', 'S3', 'Mahasiswa', 'Istri', 'Duda', 'KTP lengkong tinggal di Lengkong', 'create_event.jpg', 'video_call.jpg', '2'),
-('W-PBB-004', 'W-006', 'asep jumroni', '3204082343215002', 'Anggota Keluarga', '082314523890', 'Laki-laki', 'Islam', 'Bandung', '2021-04-13', 'SMA', 'Wiraswasta', 'Suami', 'Kawin', 'KTP lengkong tinggal di Lengkong', 'video_call.jpg', 'ipung.jpg', '2'),
-('W-PBB-002', 'W-007', 'januar', '1234567890123456', 'Anggota Keluarga', '081322128491', 'Laki-laki', 'Islam', 'Bandung', '2021-06-13', 'SD', 'Wiraswasta', 'Istri', 'Belum Kawin', 'KTP lengkong tinggal di Lengkong', NULL, 'video_call1.jpg', '1'),
-('W-PBB-005', 'W-008', 'Coba Test', NULL, 'Kepala Keluarga', '123456789012', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2');
-
 -- --------------------------------------------------------
 
 --
@@ -379,13 +352,6 @@ CREATE TABLE `keluhan` (
   `waktu_kirim` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
---
--- Dumping data untuk tabel `keluhan`
---
-
-INSERT INTO `keluhan` (`id`, `nama`, `no_wa`, `email`, `jenis_keluhan`, `keluhan`, `status`, `bukti`, `waktu_kirim`) VALUES
-(1, 'Ersaaa', '08454524363', '', 'kebersihan', 'Ayoo ngeluh', 'Belum diproses', 'logo_jp2.png', '2021-06-09 15:56:48');
-
 -- --------------------------------------------------------
 
 --
@@ -399,63 +365,13 @@ CREATE TABLE `kendaraan` (
   `merk_kendaraan` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `nama_stnk` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
   `no_polisi` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `foto_kendaraan` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL
+  `foto_kendaraan` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status_verifikasi` enum('1','2') COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT '1' COMMENT '1 = Belum Terverif, 2 = Terverfikasi'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Dumping data untuk tabel `kendaraan`
 --
-
-INSERT INTO `kendaraan` (`id_warga`, `id_kendaraan`, `tipe_kendaraan`, `merk_kendaraan`, `nama_stnk`, `no_polisi`, `foto_kendaraan`) VALUES
-('W-PBB-002', 'K-PBB-002', 'Roda Tiga', 'Avanza', 'Ersa Nur Maulana', 'D 3405 LEVI', 'mojodeso.jpg'),
-('W-PBB-002', 'K-PBB-003', 'Roda Dua', 'Supra', 'Ersa Nur Maulana', 'D 3333 AW', 'mojodeso.jpg');
-
--- --------------------------------------------------------
-
---
--- Struktur dari tabel `migrations`
---
-
-CREATE TABLE `migrations` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
---
--- Dumping data untuk tabel `migrations`
---
-
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
-(1, '2020_10_17_131248_create_users_table', 1),
-(2, '2020_10_17_131249_create_wargas_table', 1),
-(3, '2020_11_17_131045_create_detail_wargas_table', 1),
-(4, '2020_11_17_131238_create_surats_table', 1),
-(5, '2020_11_17_144353_create_pengajuan_surats_table', 1),
-(6, '2020_11_17_172832_create_kendaraans_table', 1),
-(7, '2021_11_17_131066_create_keluhans_table', 1),
-(8, '2021_11_17_131067_create_aspirasis_table', 1),
-(9, '2021_11_17_131068_create_beritas_table', 1),
-(10, '2021_11_17_131069_create_contents_table', 1),
-(11, '2021_11_17_131070_create_dashboards_table', 1),
-(12, '2021_11_17_131210_create_pengumumen_table', 1),
-(13, '2021_11_17_172831_create_penguruses_table', 1),
-(14, '2021_11_17_172833_create_user_roles_table', 1),
-(15, '2021_11_17_172835_create_agamas_table', 1),
-(16, '2021_11_17_172836_create_tokens_table', 1),
-(17, '2021_11_17_172837_create_user_akses_menus_table', 1),
-(18, '2021_11_17_172838_create_menus_table', 1),
-(19, '2021_11_17_172839_create_aspirasi_table', 1),
-(20, '2021_11_17_172839_create_fasilitas_table', 1),
-(21, '2021_11_17_172839_create_keamanan_table', 1),
-(22, '2021_11_17_172839_create_musrembang_table', 1),
-(23, '2021_11_17_172839_create_notulansi_table', 1),
-(24, '2021_11_17_172839_create_peraturan_table', 1),
-(25, '2021_11_17_172839_create_user_sub_menus_table', 1),
-(26, '2022_11_17_131108_create_pembayaran_iurans_table', 1),
-(27, '2022_11_17_131124_create_keuangans_table', 1),
-(28, '2022_11_17_131125_create_pemasukans_table', 1),
-(29, '2022_11_17_131153_create_penggunaan_iurans_table', 1);
 
 -- --------------------------------------------------------
 
@@ -478,10 +394,6 @@ CREATE TABLE `musrembang` (
 -- Dumping data untuk tabel `musrembang`
 --
 
-INSERT INTO `musrembang` (`id`, `program`, `kegiatan`, `sasaran`, `volume_lokasi`, `pengusul`, `keterangan`, `status`) VALUES
-(1, 'Peningkatan Infrastruktur', 'Pengecoran Jalan', 'Kelancaran Lalu Lintas', 'Volume: 125 m\r\nLokasi: Rw.01\r\nKelurahan Gemolong\r\n-Sragen', 'Musyawarah RT di RW.01\r\nTanggal: 2020-11-01', 'Saat ini kondisi Jalan sudah tidak dapat dilalui oleh kendaraan karena terdapat lobang-lobang yang sangat besar dan dalam', 'Sudah diusulkan'),
-(2, 'Peningkatan Kebersihan Lingkungan Hidup', 'Kerja Bakti', 'Perumah Permata Buah Batu', '100', 'Semua Warga', 'Kerja Bakti dilaksanakan jam 10 pagi', 'Diusulkan');
-
 -- --------------------------------------------------------
 
 --
@@ -501,9 +413,6 @@ CREATE TABLE `notulensi` (
 --
 -- Dumping data untuk tabel `notulensi`
 --
-
-INSERT INTO `notulensi` (`id`, `judul`, `isi`, `penulis`, `waktu_post`, `terakhir_diubah`, `thumbnail`) VALUES
-(1, 'Rapat Paripurna', 'Tidak boleh makan di Toilet.', 'Januarizqi Dwi Mileniantoro', '2021-06-09 17:28:24', '2021-06-09 17:28:24', 'pbb.jpg');
 
 -- --------------------------------------------------------
 
@@ -531,13 +440,6 @@ CREATE TABLE `pengajuan_surat` (
 -- Dumping data untuk tabel `pengajuan_surat`
 --
 
-INSERT INTO `pengajuan_surat` (`id_pengajuan_surat`, `id_detail_warga`, `pengajuan`, `tanggal_pengajuan`, `tanggal_disetujui`, `kode_surat`, `no_surat`, `rt`, `rw`, `nama_rt`, `nama_rw`, `verifikasi_rt`, `verifikasi_rw`) VALUES
-('SURAT-002', 'W-001', 'Membuat Surat Pindah', '2021-04-21', '2021-04-22', '091201212', '121 / 213 / 5541XII', '1', '2', NULL, 'RAFIF YUSUF AVANDY', 'Diproses', 'Disetujui'),
-('SURAT-004', 'W-006', 'na', '2021-04-22', '2021-04-22', '091201212', '121 / 213 / 5541XII', '1', '16', 'Ersa', 'Rafif Yusuf Avandy', 'Disetujui', 'Disetujui'),
-('SURAT-005', 'W-003', 'Mau Papam Pindahan', '2021-06-02', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Diproses', 'Diproses'),
-('SURAT-006', 'W-007', 'Pindahan', '2021-06-02', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Diproses', 'Diproses'),
-('SURAT-007', 'W-005', 'as', '2021-06-02', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 'Diproses', 'Diproses');
-
 -- --------------------------------------------------------
 
 --
@@ -557,17 +459,6 @@ CREATE TABLE `pengumuman` (
 --
 -- Dumping data untuk tabel `pengumuman`
 --
-
-INSERT INTO `pengumuman` (`id`, `judul`, `isi`, `penulis`, `waktu_post`, `terakhir_diubah`, `thumbnail`) VALUES
-(1, 'Anggota Eksekutif Baru', 'namanya Sam', 'Januarizqi Dwi Mileniantoro', '2021-03-18 09:17:28', '2021-03-20 20:49:58', 'bg-5.jpg'),
-(2, 'dicoba', 'coba', 'Ersa Nur Maulana', '2021-03-19 05:48:04', '2021-03-19 05:48:04', 'bg-7 revisi.jpg'),
-(3, 'Ever too late to lose weight?', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum, minima.', 'john stain', '2021-03-30 00:00:00', '2021-03-30 00:00:00', 'post6.jpg'),
-(4, 'Make your fitness Boost with us', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum, minima.', 'john stain', '2021-03-30 00:00:00', '2021-03-30 00:00:00', 'post1.jpg'),
-(5, 'Ethernity beauty health diet plan', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum, minima.', 'john stain', '2021-03-30 00:00:00', '2021-03-30 00:00:00', 'post2.jpg'),
-(6, 'Ever too late to lose weight?', 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Rerum, minima.', 'john stain', '2021-03-30 00:00:00', '2021-03-30 00:00:00', 'post3.jpg'),
-(9, 'Pengumuman <br>Pengajian <span class=\"text-color\">Bulanan</span>', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis Theme natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam lorem ante, dapibus in.', 'Muhammad Haitsam', '2021-03-20 21:54:41', '2021-03-20 21:54:41', 'bg-7.jpeg'),
-(10, 'Arisan RT 06', 'Yuu arisan gais', 'Januarizqi', '2021-06-10 22:37:59', '2021-06-10 22:37:59', 'teksas.jpg'),
-(11, 'kritikasasasasasasas', 'mantap', 'Januarizqi', '2021-06-10 22:40:14', '2021-06-11 16:13:18', 'doctor-011.jpg');
 
 -- --------------------------------------------------------
 
@@ -589,9 +480,6 @@ CREATE TABLE `peraturan` (
 -- Dumping data untuk tabel `peraturan`
 --
 
-INSERT INTO `peraturan` (`id`, `judul`, `isi`, `penulis`, `waktu_post`, `terakhir_diubah`, `thumbnail`) VALUES
-(1, 'Peraturan Perumahan Permata Buah Batu', 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis Theme natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Aliquam lorem ante, dapibus in.', 'Januarizqi Dwi Mileniantoro', '2021-06-09 15:31:56', '2021-06-09 15:31:56', '605818c4adc061.jpg');
-
 -- --------------------------------------------------------
 
 --
@@ -609,10 +497,6 @@ CREATE TABLE `petugas_keamanan` (
 --
 -- Dumping data untuk tabel `petugas_keamanan`
 --
-
-INSERT INTO `petugas_keamanan` (`id`, `nama`, `jabatan`, `foto`, `parent_id`) VALUES
-(1, 'Akib Dahlan', 'Kepala Keamanan', 'akib.jpg', '0'),
-(4, 'Olga Paurenta Simanihuruk', 'Anggota Keamanan', 'christopher-campbell-rDEOVtE7vOs-unsplash2.jpg', '1');
 
 -- --------------------------------------------------------
 
@@ -632,14 +516,6 @@ CREATE TABLE `struktur` (
 -- Dumping data untuk tabel `struktur`
 --
 
-INSERT INTO `struktur` (`id`, `nama`, `jabatan`, `foto`, `parent_id`) VALUES
-(1, 'Ersa Nur Maulana', 'Ketua RT', 'Ersa_Nur_Maulana-min.JPG', NULL),
-(2, 'Januarizqi Dwi Mileniantoro', 'Sie. Keamanan', 'Januarizqi_Dwi_M_-min1.JPG', '1'),
-(3, 'Alya Putri Maharani', 'Sie. Kebersihan', '4-min.JPG', '1'),
-(6, 'Nurul Fadhilah', 'Sie. PKK', '6-min.JPG', '1'),
-(12, 'Olga Paurenta Simanihuruk', 'Bendahara', '2019-06-05_11_59_30_1-min_(1).jpg', '1'),
-(13, 'sofwan f', 'Atasan', 'mojodeso.jpg', '1');
-
 -- --------------------------------------------------------
 
 --
@@ -657,9 +533,6 @@ CREATE TABLE `surat` (
 --
 -- Dumping data untuk tabel `surat`
 --
-
-INSERT INTO `surat` (`id_surat`, `id_admin`, `judul`, `keterangan_surat`, `file_surat`) VALUES
-('S-PBB-001', 2, 'Arisan RT 06', 'Wajib Hadir Semuanya Karena Ada DoorPrize', 'Bagaimana_cara_memebuat_border_pada_table_menggunakan_styling_CSS_dibawah_ini.docx');
 
 -- --------------------------------------------------------
 
@@ -692,10 +565,7 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `name`, `username`, `email`, `password`, `gender`, `place_of_birth`, `birthday`, `phone_number`, `address`, `religion_id`, `image`, `role_id`, `is_active`, `date_created`, `rt`, `rw`) VALUES
-(1, 'Rafif Yusuf Avandy', 'rafifyusuf', 'rafifyusuf@gmail.com', '$2y$10$jzPhvP0r2r70zVPGkzX7E.GYoCiJ2aki8ztuqAVDXdLei5b8FPWKu', 'Laki-laki', '122121', '2021-04-20', '082116097045', 'Komplek Bsa Blok H No.7\r\nBojongsoang', 1, 'default.svg', 7, 1, '2021-05-12', NULL, '16'),
-(2, 'Ersa', 'admin', 'ersanurzz@mail.com', '$2y$10$AUVE4Guxhfqf/SPDtPmx0OITJTmJJbSWKR2EWrMP9hWJYcV5p7ILC', 'Perempuan', '122121', '2021-05-06', '082116097045', 'Komplek Bsa Blok H No.7\r\nBojongsoang', 2, 'default.svg', 6, 1, '2021-05-12', '1', NULL),
-(3, 'Januarizqi', 'janu', 'januarrizqi5@gmail.com', '$2y$10$54Ajl0R.ArBF45hyXCsJZOnTdLzoegtv9nJbBRs3ICk1QBv1kS5yW', 'Laki-laki', 'Kediri', '2021-05-12', '085717295156', 'Kediri', 1, 'Januarizqi_Dwi_M_-min1.JPG', 1, 1, '2021-05-26', NULL, NULL),
-(4, 'Rafif Yusuf Avandy', 'rafifyusufa', 'rafifyusuaf@gmail.com', '$2y$10$hOhneBpI74Ut53fFx72OxeQf6kHggvxpd/LiumdMCG4apejlbiJyu', 'Laki-laki', 'bandua', '2021-06-04', '082116097045', 'Komplek Bojongsoang Asri 1 Blok H.No7 Rt 01 Rw 16 ,Kecamatan Bojongsoang Kabupaten Badung', 2, 'default.svg', 5, 0, '0000-00-00', NULL, NULL);
+(1, 'Januarizqi', 'janu', 'januarrizqi5@gmail.com', '$2y$10$54Ajl0R.ArBF45hyXCsJZOnTdLzoegtv9nJbBRs3ICk1QBv1kS5yW', 'Laki-laki', 'Kediri', '2021-05-12', '085717295156', 'Kediri', 1, 'default.svg', 1, 1, '2021-05-26', NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -876,31 +746,6 @@ CREATE TABLE `user_token` (
 -- Dumping data untuk tabel `user_token`
 --
 
-INSERT INTO `user_token` (`id`, `email`, `token`, `date_created`) VALUES
-(4, 'haitsam03@gmail.com', 'iscmRCWne+lTCfqz/25n5R8VUX5MUkaN02Bhum3gVsU=', 1609930420),
-(5, 'haitsam03@gmail.com', 'n5QKD1D9vUL9QiROw9MO4pgD/fbbdFGYrGd8znIJWe4=', 1609932048),
-(6, 'haitsam03@gmail.com', 'wPG+3htmGqTKAArzVlpS/b0eoqor9TKqG16H5cDvMqA=', 1609932054),
-(7, 'aa@aa.a', 'oIK0LUztcU02aYAE6HG86eh7Fq5/TcK17wF7B/To+/k=', 1609941391),
-(8, 'wahyuhidayat@gmail.com', 'h5OYZb29deEXYS/1Bc69GOaWseVwGEhhSXVKert9Oog=', 1610019862),
-(9, 'pramuko@gmail.com', 'ijlFNaUwBrUcqEbANwlEml1FluVkgWAOvEPf3VtE9H4=', 1610019892),
-(10, 'elyrosely@gmail.com', 'zLt8OC5aT9LrQaCipRl09/n95aUTUUjwCiVtKM150uA=', 1610019940),
-(11, 'inne@gmail.com', '6kl2FFh6027PAQ51K03uIlFz8f3+e59snpxLo3jAOBE=', 1610019985),
-(12, 'wawa@gmail.com', '/g7m4I60ysY6Ljs6xsHhye5zWPyA0eR/4qwv7r7czlo=', 1610020015),
-(13, 'fasaldo1999@gmail.com', 'fOSWX9UdFnoi7ejSOIkhye7te1tVdT+cXmd1hh0YZCQ=', 1610023446),
-(15, 'muhammadbarja@gmail.com', 'VpatS/tgTK/bfTZLlDDoVX9aaD6Kb3YoeS2/ozJOhXI=', 1610280453),
-(16, 'januarizqi5@gmail.com', '8QKHOpK1ROQrW679QbREt1fb2wdgcsffl5PLahNGPws=', 1610507816),
-(17, 'suryatiningsih@gmail.com', 'IvVR3KjJpnh+lnQgeWOmpht3w235j9Vax2GkkDCzUBE=', 1610509684),
-(18, 'ersanum@gmail.com', 'Tst2ygGt8n2wUa+RsqvtHguZMn1KPTaiNE63D4wwehQ=', 1610529882),
-(19, 'haitsamhaitsam18@yahoo.com', '06vONmPAIi0hj/xgLH72Ck6FSDDyqs96P9pxA5bOU54=', 1610556667),
-(20, 'shibghotul7@gmail.com', 'zLT3U4RCMM6pc1pVBCI3SodKzlAVJmG13PbfY8ijFnU=', 1610556792),
-(21, 'haitsam03@gmail.com', 'oVyGSYjGv4lTvFvUKawPJ96cj42FYlkQW8QcyPDghSQ=', 1611588824),
-(22, 'akibdahlan20@gmail.com', 'Q5sF4roomYzNnHkIS0zKCHKteza6KwrK5GYaHqlJr8w=', 1614472096),
-(23, 'akibdahlan21@gmail.com', 'M23yBdkPPwctLera1YG1Eccpx5PFhn1vNyKEeEqVpT0=', 1614472317),
-(24, 'wakwaw@gmail.com', 'iOURcncfWdC6WJhj6FEhYRCWPFMmfu25d+RbC4txFL8=', 1617169234),
-(25, 'rafifyusuf@gmail.com', 'T9eglMPMhiWbZ/imQdn7pR1TvieId+Q+R9AG580MMyY=', 1618821536),
-(26, 'rafifyusuf@gmail.com', 'xvzV1SheLdbdR9+DavEAHB6illoNnnn8Po3sQp3NsnY=', 1618895004),
-(27, 'rafifyusuaf@gmail.com', 'tWAPCcwf+qZVQTa2fguSfGUIaBAoiHMTfCoRzMFPwlk=', 1623338757);
-
 -- --------------------------------------------------------
 
 --
@@ -924,12 +769,6 @@ CREATE TABLE `warga` (
 -- Dumping data untuk tabel `warga`
 --
 
-INSERT INTO `warga` (`id_warga`, `no_rumah`, `no_kk`, `alamat`, `jumlah_keluarga`, `status_rumah`, `status_rumah_tangga`, `rt`, `rw`, `file_kk`) VALUES
-('W-PBB-001', 'H-7', '1234567890123456', 'Komplek PBB 1', 2, 'Rumah Usaha', NULL, '1', '2', 'ipung2.jpg'),
-('W-PBB-002', 'C-10', '1234567890123456', 'Komplek Pbb', 3, 'Rumah Usaha', 'KIS, RASKIN', '1', '1', 'kk_1622601649.jpg'),
-('W-PBB-003', 'E-1', '1234567890123456', 'Komplek PBB Ceria', 2, 'Rumah Usaha', NULL, '1', '1', '633547.jpg'),
-('W-PBB-004', '22-B', '3204082302800004', 'gg.pa edo ', 3, 'Rumah Tinggal', NULL, '1', '16', 'kk_1622615590.jpg'),
-('W-PBB-005', 'B-151', '1234567890123456', 'asasasas', 3, 'Rumah Usaha', 'KIS, RASKIN, KIP', '1', '2', 'kayangan_api4.jpg');
 
 --
 -- Indexes for dumped tables
@@ -1029,9 +868,6 @@ ALTER TABLE `kendaraan`
 --
 -- Indeks untuk tabel `migrations`
 --
-ALTER TABLE `migrations`
-  ADD PRIMARY KEY (`id`);
-
 --
 -- Indeks untuk tabel `musrembang`
 --
@@ -1138,7 +974,7 @@ ALTER TABLE `agama`
 -- AUTO_INCREMENT untuk tabel `aspirasi`
 --
 ALTER TABLE `aspirasi`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `berita`
@@ -1162,13 +998,13 @@ ALTER TABLE `dashboard`
 -- AUTO_INCREMENT untuk tabel `data_fasilitas`
 --
 ALTER TABLE `data_fasilitas`
-  MODIFY `no` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `no` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT untuk tabel `data_iuran_warga`
 --
 ALTER TABLE `data_iuran_warga`
-  MODIFY `no_tagihan` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2106034053;
+  MODIFY `no_tagihan` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2106095432;
 
 --
 -- AUTO_INCREMENT untuk tabel `data_keuangan_iuran`
@@ -1192,13 +1028,11 @@ ALTER TABLE `data_penggunaan_iuran`
 -- AUTO_INCREMENT untuk tabel `keluhan`
 --
 ALTER TABLE `keluhan`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `migrations`
 --
-ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT untuk tabel `musrembang`
@@ -1228,19 +1062,19 @@ ALTER TABLE `peraturan`
 -- AUTO_INCREMENT untuk tabel `petugas_keamanan`
 --
 ALTER TABLE `petugas_keamanan`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `struktur`
 --
 ALTER TABLE `struktur`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `user_access_menu`
@@ -1270,7 +1104,7 @@ ALTER TABLE `user_sub_menu`
 -- AUTO_INCREMENT untuk tabel `user_token`
 --
 ALTER TABLE `user_token`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)

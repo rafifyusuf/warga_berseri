@@ -43,7 +43,7 @@
 							<div class="form-row">
 								<div class="form-group col-md-8">
 									<label for="inputEmail4" class="col-form-label">Nomor Rumah</label>
-									<input type="text" class="form-control" placeholder="Nomor Rumah" name="no_rumah" value="<?= $warga->no_rumah ?>">
+									<input type="text" class="form-control text-uppercase" name="no_rumah" value="<?= $warga->no_rumah ?>">
 									<span class="form-text text-danger"><?= form_error('no_rumah'); ?></span>
 								</div>
 							</div>

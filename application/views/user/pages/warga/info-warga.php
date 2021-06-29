@@ -87,7 +87,7 @@
 							<div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
 								<div class="form-group">
 									<label for="firstname">No Rumah</label>
-									<input type="text" class="form-control" name="no_rumah" value="<?php echo $warga->no_rumah ?>">
+									<input type="text" class="form-control text-uppercase" name="no_rumah" value="<?php echo $warga->no_rumah ?>">
 									<span class="form-text text-danger"><?= form_error('no_rumah'); ?></span>
 								</div>
 							</div>

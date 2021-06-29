@@ -199,7 +199,7 @@ class Iuran extends CI_Controller
 		$this->generate_data_iuran();
 		$saldo = $this->KeuanganModel->getTotalSaldo()->result();
 		$nominal = $this->IuranModel->nominal_tagihan($tagihan)->result();
-		$nom= $nominal[0]->nominal;
+		$nom = $nominal[0]->nominal;
 		$total_saldo = $saldo[0]->total_saldo;
 		$jumlah = $nom + $total_saldo;
 		$data_saldo = array('total_saldo' => $jumlah);
@@ -207,7 +207,7 @@ class Iuran extends CI_Controller
 		$this->IuranModel->verifikasi_iuran($tagihan);
 		redirect('IuranController/view_dataIuran');
 	}
-	
+
 	public function tolak_verifikasi($tagihan)
 	{
 		$data_iuran = $this->IuranModel->tolak_verifikasi($tagihan);
@@ -271,7 +271,6 @@ class Iuran extends CI_Controller
 				'tahun_iuran'     => date('Y')
 			);
 			$this->IuranModel->tambahDataIuran($data_iuran);
-
 		}
 	}
 
@@ -288,7 +287,7 @@ class Iuran extends CI_Controller
 			$sw = $this->IuranModel->check_status($get_rumah[$i]->id_warga)->result();
 			$get_kepkel = $this->IuranModel->get_kepala_keluarga($get_rumah[$i]->id_warga)->result();
 			$stat = $sw[0]->status_rumah;
-			$kepkel = $get_kepkel[0]->nama_warga;
+			// $kepkel = $get_kepkel[0]->nama_warga;
 
 			if (empty($check_tagihan_bulanan)) {
 				$notagihan = date('ymhis');
@@ -303,16 +302,14 @@ class Iuran extends CI_Controller
 				$data_iuran = array(
 					'no_tagihan'      => $notagihan + $i,
 					'id_warga' => $get_rumah[$i]->id_warga,
-					'nama'            => $kepkel,
+					'nama'            => $get_kepkel[0]->nama_warga,
 					'jenis'			  => 'Wajib',
 					'nominal' 		  => $nominal,
 					'bulan_iuran'     => date('M'),
 					'tahun_iuran'     => date('Y')
 				);
 				$this->IuranModel->tambahDataIuran($data_iuran);
-				
 			}
-
 		}
 	}
 
@@ -369,5 +366,4 @@ class Iuran extends CI_Controller
 			$this->IuranModel->tambah_totalsaldo($total_saldo_iuran[0]->total_saldo);
 		}
 	}
-	
 }

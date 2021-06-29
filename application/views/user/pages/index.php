@@ -5,6 +5,10 @@
 		width: 100%;
 		/* The width is the width of the web page */
 	}
+
+	.btn {
+		padding: 18px 35px;
+	}
 </style>
 <?php unset($_SESSION['flash']); ?>
 <div class="main-wrapper ">

@@ -8,7 +8,6 @@ class Penggunaan extends CI_Controller
 	{
 		parent::__construct();
 		$this->load->helper('tgl_indo');
-		$this->load->helper('tgl_indo');
 		$this->load->model('admin/WargaModelIuran', 'WargaModel');
 		$this->load->model('admin/AspirasiModel', 'AspirasiModel');
 		$this->load->model('admin/IuranModel', 'IuranModel');
@@ -20,14 +19,14 @@ class Penggunaan extends CI_Controller
 	{
 		$data['aspirasi'] = $this->AspirasiModel->getBelumTertangani()->result();
 		$data['saldo'] = $this->KeuanganModel->getTotalSaldo()->result();
-		$data['penggunaan'] = $this->PenggunaanIuranModel->tampilDataPenggunaan()->result();
+		$data['penggunaan'] = $this->PenggunaanIuranModel->penggunaan_bulanan()->result();
 		$this->load->view('admin/layouts/header', $data);
 		$this->load->view('admin/pages/penggunaan/index', $data);
 		$this->load->view('admin/layouts/footer');
 		$this->generate_data_iuran();
 	}
-	
-	
+
+
 	public function tampil_bulanan($bulan)
 	{
 		$data['saldo'] = $this->KeuanganModel->getTotalSaldo()->result();
@@ -65,10 +64,10 @@ class Penggunaan extends CI_Controller
 		$pengeluaran = $total_saldo[0]->total_saldo - $data_form['jumlah_pengeluaran'];
 
 		$bulan_convert = strtotime($data_form['tanggal_penggunaan']);
-		$bulan = date('M',$bulan_convert);
-		$tahun = date('Y',$bulan_convert);
-		
-		$check = $this->KeuanganModel->check_bulan_tahun($bulan,$tahun)->result();
+		$bulan = date('M', $bulan_convert);
+		$tahun = date('Y', $bulan_convert);
+
+		$check = $this->KeuanganModel->check_bulan_tahun($bulan, $tahun)->result();
 
 		if ($pengeluaran < 0) {
 			$this->session->set_flashdata('error', 'Saldo Tidak Mencukupi');
@@ -109,8 +108,8 @@ class Penggunaan extends CI_Controller
 					$jumlah_warga_iuran = count($jumlah_warga);
 					$warga_sudah_bayar = count($tagihan_lunas_bulanan);
 					$warga_belum_bayar = count($tagihan_bulanan);
-	
-					$saldo = $this->IuranModel->get_nominal_bulanan($bulan,$tahun)->result();
+
+					$saldo = $this->IuranModel->get_nominal_bulanan($bulan, $tahun)->result();
 					$uang_iuran = 0;
 					$tagihan = 0;
 					$check_rekap_iuran = $this->IuranModel->check_rekap_iuran_bulanan($bulan, $tahun)->result();
@@ -120,23 +119,23 @@ class Penggunaan extends CI_Controller
 						'jumlah_warga'       => $jumlah_warga_iuran,
 						'jumlah_sudah_bayar' => $warga_sudah_bayar,
 						'jumlah_belum_bayar' => $warga_belum_bayar,
-						);
+					);
 					//echo "Bulan tidak ada";
-				$this->IuranModel->rekap_iuran_bulanan($data_keuangan);
-				$this->PenggunaanIuranModel->tambahDataPenggunaan($data);
-				$this->KeuanganModel->updateSaldo($totalsaldo);
-				redirect('admin/penggunaan');
-				} else{
+					$this->IuranModel->rekap_iuran_bulanan($data_keuangan);
+					$this->PenggunaanIuranModel->tambahDataPenggunaan($data);
+					$this->KeuanganModel->updateSaldo($totalsaldo);
+					redirect('admin/penggunaan');
+				} else {
 					//echo "Bulan ada";
-				$this->PenggunaanIuranModel->tambahDataPenggunaan($data);
-				$this->KeuanganModel->updateSaldoPeng($bulan,$tahun,$totalsaldo);
-				$this->KeuanganModel->updateSaldo($totalsaldo);
-				redirect('admin/penggunaan/');
+					$this->PenggunaanIuranModel->tambahDataPenggunaan($data);
+					$this->KeuanganModel->updateSaldoPeng($bulan, $tahun, $totalsaldo);
+					$this->KeuanganModel->updateSaldo($totalsaldo);
+					redirect('admin/penggunaan/');
 				}
 			}
 		}
 	}
-	
+
 
 	public function edit_data_penggunaan($id)
 	{
@@ -157,10 +156,10 @@ class Penggunaan extends CI_Controller
 		$this->KeuanganModel->updateSaldo($saldo);
 		$total_saldo_baru = $this->KeuanganModel->getTotalSaldo()->result();
 		$pengeluaran = $total_saldo_baru[0]->total_saldo - $data_form['jumlah_pengeluaran'];
-		
+
 		$bulan_convert = strtotime($data_form['tanggal_penggunaan']);
-		$bulan = date('M',$bulan_convert);
-		$tahun = date('Y',$bulan_convert);
+		$bulan = date('M', $bulan_convert);
+		$tahun = date('Y', $bulan_convert);
 
 		if ($pengeluaran < 0) {
 			$this->session->set_flashdata('error', 'Saldo Tidak Mencukupi');
@@ -176,8 +175,8 @@ class Penggunaan extends CI_Controller
 					'tanggal_penggunaan'	=> $data_form['tanggal_penggunaan'],
 					'keterangan'			=> $data_form['keterangan'],
 					'id_admin'				=> $admin['id'],
-					'bulan_penggunaan' =>$bulan,
-					'tahun_penggunaan' =>$tahun
+					'bulan_penggunaan' => $bulan,
+					'tahun_penggunaan' => $tahun
 				);
 				$saldo = array('total_saldo' => $pengeluaran);
 				$this->PenggunaanIuranModel->editDataPenggunaan($data_update, $where);
@@ -250,7 +249,7 @@ class Penggunaan extends CI_Controller
 			$sw = $this->IuranModel->check_status($get_rumah[$i]->id_warga)->result();
 			$get_kepkel = $this->IuranModel->get_kepala_keluarga($get_rumah[$i]->id_warga)->result();
 			$stat = $sw[0]->status_rumah;
-			$kepkel = $get_kepkel[0]->nama_warga;
+			// $kepkel = $get_kepkel[0]->nama_warga;
 
 			if (empty($check_tagihan_bulanan)) {
 				$notagihan = date('ymhis');
@@ -265,7 +264,7 @@ class Penggunaan extends CI_Controller
 				$data_iuran = array(
 					'no_tagihan'      => $notagihan + $i,
 					'id_warga' => $get_rumah[$i]->id_warga,
-					'nama'            => $kepkel,
+					'nama'            => $get_kepkel[0]->nama_warga,
 					//'id_detail_warga' => $get_warga[$i]->id_detail_warga,
 					'jenis'			  => 'wajib',
 					'nominal' 		  => $nominal,
@@ -292,7 +291,7 @@ class Penggunaan extends CI_Controller
 		$jumlah_warga_iuran = count($jumlah_warga);
 		$warga_sudah_bayar = count($tagihan_lunas_bulanan);
 		$warga_belum_bayar = $jumlah_warga_iuran - $warga_sudah_bayar;
-		
+
 		$check_rekap_iuran = $this->IuranModel->check_rekap_iuran_bulanan($bulan, $tahun)->result();
 
 		if (count($check_rekap_iuran) == 0) {
@@ -303,7 +302,7 @@ class Penggunaan extends CI_Controller
 				'jumlah_warga'       => $jumlah_warga_iuran,
 				'jumlah_sudah_bayar' => $warga_sudah_bayar,
 				'jumlah_belum_bayar' => $warga_belum_bayar,
-				
+
 			);
 
 			$this->IuranModel->rekap_iuran_bulanan($data_keuangan);
@@ -315,7 +314,7 @@ class Penggunaan extends CI_Controller
 				'jumlah_warga'      => $jumlah_warga_iuran,
 				'jumlah_sudah_bayar'  => $warga_sudah_bayar,
 				'jumlah_belum_bayar'  => $warga_belum_bayar,
-				
+
 			);
 
 			$this->IuranModel->update_rekap_iruan_bulanan($bulan, $tahun, $data_keuangan);

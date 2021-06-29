@@ -66,7 +66,7 @@ class Keuangan extends CI_Controller
 			$sw = $this->IuranModel->check_status($get_rumah[$i]->id_warga)->result();
 			$get_kepkel = $this->IuranModel->get_kepala_keluarga($get_rumah[$i]->id_warga)->result();
 			$stat = $sw[0]->status_rumah;
-			$kepkel = $get_kepkel[0]->nama_warga;
+			// $kepkel = $get_kepkel[0]->nama_warga;
 
 			if (empty($check_tagihan_bulanan)) {
 				$notagihan = date('ymhis');
@@ -81,7 +81,7 @@ class Keuangan extends CI_Controller
 				$data_iuran = array(
 					'no_tagihan'      => $notagihan + $i,
 					'id_warga' => $get_rumah[$i]->id_warga,
-					'nama'            => $kepkel,
+					'nama'            => $get_kepkel[0]->nama_warga,
 					//'id_detail_warga' => $get_warga[$i]->id_detail_warga,
 					'jenis'			  => 'wajib',
 					'nominal' 		  => $nominal,
@@ -130,7 +130,7 @@ class Keuangan extends CI_Controller
 				'jumlah_warga'      => $jumlah_warga_iuran,
 				'jumlah_sudah_bayar'  => $warga_sudah_bayar,
 				'jumlah_belum_bayar'  => $warga_belum_bayar,
-				
+
 			);
 
 			$this->IuranModel->update_rekap_iruan_bulanan($bulan, $tahun, $data_keuangan);

@@ -51,6 +51,7 @@ class Iuran extends CI_Controller
 		$data['totalsaldo'] = $this->KeuanganModel->getTotalSaldo()->result();
 		$data['pemasukan'] = $this->PenggunaanIuranModel->tampilDataPemasukan($bulan)->result();
 		$data['penggunaan'] = $this->PenggunaanIuranModel->tampilDataPenggunaan($bulan)->result();
+		$data['keuangan'] = $this->PenggunaanIuranModel->getPemasukanPengeluaran($bulan)->result();
 		$this->load->view('user/layouts/header', $data);
 		$this->load->view('user/pages/iuran/infoPenggunaan', $data);
 		$this->load->view('user/layouts/footer');

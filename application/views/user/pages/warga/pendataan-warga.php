@@ -1,3 +1,13 @@
+<style>
+	.btn-main {
+		color: white;
+	}
+
+	.button-tambah .btn {
+		padding: 18px 35px;
+	}
+</style>
+
 <!-- START Modal tambah Data Kendaraan -->
 <div class="modal fade overflow-auto" id="addKendaraan" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
@@ -38,8 +48,8 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<button type="submit" name="submit" class="btn btn-primary">Upload</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
+				<button type="submit" name="submit" class="btn btn-primary">Tambah</button>
 			</div>
 		</div>
 		<input type="hidden" name="id_warga" value="<?= $this->session->id_warga ?>">
@@ -47,12 +57,6 @@
 	</div>
 </div>
 <!-- End Modal tambah Data Kendaraan -->
-
-<style>
-	.btn-main {
-		color: white;
-	}
-</style>
 <!-- START Modal Lihat File KK -->
 <div class="modal fade overflow-auto" id="openImageKK" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
@@ -68,7 +72,7 @@
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Tutup</button>
 			</div>
 		</div>
 	</div>
@@ -160,7 +164,7 @@
 				<div>
 					<p style="font-weight: 900;">Silahkan edit data jika ada kesalahan saat penginputan oleh admin</p>
 				</div>
-				<div>
+				<div class="button-tambah">
 					<a href="<?= base_url('user/warga/info_warga/' . $warga->id_warga) ?>">
 						<button class="btn btn-main" style="width: 200px;">Edit Data</button>
 					</a>
@@ -179,9 +183,9 @@
 					</button>
 				</div>
 			<?php } else { ?>
-				<div class="row ml-4 mt-5">
+				<div class="row ml-4 mt-5 ">
 					<a href="<?= base_url('user/warga/tambah_hunian') ?>">
-						<button type="button" class="btn btn btn-primary">
+						<button type="button" class="btn btn-primary">
 							<i class=" fas fa-plus mr-2"></i>
 							Tambah Anggota Hunian
 						</button>

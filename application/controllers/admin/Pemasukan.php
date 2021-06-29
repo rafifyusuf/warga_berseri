@@ -19,13 +19,13 @@ class Pemasukan extends CI_Controller
 		$data['title'] = "Pemasukan";
 		$data['aspirasi'] = $this->AspirasiModel->getBelumTertangani()->result();
 		$data['saldo'] = $this->KeuanganModel->getTotalSaldo()->result();
-		$data['pemasukan'] = $this->PemasukanIuranModel->tampilDataPemasukan()->result();
+		$data['pemasukan'] = $this->PemasukanIuranModel->pemasukan_bulanan()->result();
 		$this->load->view('admin/layouts/header', $data);
 		$this->load->view('admin/pages/pemasukan/index', $data);
 		$this->load->view('admin/layouts/footer');
 		$this->generate_data_iuran();
 	}
-	
+
 	public function tampil_bulanan($bulan)
 	{
 		$data['aspirasi'] = $this->AspirasiModel->getBelumTertangani()->result();
@@ -62,69 +62,69 @@ class Pemasukan extends CI_Controller
 		$total_saldo = $this->KeuanganModel->getTotalSaldo()->result();
 		$pemasukan = $total_saldo[0]->total_saldo + $data_form['jumlah_pemasukan'];
 		$bulan_convert = strtotime($data_form['tanggal_pemasukan']);
-		$bulan = date('M',$bulan_convert);
-		$tahun = date('Y',$bulan_convert);
+		$bulan = date('M', $bulan_convert);
+		$tahun = date('Y', $bulan_convert);
 
-		$check = $this->KeuanganModel->check_bulan_tahun($bulan,$tahun)->result();
+		$check = $this->KeuanganModel->check_bulan_tahun($bulan, $tahun)->result();
 
 		//print_r($check);
 		// echo $bulan;
 
-			$config['upload_path'] = './uploads/bukti_pemasukan/';
-			$config['allowed_types'] = 'jpg|jpeg|png';
-			$config['max_size'] = '10000';
-			$config['max_width'] = '10000';
-			$config['max_height'] = '10000';
+		$config['upload_path'] = './uploads/bukti_pemasukan/';
+		$config['allowed_types'] = 'jpg|jpeg|png';
+		$config['max_size'] = '10000';
+		$config['max_width'] = '10000';
+		$config['max_height'] = '10000';
 
-			$this->load->library('upload', $config);
-			$this->upload->initialize($config);
+		$this->load->library('upload', $config);
+		$this->upload->initialize($config);
 
-			if (!$this->upload->do_upload('bukti_pemasukan')) {
-				echo "<script>alert('Gagal di tambahkan! Periksa kembali file yang anda masukan');history.go(-1);</script>";
-			} else {
-				$data = array('upload_data'	=>	$this->upload->data());
-				$admin = $this->session->all_userdata();
-				$data = array(
-					'nama_pemasukan' => $data_form['nama_pemasukan'],
-					'kategori' => $data_form['kategori'],
-					'jumlah_pemasukan' => $data_form['jumlah_pemasukan'],
-					'tanggal_pemasukan' => $data_form['tanggal_pemasukan'],
-					'bukti_pemasukan'	=> "/uploads/bukti_pemasukan/" . $data['upload_data']['file_name'],
-					'keterangan' => $data_form['keterangan'],
-					'id_admin' => $admin['id'],
-					'bulan_pemasukan' => $bulan,
-					'tahun_pemasukan' => $tahun
+		if (!$this->upload->do_upload('bukti_pemasukan')) {
+			echo "<script>alert('Gagal di tambahkan! Periksa kembali file yang anda masukan');history.go(-1);</script>";
+		} else {
+			$data = array('upload_data'	=>	$this->upload->data());
+			$admin = $this->session->all_userdata();
+			$data = array(
+				'nama_pemasukan' => $data_form['nama_pemasukan'],
+				'kategori' => $data_form['kategori'],
+				'jumlah_pemasukan' => $data_form['jumlah_pemasukan'],
+				'tanggal_pemasukan' => $data_form['tanggal_pemasukan'],
+				'bukti_pemasukan'	=> "/uploads/bukti_pemasukan/" . $data['upload_data']['file_name'],
+				'keterangan' => $data_form['keterangan'],
+				'id_admin' => $admin['id'],
+				'bulan_pemasukan' => $bulan,
+				'tahun_pemasukan' => $tahun
+			);
+			$totalsaldo = array('total_saldo' => $pemasukan);
+			if (empty($check)) {
+				$tagihan_bulanan = date('ym');
+				$jumlah_warga = $this->WargaModel->jumlah_rumah()->result();
+				$tagihan_lunas_bulanan = $this->IuranModel->data_iuran_lunas_bulanan($bulan, $tahun)->result();
+				$jumlah_warga_iuran = count($jumlah_warga);
+				$warga_sudah_bayar = count($tagihan_lunas_bulanan);
+				$warga_belum_bayar = count($tagihan_bulanan);
+				$check_rekap_iuran = $this->IuranModel->check_rekap_iuran_bulanan($bulan, $tahun)->result();
+				$data_keuangan = array(
+					'bulan'              => $bulan,
+					'tahun'              => $tahun,
+					'jumlah_warga'       => $jumlah_warga_iuran,
+					'jumlah_sudah_bayar' => $warga_sudah_bayar,
+					'jumlah_belum_bayar' => $warga_belum_bayar,
+
 				);
-				$totalsaldo = array('total_saldo' => $pemasukan);
-				if (empty($check)) {
-					$tagihan_bulanan = date('ym');
-					$jumlah_warga = $this->WargaModel->jumlah_rumah()->result();
-					$tagihan_lunas_bulanan = $this->IuranModel->data_iuran_lunas_bulanan($bulan, $tahun)->result();
-					$jumlah_warga_iuran = count($jumlah_warga);
-					$warga_sudah_bayar = count($tagihan_lunas_bulanan);
-					$warga_belum_bayar = count($tagihan_bulanan);
-					$check_rekap_iuran = $this->IuranModel->check_rekap_iuran_bulanan($bulan, $tahun)->result();
-					$data_keuangan = array(
-						'bulan'              => $bulan,
-						'tahun'              => $tahun,
-						'jumlah_warga'       => $jumlah_warga_iuran,
-						'jumlah_sudah_bayar' => $warga_sudah_bayar,
-						'jumlah_belum_bayar' => $warga_belum_bayar,
-		
-			 		); 	
 				$this->IuranModel->rekap_iuran_bulanan($data_keuangan);
 				$this->PemasukanIuranModel->tambahdataPemasukan($data);
 				$this->KeuanganModel->updateSaldo($totalsaldo);
 				redirect('admin/pemasukan/');
-				} else{
+			} else {
 				$this->PemasukanIuranModel->tambahdataPemasukan($data);
-				$this->KeuanganModel->updateSaldoPem($bulan,$tahun,$totalsaldo);
+				$this->KeuanganModel->updateSaldoPem($bulan, $tahun, $totalsaldo);
 				$this->KeuanganModel->updateSaldo($totalsaldo);
 				redirect('admin/pemasukan/');
-				}
-			} 
-			//print_r($check);
 			}
+		}
+		//print_r($check);
+	}
 
 	public function edit_data_pemasukan($id)
 	{
@@ -145,11 +145,11 @@ class Pemasukan extends CI_Controller
 		$this->KeuanganModel->updateSaldo($saldo);
 		$total_saldo_baru = $this->KeuanganModel->getTotalSaldo()->result();
 		$pemasukan = $total_saldo_baru[0]->total_saldo - $data_form['jumlah_pemasukan'];
-			
+
 		$bulan_convert = strtotime($data_form['tanggal_pemasukan']);
-		$bulan = date('M',$bulan_convert);
-		$tahun = date('Y',$bulan_convert);
-		
+		$bulan = date('M', $bulan_convert);
+		$tahun = date('Y', $bulan_convert);
+
 		$total_saldo_baru = $this->KeuanganModel->getTotalSaldo()->result();
 		$pemasukan = $total_saldo_baru[0]->total_saldo + $data_form['jumlah_pemasukan'];
 
@@ -243,7 +243,7 @@ class Pemasukan extends CI_Controller
 			$sw = $this->IuranModel->check_status($get_rumah[$i]->id_warga)->result();
 			$get_kepkel = $this->IuranModel->get_kepala_keluarga($get_rumah[$i]->id_warga)->result();
 			$stat = $sw[0]->status_rumah;
-			$kepkel = $get_kepkel[0]->nama_warga;
+			// $kepkel = $get_kepkel[0]->nama_warga;
 
 			if (empty($check_tagihan_bulanan)) {
 				$notagihan = date('ymhis');
@@ -258,7 +258,7 @@ class Pemasukan extends CI_Controller
 				$data_iuran = array(
 					'no_tagihan'      => $notagihan + $i,
 					'id_warga'	  => $get_rumah[$i]->id_warga,
-					'nama'            => $kepkel,
+					'nama'            => $get_kepkel[0]->nama_warga,
 					'jenis'			  => 'Wajib',
 					'nominal' 		  => $nominal,
 					'bulan_iuran'     => date('M'),
@@ -284,7 +284,7 @@ class Pemasukan extends CI_Controller
 		$jumlah_warga_iuran = count($jumlah_warga);
 		$warga_sudah_bayar = count($tagihan_lunas_bulanan);
 		$warga_belum_bayar = $jumlah_warga_iuran - $warga_sudah_bayar;
-		
+
 		$check_rekap_iuran = $this->IuranModel->check_rekap_iuran_bulanan($bulan, $tahun)->result();
 
 		if (count($check_rekap_iuran) == 0) {
@@ -295,7 +295,7 @@ class Pemasukan extends CI_Controller
 				'jumlah_warga'       => $jumlah_warga_iuran,
 				'jumlah_sudah_bayar' => $warga_sudah_bayar,
 				'jumlah_belum_bayar' => $warga_belum_bayar,
-	
+
 			);
 
 			$this->IuranModel->rekap_iuran_bulanan($data_keuangan);
